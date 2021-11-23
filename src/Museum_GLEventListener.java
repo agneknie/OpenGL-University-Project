@@ -8,6 +8,11 @@ import figures.Rectangle;
 import gmaths.Mat4;
 import gmaths.Mat4Transform;
 import gmaths.Vec3;
+import objects.Floor;
+import objects.FrontWall;
+import objects.SideWall;
+
+import static objects.Measurements.*;
 
 /**
  * Class, which handles the main program- Museum Assignment for COM3503.
@@ -23,9 +28,9 @@ public class Museum_GLEventListener implements GLEventListener {
     private Model rectangle;
     private Light light;
 
-    private final static float WALL_WIDTH = 18f;
-    private final static float WALL_HEIGHT = 12f;
-    private final static float WALL_INCREMENT = 1f;
+    private Floor floor;
+    private FrontWall frontWall;
+    private SideWall sideWall;
 
     public Museum_GLEventListener(Camera camera){
         this.camera = camera;
@@ -57,11 +62,20 @@ public class Museum_GLEventListener implements GLEventListener {
         light = new Light(gl);
         light.setCamera(camera);
 
-        // Initialises square, used for floor and walls
+        // Initialises rectangle, used for floor and walls
         Mesh m = new Mesh(gl, Rectangle.vertices.clone(), Rectangle.indices.clone());
         Shader shader = new Shader(gl, "vs_tt.glsl", "fs_tt.glsl");
         Material material = new Material(new Vec3(0.1f, 0.5f, 0.91f), new Vec3(0.1f, 0.5f, 0.91f), new Vec3(0.3f, 0.3f, 0.3f), 4.0f);
         rectangle = new Model(gl, camera, light, shader, material, new Mat4(1), m);
+
+        // Initialises Floor
+        floor = new Floor(rectangle);
+
+        // Initialises Front Wall
+        frontWall = new FrontWall(rectangle);
+
+        // Initialises Side Wall
+        sideWall = new SideWall(rectangle);
 
     /*
     Material material = new Material(new Vec3(0.1f, 0.5f, 0.91f),
@@ -118,32 +132,14 @@ public class Museum_GLEventListener implements GLEventListener {
         light.render(gl);
 
         // Floor
-        rectangle.setModelMatrix(getMforFloor());
-        rectangle.render(gl);
+        floor.render(gl);
 
         // Front Wall
-        Mat4 firstFW = new Mat4(1);
-        firstFW = Mat4.multiply(Mat4Transform.scale(WALL_INCREMENT*2f, WALL_INCREMENT, WALL_HEIGHT), firstFW);
-        firstFW = Mat4.multiply(Mat4Transform.rotateAroundX(90), firstFW);
-        firstFW = Mat4.multiply(Mat4Transform.translate(-WALL_WIDTH*0.5f+WALL_INCREMENT, WALL_HEIGHT*0.5f, -WALL_WIDTH*0.5f), firstFW);
-        rectangle.setModelMatrix(firstFW);
-        rectangle.render(gl);
-
-        Mat4 secondFW = new Mat4(1);
-        secondFW = Mat4.multiply(Mat4Transform.scale(WALL_WIDTH*0.5f-WALL_INCREMENT*4, WALL_INCREMENT, WALL_HEIGHT*0.5f), secondFW);
-        secondFW = Mat4.multiply(Mat4Transform.rotateAroundX(90), secondFW);
-        secondFW = Mat4.multiply(Mat4Transform.translate(-WALL_WIDTH*0.25f, WALL_HEIGHT*0.75f, -WALL_WIDTH*0.5f), secondFW);
-        rectangle.setModelMatrix(secondFW);
-        rectangle.render(gl);
-
-        Mat4 thirdFW = new Mat4(1);
-        thirdFW = Mat4.multiply(Mat4Transform.scale(WALL_WIDTH*0.5f+WALL_INCREMENT*2f, WALL_INCREMENT, WALL_HEIGHT), thirdFW);
-        thirdFW = Mat4.multiply(Mat4Transform.rotateAroundX(90), thirdFW);
-        thirdFW = Mat4.multiply(Mat4Transform.translate(WALL_WIDTH*0.25f-WALL_INCREMENT, WALL_HEIGHT*0.5f, -WALL_WIDTH*0.5f), thirdFW);
-        rectangle.setModelMatrix(thirdFW);
-        rectangle.render(gl);
+        frontWall.render(gl);
 
         // Side Wall
+        sideWall.render(gl);
+
         Mat4 firstSW = new Mat4(1);
         firstSW = Mat4.multiply(Mat4Transform.scale(WALL_WIDTH, WALL_INCREMENT, WALL_HEIGHT/3f), firstSW);
         firstSW = Mat4.multiply(Mat4Transform.rotateAroundX(90), firstSW);
@@ -167,48 +163,6 @@ public class Museum_GLEventListener implements GLEventListener {
         secondSW = Mat4.multiply(Mat4Transform.translate(0, 0, -WALL_WIDTH/3f*2f), secondSW);
         rectangle.setModelMatrix(secondSW);
         rectangle.render(gl);
-/**
-        Mat4 thirdSW = new Mat4(1);
-        thirdSW = Mat4.multiply(Mat4Transform.scale(), thirdSW);
-        rectangle.setModelMatrix(thirdSW);
-        rectangle.render(gl);
-
-        Mat4 fourthSW = new Mat4(1);
-        fourthSW = Mat4.multiply(Mat4Transform.scale(), fourthSW);
-        rectangle.setModelMatrix(fourthSW);
-        rectangle.render(gl);
- **/
-    }
-
-    // As the transforms do not change over time for this object, they could be stored once rather than continually being calculated
-    // Floor
-    private Mat4 getMforFloor() {
-        float size = 16f;
-        Mat4 modelMatrix = new Mat4(1);
-        modelMatrix = Mat4.multiply(Mat4Transform.scale(WALL_WIDTH,1f,WALL_WIDTH), modelMatrix);
-        return modelMatrix;
-    }
-
-    // As the transforms do not change over time for this object, they could be stored once rather than continually being calculated
-    // Front Wall
-    private Mat4 getMforFrontWall() {
-        float size = 16f;
-        Mat4 modelMatrix = new Mat4(1);
-        modelMatrix = Mat4.multiply(Mat4Transform.scale(WALL_WIDTH,1f,WALL_WIDTH), modelMatrix);
-        modelMatrix = Mat4.multiply(Mat4Transform.rotateAroundX(90), modelMatrix);
-        modelMatrix = Mat4.multiply(Mat4Transform.translate(0,size*0.5f,-size*0.5f), modelMatrix);
-        return modelMatrix;
-    }
-
-    // As the transforms do not change over time for this object, they could be stored once rather than continually being calculated
-    // Side Wall
-    private Mat4 getMforSideWall() {
-        float size = 16f;
-        Mat4 modelMatrix = new Mat4(1);
-        modelMatrix = Mat4.multiply(Mat4Transform.scale(WALL_WIDTH,1f,WALL_WIDTH), modelMatrix);
-        modelMatrix = Mat4.multiply(Mat4Transform.rotateAroundZ(-90), modelMatrix);
-        modelMatrix = Mat4.multiply(Mat4Transform.translate(-size*0.5f,size*0.5f,0), modelMatrix);
-        return modelMatrix;
     }
 
     /**
