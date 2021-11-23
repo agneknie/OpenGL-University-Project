@@ -1,6 +1,9 @@
 package gmaths;
 
 /**
+ * Class taken from COM3503 Online Tutorial Materials
+ * by Dr Steve Maddock at The University of Sheffield, 2021.
+ *
  * A class for a 2D vector.
  * This includes two components: x and y. 
  *

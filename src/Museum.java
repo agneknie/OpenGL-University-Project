@@ -13,6 +13,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+/**
+ * Class, which starts the main program- Museum Assignment for COM3503.
+ *
+ * Made with code examples from COM3503 Online Tutorial Materials by
+ * Dr Steve Maddock at The University of Sheffield.
+ *
+ * @author Agne Knietaite
+ */
 public class Museum extends JFrame implements ActionListener {
 
     private static final int WIDTH = 1024;

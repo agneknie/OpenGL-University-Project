@@ -1,5 +1,9 @@
 package gmaths;
 
+/**
+ * Class taken from COM3503 Online Tutorial Materials
+ * by Dr Steve Maddock at The University of Sheffield, 2021.
+ */
 public final class Vec4 {
   public float x;
   public float y;

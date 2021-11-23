@@ -1,6 +1,9 @@
 package gmaths;
 
 /**
+ *  Class taken from COM3503 Online Tutorial Materials
+ *  by Dr Steve Maddock at The University of Sheffield, 2021.
+ *
  * A static class for a set of methods to create transformation matrices.
  * The matrix is represented in row-column form.
  * Matrices are formed so as to be used in premultiplication of vectors, i.e. matrix <strong>x</strong> vector.

@@ -6,9 +6,9 @@ import gmaths.Vec3;
 
 /**
  * Camera class taken from COM3503 Online Tutorial Materials
- * by Steve Maddock at The University of Sheffield, 2021.
+ * by Dr Steve Maddock at The University of Sheffield, 2021.
  *
- * Minimal modifications, to better suit this project.
+ * Minimal modifications and restruction, to better suit this project.
  *
  * Agne Knietaite, 2021
  */

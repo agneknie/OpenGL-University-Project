@@ -1,9 +1,13 @@
 package gmaths;
 
+/**
+ * Class taken from COM3503 Online Tutorial Materials
+ * by Dr Steve Maddock at The University of Sheffield, 2021.
+ */
 public class Mat4 {   // row column formulation
 
   private float[][] values;
-  
+
   public Mat4() {
     this(0);
   }
