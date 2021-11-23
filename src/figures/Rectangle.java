@@ -7,7 +7,7 @@ package figures;
  * Modified to better suit the assignment for COM3503
  * by Agne Knietaite, 2021.
  */
-public final class TwoTriangles {
+public final class Rectangle {
     public static final float[] vertices = {
             // position, colour, texture coordinates
             -0.5f, 0.0f, -0.5f,  0.0f, 1.0f, 0.0f,  0.0f, 1.0f,  // top left

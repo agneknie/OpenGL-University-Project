@@ -23,8 +23,8 @@ import java.awt.event.WindowEvent;
  */
 public class Museum extends JFrame implements ActionListener {
 
-    private static final int WIDTH = 1024;
-    private static final int HEIGHT = 768;
+    private static final int WIDTH = 1800;
+    private static final int HEIGHT = 900;
     private static final Dimension dimension = new Dimension(WIDTH, HEIGHT);
 
     private GLCanvas canvas;
