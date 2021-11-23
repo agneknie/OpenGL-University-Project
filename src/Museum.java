@@ -1,6 +1,6 @@
-import Camera.Camera;
-import Camera.CameraKeyboardInput;
-import Camera.CameraMouseInput;
+import camera.Camera;
+import camera.CameraKeyboardInput;
+import camera.CameraMouseInput;
 import com.jogamp.opengl.GLCapabilities;
 import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.awt.GLCanvas;

@@ -1,4 +1,4 @@
-import Camera.Camera;
+import camera.Camera;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;
 import gmaths.Vec3;

@@ -1,4 +1,4 @@
-package Camera;
+package camera;
 
 import gmaths.Mat4;
 import gmaths.Mat4Transform;
@@ -9,8 +9,6 @@ import gmaths.Vec3;
  * by Dr Steve Maddock at The University of Sheffield, 2021.
  *
  * Minimal modifications and restruction, to better suit this project.
- *
- * Agne Knietaite, 2021
  */
 public class Camera {
     public enum CameraType {X, Z};

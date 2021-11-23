@@ -1,4 +1,4 @@
-package Camera;
+package camera;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -9,8 +9,6 @@ import java.awt.event.MouseMotionAdapter;
  * by Dr Steve Maddock at The University of Sheffield, 2021.
  *
  * Restructured, to better suit this project.
- *
- * Agne Knietaite, 2021
  */
 public class CameraMouseInput extends MouseMotionAdapter {
     private Point lastPoint;

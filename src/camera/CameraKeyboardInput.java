@@ -1,4 +1,4 @@
-package Camera;
+package camera;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -8,8 +8,6 @@ import java.awt.event.KeyEvent;
  * by Dr Steve Maddock at The University of Sheffield, 2021.
  *
  * Restructured, to better suit this project.
- *
- * Agne Knietaite, 2021
  */
 public class CameraKeyboardInput extends KeyAdapter {
     private Camera camera;
