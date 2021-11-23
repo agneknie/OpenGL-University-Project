@@ -51,6 +51,7 @@ public class Museum extends JFrame implements ActionListener {
         canvas = new GLCanvas(glCapabilities);
         camera = new Camera(Camera.DEFAULT_POSITION, Camera.DEFAULT_TARGET, Camera.DEFAULT_UP);
 
+        glEventListener = new Museum_GLEventListener(camera);
         canvas.addGLEventListener(glEventListener);
         canvas.addKeyListener(new CameraKeyboardInput(camera));
         canvas.addMouseMotionListener(new CameraMouseInput(camera));

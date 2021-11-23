@@ -13,6 +13,9 @@ import java.nio.file.Paths;
 /**
  * Class taken from COM3503 Online Tutorial Materials
  * by Dr Steve Maddock at The University of Sheffield, 2021.
+ *
+ * Adapted to better suit this project for COM3503.
+ * By Agne Knietaite, 2021.
  */
 public class Shader {
 
@@ -22,11 +25,16 @@ public class Shader {
     private String vertexShaderSource;
     private String fragmentShaderSource;
 
-    /* The constructor */
-    public Shader(GL3 gl, String vertexPath, String fragmentPath) {
+    /**
+     * Constructor for the shader.
+     *
+     * Default path for vertex shaders: src/shaders/vertex/
+     * Default path for fragment shaders: src/shaders/fragment/
+     */
+    public Shader(GL3 gl, String vertexName, String fragmentName) {
         try {
-            vertexShaderSource = new String(Files.readAllBytes(Paths.get(vertexPath)), Charset.defaultCharset());
-            fragmentShaderSource = new String(Files.readAllBytes(Paths.get(fragmentPath)), Charset.defaultCharset());
+            vertexShaderSource = new String(Files.readAllBytes(Paths.get("src/shaders/vertex/", vertexName)), Charset.defaultCharset());
+            fragmentShaderSource = new String(Files.readAllBytes(Paths.get("src/shaders/fragment/", fragmentName)), Charset.defaultCharset());
         }
         catch (IOException e) {
             e.printStackTrace();
