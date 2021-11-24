@@ -27,8 +27,8 @@ public class Museum_GLEventListener implements GLEventListener {
     private Camera camera;
 
     // Lights
-    public Light light1;
-    public Light light2;
+    private Light light1;
+    private Light light2;
 
     // Figures from which objects are made
     private Model rectangle;
@@ -41,6 +41,14 @@ public class Museum_GLEventListener implements GLEventListener {
     public Museum_GLEventListener(Camera camera){
         this.camera = camera;
         this.camera.setPosition(new Vec3(4f,12f,18f));
+    }
+
+    public Light getLight1(){
+        return light1;
+    }
+
+    public core.Light getLight2() {
+        return light2;
     }
 
     @Override
@@ -172,9 +180,5 @@ public class Museum_GLEventListener implements GLEventListener {
 
         float aspect = (float)width/(float)height;
         camera.setPerspectiveMatrix(Mat4Transform.perspective(45, aspect));
-    }
-
-    public void turnLightOn(Light light, boolean lightOn){
-        light.turnLightOn(lightOn);
     }
 }

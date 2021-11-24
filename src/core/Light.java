@@ -21,11 +21,9 @@ public class Light {
     private Mat4 model;
     private Shader shader;
     private Camera camera;
-    //private Mat4 perspective;
 
     private final float LIGHT_ON_1 = 0.15f;
     private final float LIGHT_ON_2 = LIGHT_ON_1*2;
-    private final float LIGHT_OFF = 0.0f;
 
     public Light(GL3 gl) {
         material = new Material();
@@ -67,26 +65,16 @@ public class Light {
     }
 
     /**
-     * Method which turns the light on and off.
+     * Method which sets the light's intensity.
      *
-     * @param lightOn turns light on if true, off if false
+     * @param intensity intensity of the light
      */
-    public void turnLightOn(boolean lightOn){
-        if(lightOn) {
-            material.setAmbient(LIGHT_ON_1, LIGHT_ON_1, LIGHT_ON_1);
-            material.setDiffuse(LIGHT_ON_2, LIGHT_ON_2, LIGHT_ON_2);
-            material.setSpecular(LIGHT_ON_2, LIGHT_ON_2, LIGHT_ON_2);
-        }
-        else{
-            material.setAmbient(LIGHT_OFF, LIGHT_OFF, LIGHT_OFF);
-            material.setDiffuse(LIGHT_OFF, LIGHT_OFF, LIGHT_OFF);
-            material.setSpecular(LIGHT_OFF, LIGHT_OFF, LIGHT_OFF);
-        }
+    public void setIntensity(float intensity){
+        // TODO Change the intensity of the as well
+        material.setAmbient(intensity*0.5f, intensity*0.5f, intensity*0.5f);
+        material.setDiffuse(intensity, intensity, intensity);
+        material.setSpecular(intensity, intensity, intensity);
     }
-
-  /*public void setPerspective(Mat4 perspective) {
-    this.perspective = perspective;
-  }*/
 
     public void render(GL3 gl) { //, Mat4 perspective, Mat4 view) {
         Mat4 model = new Mat4(1);
@@ -109,11 +97,7 @@ public class Light {
         gl.glDeleteBuffers(1, elementBufferId, 0);
     }
 
-    // ***************************************************
-    /* THE DATA
-     */
-    // anticlockwise/counterclockwise ordering
-
+    // VERTEX DATA
     private float[] vertices = new float[] {  // x,y,z
             -0.5f, -0.5f, -0.5f,  // 0
             -0.5f, -0.5f,  0.5f,  // 1
@@ -143,10 +127,7 @@ public class Light {
     private int vertexStride = 3;
     private int vertexXYZFloats = 3;
 
-    // ***************************************************
-    /* THE LIGHT BUFFERS
-     */
-
+    // LIGHT BUFFERS
     private int[] vertexBufferId = new int[1];
     private int[] vertexArrayId = new int[1];
     private int[] elementBufferId = new int[1];

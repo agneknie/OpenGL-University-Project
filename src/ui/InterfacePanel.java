@@ -1,9 +1,15 @@
 package ui;
 
+import core.Light;
 import main.Museum;
+import main.Museum_GLEventListener;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Class describing the user interface with all of its
@@ -12,6 +18,9 @@ import java.awt.*;
  * @author Agne Knietaite
  */
 public class InterfacePanel extends JPanel {
+    private JSlider light1Slider;
+    private JSlider light2Slider;
+
     public InterfacePanel (Museum museum){
         super();
         this.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 20));
@@ -36,8 +45,7 @@ public class InterfacePanel extends JPanel {
         addButton(museum,west, "Pose 5");
 
         // Adding light controls
-        addSlider(museum,center, "Light 1:");
-        addSlider(museum,center, "Light 2:");
+        addSliders(museum,center);
         addButton(museum,center, "Spotlight On/Off");
 
         // Adding animation controls
@@ -67,30 +75,109 @@ public class InterfacePanel extends JPanel {
      */
     private void addButton(Museum museum, JPanel panel, String buttonName){
         JButton button = new JButton(buttonName);
-        button.addActionListener(museum);
+
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String buttonName = e.getActionCommand();
+                buttonClicked(museum.getGlEventListener(), buttonName);
+            }
+        });
+
         panel.add(button);
     }
 
     /**
-     * Method which creates the slider with specified name and
-     * assigns a listener to it.
+     * Method which adds sliders for lights.
      *
      * @param museum main class to add the listeners to
-     * @param panel panel to put the slider into
-     * @param sliderName name of the slider
+     * @param panel panel to put the sliders into
      */
-    private void addSlider(Museum museum, JPanel panel, String sliderName){
+    private void addSliders(Museum museum, JPanel panel){
         final int MIN = 0;
-        final int MAX = 10;
-        final int TICK = 1;
+        final int MAX = 100;
+        final int CURRENT = 30;
 
-        JSlider slider = new JSlider(MIN, MAX, MAX);
-        panel.add(new JLabel(sliderName));
+        // Creating slider for light 1
+        light1Slider = new JSlider(MIN, MAX, CURRENT);
+        panel.add(new JLabel("Light 1:"));
+        panel.add(light1Slider);
 
-        slider.setMajorTickSpacing(TICK);
-        slider.setPaintTicks(true);
+        // Creating slider for light 2
+        light2Slider = new JSlider(MIN, MAX, CURRENT);
+        panel.add(new JLabel("Light 1:"));
+        panel.add(light2Slider);
 
-        slider.addChangeListener(museum);
-        panel.add(slider);
+        // Adding listeners for sliders
+        light1Slider.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                light1SliderStateChanged(museum.getGlEventListener(), e);
+            }
+        });
+
+        light2Slider.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                light2SliderStateChanged(museum.getGlEventListener(), e);
+            }
+        });
+    }
+
+    /**
+     * Method which changes first light's intensity when slider is adjusted.
+     */
+    private void light1SliderStateChanged(Museum_GLEventListener gl, ChangeEvent event){
+        lightSliderStateChanged(gl, event, gl.getLight1());
+    }
+
+    /**
+     * Method which changes second light's intensity when slider is adjusted.
+     */
+    private void light2SliderStateChanged(Museum_GLEventListener gl, ChangeEvent event){
+        lightSliderStateChanged(gl, event, gl.getLight2());
+    }
+
+    /**
+     * Method which changes light's intensity when slider is adjusted.
+     */
+    private void lightSliderStateChanged(Museum_GLEventListener gl, ChangeEvent event, Light light){
+        JSlider source = (JSlider)event.getSource();
+        float lightIntensity = source.getValue()/100f;
+
+        light.setIntensity(lightIntensity);
+    }
+
+    /**
+     * Method which initiates relevant action when a button on the user interface is clicked.
+     *
+     * @param gl
+     * @param buttonName name of the button
+     */
+    public void buttonClicked(Museum_GLEventListener gl, String buttonName){
+        // TODO Implement button clicks
+        switch (buttonName){
+            case "Pose 1":
+                System.out.println("Pose 1");
+                break;
+            case "Pose 2":
+                System.out.println("Pose 2");
+                break;
+            case "Pose 3":
+                System.out.println("Pose 3");
+                break;
+            case "Pose 4":
+                System.out.println("Pose 4");
+                break;
+            case "Pose 5":
+                System.out.println("Pose 5");
+                break;
+            case "Spotlight On/Off":
+                System.out.println("Spotlight On/Off");
+                break;
+            case "Animate":
+                System.out.println("Animate");
+                break;
+        }
     }
 }
