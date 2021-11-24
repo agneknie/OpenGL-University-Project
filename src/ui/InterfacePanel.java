@@ -6,10 +6,7 @@ import main.Museum_GLEventListener;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * Class describing the user interface with all of its
@@ -76,12 +73,9 @@ public class InterfacePanel extends JPanel {
     private void addButton(Museum museum, JPanel panel, String buttonName){
         JButton button = new JButton(buttonName);
 
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String buttonName = e.getActionCommand();
-                buttonClicked(museum.getGlEventListener(), buttonName);
-            }
+        button.addActionListener(e -> {
+            String buttonName1 = e.getActionCommand();
+            buttonClicked(museum.getGlEventListener(), buttonName1);
         });
 
         panel.add(button);
@@ -109,19 +103,11 @@ public class InterfacePanel extends JPanel {
         panel.add(light2Slider);
 
         // Adding listeners for sliders
-        light1Slider.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                light1SliderStateChanged(museum.getGlEventListener(), e);
-            }
-        });
+        light1Slider.addChangeListener(e -> light1SliderStateChanged
+                (museum.getGlEventListener(), e));
 
-        light2Slider.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                light2SliderStateChanged(museum.getGlEventListener(), e);
-            }
-        });
+        light2Slider.addChangeListener(e -> light2SliderStateChanged
+                (museum.getGlEventListener(), e));
     }
 
     /**

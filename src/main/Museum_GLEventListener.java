@@ -56,7 +56,7 @@ public class Museum_GLEventListener implements GLEventListener {
         GL3 gl = drawable.getGL().getGL3();
 
         // Prints out OpenGL parameters
-        System.err.println("Chosen GLCapabilities: " + drawable.getChosenGLCapabilities());
+        // System.err.println("Chosen GLCapabilities: " + drawable.getChosenGLCapabilities());
 
         // OpenGL configuration related
         gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -97,7 +97,7 @@ public class Museum_GLEventListener implements GLEventListener {
         // Sets up texture used for floor
         rectangle = new Model(gl, camera, light1, light2, shader, material, new Mat4(1), m, textureId0);
         // Sets up materials used for floor
-        // TODO
+        // TODO light for different materials should be different
         // Initialises Floor
         floor = new Floor(rectangle);
 
@@ -114,35 +114,10 @@ public class Museum_GLEventListener implements GLEventListener {
      */
     }
 
-    // Transforms may be altered each frame for objects so they are set in the render method.
-    // If the transforms do not change each frame, then the model matrix could be set in initialise() and then only retrieved here,
-    // although if the same object is being used in multiple positions, then
-    // the transforms would need updating for each use of the object.
-    // For more efficiency, if the object is static, its vertices could be defined once in the correct world positions.
-
     /**
-     * Called to clean up memory if necessary.
-     * Taken from the COM3503 Online Tutorials.
+     * Called to render the scene.
+     * Adapted from COM3503 Tutorials.
      */
-    @Override
-    public void dispose(GLAutoDrawable drawable) {
-        GL3 gl = drawable.getGL().getGL3();
-
-        rectangle.dispose(gl);
-        light1.dispose(gl);
-        light2.dispose(gl);
-    }
-
-    /**
-     * Called to draw the scene.
-     * Taken from the COM3503 Online Tutorials.
-     */
-    @Override
-    public void display(GLAutoDrawable drawable) {
-        GL3 gl = drawable.getGL().getGL3();
-        render(gl);
-    }
-
     public void render(GL3 gl) {
         gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
 
@@ -166,6 +141,29 @@ public class Museum_GLEventListener implements GLEventListener {
 
         // Side Wall
         sideWall.render(gl);
+    }
+
+    /**
+     * Called to clean up memory if necessary.
+     * Adapted from the COM3503 Online Tutorials.
+     */
+    @Override
+    public void dispose(GLAutoDrawable drawable) {
+        GL3 gl = drawable.getGL().getGL3();
+
+        rectangle.dispose(gl);
+        light1.dispose(gl);
+        light2.dispose(gl);
+    }
+
+    /**
+     * Called to draw the scene.
+     * Taken from the COM3503 Online Tutorials.
+     */
+    @Override
+    public void display(GLAutoDrawable drawable) {
+        GL3 gl = drawable.getGL().getGL3();
+        render(gl);
     }
 
     /**
