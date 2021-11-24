@@ -1,3 +1,5 @@
+package main;
+
 import camera.Camera;
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL3;
@@ -11,10 +13,10 @@ import gmaths.Vec3;
 import figures.objects.Floor;
 import figures.objects.FrontWall;
 import figures.objects.SideWall;
-import texture.TextureLibrary;
+import textures.TextureLibrary;
 
 /**
- * Class, which handles the main program- Museum Assignment for COM3503.
+ * Class, which handles the main program- start.Museum Assignment for COM3503.
  *
  * Made with code examples from COM3503 Online Tutorial Materials by
  * Dr Steve Maddock at The University of Sheffield.
