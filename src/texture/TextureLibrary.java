@@ -23,7 +23,7 @@ public class TextureLibrary {
                                     int wrappingS, int wrappingT, int filterS, int filterT) {
         int[] textureId = new int[1];
         try {
-            File f = new File(filename);
+            File f = new File("src/texture/images/"+filename);
             JPEGImage img = JPEGImage.read(new FileInputStream(f));
             gl.glGenTextures(1, textureId, 0);
             gl.glBindTexture(GL.GL_TEXTURE_2D, textureId[0]);
@@ -31,6 +31,7 @@ public class TextureLibrary {
             gl.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_WRAP_T, wrappingT);
             gl.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_MIN_FILTER, filterS);
             gl.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_MAG_FILTER, filterT);
+            gl.glPixelStorei(GL.GL_UNPACK_ALIGNMENT, 1);
             gl.glTexImage2D(GL.GL_TEXTURE_2D, 0, GL.GL_RGB, img.getWidth(), img.getHeight(), 0, GL.GL_RGB, GL.GL_UNSIGNED_BYTE, img.getData());
             gl.glGenerateMipmap(GL.GL_TEXTURE_2D);
             gl.glTexParameteri(GL.GL_TEXTURE_2D, GL2.GL_TEXTURE_MIN_FILTER, GL2.GL_LINEAR_MIPMAP_LINEAR);
@@ -38,6 +39,7 @@ public class TextureLibrary {
         }
         catch(Exception e) {
             System.out.println("Error loading texture " + filename);
+            e.printStackTrace();
         }
         return textureId;
     }

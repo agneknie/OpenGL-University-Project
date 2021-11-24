@@ -11,8 +11,7 @@ import gmaths.Vec3;
 import objects.Floor;
 import objects.FrontWall;
 import objects.SideWall;
-
-import static objects.Measurements.*;
+import texture.TextureLibrary;
 
 /**
  * Class, which handles the main program- Museum Assignment for COM3503.
@@ -26,6 +25,7 @@ public class Museum_GLEventListener implements GLEventListener {
     private Camera camera;
 
     private Model rectangle;
+    private Model rectangleFloor;
     private Light light;
 
     private Floor floor;
@@ -58,18 +58,27 @@ public class Museum_GLEventListener implements GLEventListener {
     }
 
     public void initialise(GL3 gl) {
+        int[] textureId0 = TextureLibrary.loadTexture(gl, "floorWood.jpg");
+        int[] textureId1 = TextureLibrary.loadTexture(gl, "wallPaint.jpg");
+
         // Initialises the light
         light = new Light(gl);
         light.setCamera(camera);
 
-        // Initialises rectangle, used for floor and walls
+        // Initialises rectangle, used walls
         Mesh m = new Mesh(gl, Rectangle.vertices.clone(), Rectangle.indices.clone());
-        Shader shader = new Shader(gl, "vs_tt.glsl", "fs_tt.glsl");
+        Shader shader = new Shader(gl, "vs_rectangle.glsl", "fs_rectangle.glsl");
         Material material = new Material(new Vec3(0.1f, 0.5f, 0.91f), new Vec3(0.1f, 0.5f, 0.91f), new Vec3(0.3f, 0.3f, 0.3f), 4.0f);
-        rectangle = new Model(gl, camera, light, shader, material, new Mat4(1), m);
+        rectangle = new Model(gl, camera, light, shader, material, new Mat4(1), m, textureId1);
+
+        // Initialises rectangle, used for floor
+        m = new Mesh(gl, Rectangle.vertices.clone(), Rectangle.indices.clone());
+        shader = new Shader(gl, "vs_rectangle.glsl", "fs_rectangle.glsl");
+        material = new Material(new Vec3(0.1f, 0.5f, 0.91f), new Vec3(0.1f, 0.5f, 0.91f), new Vec3(0.3f, 0.3f, 0.3f), 4.0f);
+        rectangleFloor = new Model(gl, camera, light, shader, material, new Mat4(1), m, textureId0);
 
         // Initialises Floor
-        floor = new Floor(rectangle);
+        floor = new Floor(rectangleFloor);
 
         // Initialises Front Wall
         frontWall = new FrontWall(rectangle);
@@ -105,6 +114,7 @@ public class Museum_GLEventListener implements GLEventListener {
         GL3 gl = drawable.getGL().getGL3();
 
         rectangle.dispose(gl);
+        rectangleFloor.dispose(gl);
         light.dispose(gl);
     }
 
@@ -128,7 +138,7 @@ public class Museum_GLEventListener implements GLEventListener {
         // For more efficiency, if the object is static, its vertices could be defined once in the correct world positions.
 
         // Light
-        light.setPosition(0, 5, 0);
+        light.setPosition(12, 15, 0);
         light.render(gl);
 
         // Floor
@@ -139,30 +149,6 @@ public class Museum_GLEventListener implements GLEventListener {
 
         // Side Wall
         sideWall.render(gl);
-
-        Mat4 firstSW = new Mat4(1);
-        firstSW = Mat4.multiply(Mat4Transform.scale(WALL_WIDTH, WALL_INCREMENT, WALL_HEIGHT/3f), firstSW);
-        firstSW = Mat4.multiply(Mat4Transform.rotateAroundX(90), firstSW);
-        firstSW = Mat4.multiply(Mat4Transform.rotateAroundY(90), firstSW);
-        firstSW = Mat4.multiply(Mat4Transform.translate(-WALL_WIDTH*0.5f, WALL_HEIGHT-(WALL_HEIGHT/3f)*0.5f,0), firstSW);
-        rectangle.setModelMatrix(firstSW);
-        rectangle.render(gl);
-
-        firstSW = Mat4.multiply(Mat4Transform.translate(0, -WALL_HEIGHT/3f*2f, 0), firstSW);
-        rectangle.setModelMatrix(firstSW);
-        rectangle.render(gl);
-
-        Mat4 secondSW = new Mat4(1);
-        secondSW = Mat4.multiply(Mat4Transform.scale(WALL_WIDTH/3f, WALL_INCREMENT, WALL_HEIGHT/3f), secondSW);
-        secondSW = Mat4.multiply(Mat4Transform.rotateAroundX(90), secondSW);
-        secondSW = Mat4.multiply(Mat4Transform.rotateAroundY(90), secondSW);
-        secondSW = Mat4.multiply(Mat4Transform.translate(-WALL_WIDTH*0.5f, WALL_HEIGHT/3f*2f-(WALL_HEIGHT/3f*0.5f), WALL_WIDTH/3f), secondSW);
-        rectangle.setModelMatrix(secondSW);
-        rectangle.render(gl);
-
-        secondSW = Mat4.multiply(Mat4Transform.translate(0, 0, -WALL_WIDTH/3f*2f), secondSW);
-        rectangle.setModelMatrix(secondSW);
-        rectangle.render(gl);
     }
 
     /**
