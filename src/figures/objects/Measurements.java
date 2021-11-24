@@ -1,4 +1,4 @@
-package objects;
+package figures.objects;
 
 /**
  * Class which defines all constant values used for objects

@@ -56,6 +56,7 @@ public class Museum extends JFrame implements ActionListener {
         getContentPane().add(canvas, BorderLayout.CENTER);
 
         //TODO: Add User Interface Buttons (Look at Chapter 7, Scene Graph)
+
         //TODO Optional: Add menu to quit the application, etc (Look at Chapter 7, Scene Graph)
 
         addWindowListener(new WindowAdapter() {
@@ -64,6 +65,18 @@ public class Museum extends JFrame implements ActionListener {
                 remove(canvas);
                 dispose();
                 System.exit(0);
+            }
+        });
+
+        canvas.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                char keyPressed = e.getKeyChar();
+
+                if(keyPressed == '1') glEventListener.turnLightOn(glEventListener.light1, true);
+                if(keyPressed == '2') glEventListener.turnLightOn(glEventListener.light1, false);
+                if(keyPressed == '4') glEventListener.turnLightOn(glEventListener.light2, true);
+                if(keyPressed == '5') glEventListener.turnLightOn(glEventListener.light2, false);
             }
         });
 

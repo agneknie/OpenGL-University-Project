@@ -16,7 +16,8 @@ struct Light {
   vec3 specular;
 };
 
-uniform Light light;  
+uniform Light light1;
+uniform Light light2;
 
 struct Material {
   vec3 ambient;
@@ -27,22 +28,32 @@ struct Material {
   
 uniform Material material;
 
-void main() {
-  // ambient
+vec3 calculateLight(Light light, vec3 norm, vec3 viewDir){
+  // Ambient
   vec3 ambient = light.ambient * material.ambient * vec3(texture(first_texture, aTexCoord));
-  
-  // diffuse
-  vec3 norm = normalize(aNormal);
-  vec3 lightDir = normalize(light.position - aPos);  
+
+  // Diffuse
+  vec3 lightDir = normalize(light.position - aPos);
   float diff = max(dot(norm, lightDir), 0.0);
   vec3 diffuse = light.diffuse * diff * vec3(texture(first_texture, aTexCoord));
-  
-  // specular 
-  vec3 viewDir = normalize(viewPos - aPos);
-  vec3 reflectDir = reflect(-lightDir, norm);  
-  float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
-  vec3 specular = light.specular * spec;
 
-  vec3 result = ambient + diffuse + specular;
+  // Specular
+  vec3 reflectDir = reflect(-lightDir, norm);
+  float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
+  vec3 specular = light.specular * spec;    // * vec3(texture(material.specular, aTexCoord))
+
+  return (ambient + diffuse + specular);
+}
+
+void main() {
+
+  vec3 norm = normalize(aNormal);
+  vec3 viewDir = normalize(viewPos - aPos);
+
+  // Calculates impact of first general light
+  vec3 result = calculateLight(light1, norm, viewDir);
+  // Calculates impact of second general light
+  result += calculateLight(light2, norm, viewDir);
+
   fragColor = vec4(result, 1.0);
 }

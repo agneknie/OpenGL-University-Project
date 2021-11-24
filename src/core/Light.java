@@ -23,11 +23,15 @@ public class Light {
     private Camera camera;
     //private Mat4 perspective;
 
+    private final float LIGHT_ON_1 = 0.15f;
+    private final float LIGHT_ON_2 = LIGHT_ON_1*2;
+    private final float LIGHT_OFF = 0.0f;
+
     public Light(GL3 gl) {
         material = new Material();
-        material.setAmbient(0.3f, 0.3f, 0.3f);
-        material.setDiffuse(0.7f, 0.7f, 0.7f);
-        material.setSpecular(0.7f, 0.7f, 0.7f);
+        material.setAmbient(LIGHT_ON_1, LIGHT_ON_1, LIGHT_ON_1);
+        material.setDiffuse(LIGHT_ON_2, LIGHT_ON_2, LIGHT_ON_2);
+        material.setSpecular(LIGHT_ON_2, LIGHT_ON_2, LIGHT_ON_2);
         position = new Vec3(3f,2f,1f);
         model = new Mat4(1);
         shader = new Shader(gl, "vs_light_01.glsl", "fs_light_01.glsl");
@@ -60,6 +64,24 @@ public class Light {
 
     public void setCamera(Camera camera) {
         this.camera = camera;
+    }
+
+    /**
+     * Method which turns the light on and off.
+     *
+     * @param lightOn turns light on if true, off if false
+     */
+    public void turnLightOn(boolean lightOn){
+        if(lightOn) {
+            material.setAmbient(LIGHT_ON_1, LIGHT_ON_1, LIGHT_ON_1);
+            material.setDiffuse(LIGHT_ON_2, LIGHT_ON_2, LIGHT_ON_2);
+            material.setSpecular(LIGHT_ON_2, LIGHT_ON_2, LIGHT_ON_2);
+        }
+        else{
+            material.setAmbient(LIGHT_OFF, LIGHT_OFF, LIGHT_OFF);
+            material.setDiffuse(LIGHT_OFF, LIGHT_OFF, LIGHT_OFF);
+            material.setSpecular(LIGHT_OFF, LIGHT_OFF, LIGHT_OFF);
+        }
     }
 
   /*public void setPerspective(Mat4 perspective) {

@@ -4,13 +4,13 @@ import com.jogamp.opengl.GL3;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;
 import core.*;
-import figures.Rectangle;
+import figures.base.Rectangle;
 import gmaths.Mat4;
 import gmaths.Mat4Transform;
 import gmaths.Vec3;
-import objects.Floor;
-import objects.FrontWall;
-import objects.SideWall;
+import figures.objects.Floor;
+import figures.objects.FrontWall;
+import figures.objects.SideWall;
 import texture.TextureLibrary;
 
 /**
@@ -24,10 +24,14 @@ import texture.TextureLibrary;
 public class Museum_GLEventListener implements GLEventListener {
     private Camera camera;
 
-    private Model rectangle;
-    private Model rectangleFloor;
-    private Light light;
+    // Lights
+    public Light light1;
+    public Light light2;
 
+    // Figures from which objects are made
+    private Model rectangle;
+
+    // Constructed objects
     private Floor floor;
     private FrontWall frontWall;
     private SideWall sideWall;
@@ -61,30 +65,31 @@ public class Museum_GLEventListener implements GLEventListener {
         int[] textureId0 = TextureLibrary.loadTexture(gl, "floorWood.jpg");
         int[] textureId1 = TextureLibrary.loadTexture(gl, "wallPaint.jpg");
 
-        // Initialises the light
-        light = new Light(gl);
-        light.setCamera(camera);
+        // Initialises the lights
+        light1 = new Light(gl);
+        light1.setCamera(camera);
+        light2 = new Light(gl);
+        light2.setCamera(camera);
 
-        // Initialises rectangle, used walls
+        // Initialises rectangle, used walls and floor
         Mesh m = new Mesh(gl, Rectangle.vertices.clone(), Rectangle.indices.clone());
         Shader shader = new Shader(gl, "vs_rectangle.glsl", "fs_rectangle.glsl");
+
+        // Sets up materials used for walls
         Material material = new Material(new Vec3(0.1f, 0.5f, 0.91f), new Vec3(0.1f, 0.5f, 0.91f), new Vec3(0.3f, 0.3f, 0.3f), 4.0f);
-        rectangle = new Model(gl, camera, light, shader, material, new Mat4(1), m, textureId1);
-
-        // Initialises rectangle, used for floor
-        m = new Mesh(gl, Rectangle.vertices.clone(), Rectangle.indices.clone());
-        shader = new Shader(gl, "vs_rectangle.glsl", "fs_rectangle.glsl");
-        material = new Material(new Vec3(0.1f, 0.5f, 0.91f), new Vec3(0.1f, 0.5f, 0.91f), new Vec3(0.3f, 0.3f, 0.3f), 4.0f);
-        rectangleFloor = new Model(gl, camera, light, shader, material, new Mat4(1), m, textureId0);
-
-        // Initialises Floor
-        floor = new Floor(rectangleFloor);
-
+        // Sets up texture used for walls
+        rectangle = new Model(gl, camera, light1, light2, shader, material, new Mat4(1), m, textureId1);
         // Initialises Front Wall
         frontWall = new FrontWall(rectangle);
-
         // Initialises Side Wall
         sideWall = new SideWall(rectangle);
+
+        // Sets up texture used for floor
+        rectangle = new Model(gl, camera, light1, light2, shader, material, new Mat4(1), m, textureId0);
+        // Sets up materials used for floor
+        // TODO
+        // Initialises Floor
+        floor = new Floor(rectangle);
 
     /*
     Material material = new Material(new Vec3(0.1f, 0.5f, 0.91f),
@@ -114,8 +119,8 @@ public class Museum_GLEventListener implements GLEventListener {
         GL3 gl = drawable.getGL().getGL3();
 
         rectangle.dispose(gl);
-        rectangleFloor.dispose(gl);
-        light.dispose(gl);
+        light1.dispose(gl);
+        light2.dispose(gl);
     }
 
     /**
@@ -137,9 +142,11 @@ public class Museum_GLEventListener implements GLEventListener {
         // the transforms would need updating for each use of the object.
         // For more efficiency, if the object is static, its vertices could be defined once in the correct world positions.
 
-        // Light
-        light.setPosition(12, 15, 0);
-        light.render(gl);
+        // Lights
+        light1.setPosition(12, 15, 0);
+        light1.render(gl);
+        light2.setPosition(-10, 15, 15);
+        light2.render(gl);
 
         // Floor
         floor.render(gl);
@@ -163,5 +170,9 @@ public class Museum_GLEventListener implements GLEventListener {
 
         float aspect = (float)width/(float)height;
         camera.setPerspectiveMatrix(Mat4Transform.perspective(45, aspect));
+    }
+
+    public void turnLightOn(Light light, boolean lightOn){
+        light.turnLightOn(lightOn);
     }
 }

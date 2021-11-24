@@ -1,4 +1,4 @@
-package objects;
+package figures.objects;
 
 import com.jogamp.opengl.GL3;
 import core.Model;

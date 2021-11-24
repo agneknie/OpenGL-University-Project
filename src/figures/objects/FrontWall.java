@@ -1,4 +1,4 @@
-package objects;
+package figures.objects;
 
 import core.Model;
 import gmaths.Mat4;
@@ -7,8 +7,8 @@ import gmaths.Mat4Transform;
 import java.util.ArrayList;
 import java.util.List;
 
-import static objects.Measurements.*;
-import static objects.Measurements.WALL_WIDTH;
+import static figures.objects.Measurements.*;
+import static figures.objects.Measurements.WALL_WIDTH;
 
 /**
  * Class, which defines matrices for and renders the front
