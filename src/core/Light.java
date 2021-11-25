@@ -25,13 +25,14 @@ public class Light {
     protected final float LIGHT_ON_1 = 0.15f;
     protected final float LIGHT_ON_2 = LIGHT_ON_1*2;
     protected final float LIGHT_OFF = 0f;
+    public static final float LIGHT_ON = 0.5f;
 
     public Light(GL3 gl) {
         material = new Material();
         material.setAmbient(LIGHT_ON_1, LIGHT_ON_1, LIGHT_ON_1);
         material.setDiffuse(LIGHT_ON_2, LIGHT_ON_2, LIGHT_ON_2);
         material.setSpecular(LIGHT_ON_2, LIGHT_ON_2, LIGHT_ON_2);
-        position = new Vec3(3f,2f,1f);
+        position = new Vec3(0f,0f,0f);
         model = new Mat4(1);
         shader = new Shader(gl, "vs_light.glsl", "fs_light.glsl");
         fillBuffers(gl);
@@ -65,6 +66,10 @@ public class Light {
         this.camera = camera;
     }
 
+    protected Shader getShader() {
+        return shader;
+    }
+
     public Camera getCamera() {
         return camera;
     }
@@ -75,10 +80,24 @@ public class Light {
      * @param intensity intensity of the light
      */
     public void setIntensity(float intensity){
-        // TODO Change the intensity of the cube representing the light as well
         material.setAmbient(intensity*0.5f, intensity*0.5f, intensity*0.5f);
         material.setDiffuse(intensity, intensity, intensity);
         material.setSpecular(intensity, intensity, intensity);
+    }
+
+    /**
+     * Method which checks if light is off and renders the
+     * object which represents the light as dark if light is off.
+     * Renders the cube as lit up if the light is on.
+     * @param gl
+     */
+    public void renderLightCubeIntensity(GL3 gl){
+        Vec3 lightIntensity = material.getDiffuse();
+
+        if(this.material.getDiffuse().x != LIGHT_OFF)
+            lightIntensity = Vec3.add(lightIntensity, new Vec3(LIGHT_ON_2, LIGHT_ON_2, LIGHT_ON_2));
+
+        shader.setVec3(gl, "lightIntensity", lightIntensity);
     }
 
     public void render(GL3 gl) { //, Mat4 perspective, Mat4 view) {
@@ -90,6 +109,8 @@ public class Light {
 
         shader.use(gl);
         shader.setFloatArray(gl, "mvpMatrix", mvpMatrix.toFloatArrayForGLSL());
+
+        renderLightCubeIntensity(gl);
 
         gl.glBindVertexArray(vertexArrayId[0]);
         gl.glDrawElements(GL.GL_TRIANGLES, indices.length, GL.GL_UNSIGNED_INT, 0);

@@ -1,6 +1,7 @@
 package ui;
 
 import core.Light;
+import core.Spotlight;
 import main.Museum;
 import main.Museum_GLEventListener;
 
@@ -99,7 +100,7 @@ public class InterfacePanel extends JPanel {
 
         // Creating slider for light 2
         light2Slider = new JSlider(MIN, MAX, CURRENT);
-        panel.add(new JLabel("Light 1:"));
+        panel.add(new JLabel("Light 2:"));
         panel.add(light2Slider);
 
         // Adding listeners for sliders
@@ -159,7 +160,13 @@ public class InterfacePanel extends JPanel {
                 System.out.println("Pose 5");
                 break;
             case "Spotlight On/Off":
-                System.out.println("Spotlight On/Off");
+                // Finds current light setting
+                boolean lightOn = gl.getSpotlight().getMaterial().getSpecular().x
+                                    == Spotlight.LIGHT_ON;
+
+                // Changes to the opposite value
+                gl.getSpotlight().turnLightOn(!lightOn);
+
                 break;
             case "Animate":
                 System.out.println("Animate");

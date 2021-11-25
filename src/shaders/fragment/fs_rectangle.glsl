@@ -24,10 +24,6 @@ struct Spotlight {
 
   vec3 direction;
   float cutOff;
-
-  float constant;
-  float linear;
-  float quadratic;
 };
 
 uniform Light light1;
@@ -46,7 +42,7 @@ uniform Material material;
 // Calculates the light impact of the general lights
 vec3 calculateLight(Light light, vec3 norm, vec3 viewDir){
   // Ambient
-  vec3 ambient = light.ambient * material.ambient * vec3(texture(first_texture, aTexCoord));
+  vec3 ambient = light.ambient * vec3(texture(first_texture, aTexCoord));
 
   // Diffuse
   vec3 lightDir = normalize(light.position - aPos);
@@ -69,29 +65,23 @@ vec3 calculateSpotlight(Spotlight spotlight, vec3 norm, vec3 aPos, vec3 viewDir)
   vec3 specular = vec3(0.0, 0.0, 0.0);
 
   // Variables for light direction and spotlight area determination
-  vec3 lightDir = normalize(spotlight.position - aPos);
+  vec3 lightDir = normalize(spotlight.direction - aPos);
   float theta = dot(lightDir, normalize(spotlight.position - aPos));
 
-  // Attenuation
-  float distance = length(spotlight.position - aPos);
-  float attenuation = 1.0 / (spotlight.constant + spotlight.linear * distance + spotlight.quadratic * (distance * distance));
-
   // If fragment is in the spotlight 'cone', applies the light
-  if(theta > spotlight.cutOff){
+  if(theta < spotlight.cutOff){
     // Ambient
-    ambient = spotlight.ambient * material.ambient * vec3(texture(first_texture, aTexCoord));
-    //ambient *= attenuation;
+    ambient = spotlight.ambient * vec3(texture(first_texture, aTexCoord));
 
     // Diffuse
     float diff = max(dot(norm, lightDir), 0.0);
     diffuse = spotlight.diffuse * diff * vec3(texture(first_texture, aTexCoord));
-    //diffuse *= attenuation;
+
 
     // Specular
     vec3 reflectDir = reflect(-lightDir, norm);
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
     specular = spotlight.specular * spec;
-    //specular *= attenuation;
   }
 
   return (ambient + diffuse + specular);
@@ -105,8 +95,10 @@ void main() {
 
   // Calculates impact of first general light
   vec3 result = calculateLight(light1, norm, viewDir);
+
   // Calculates impact of second general light
   result += calculateLight(light2, norm, viewDir);
+
   // Calculates the impact of the spotlight
   result += calculateSpotlight(spotlight, norm, aPos, viewDir);
 

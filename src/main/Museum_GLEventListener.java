@@ -52,6 +52,10 @@ public class Museum_GLEventListener implements GLEventListener {
         return light2;
     }
 
+    public Spotlight getSpotlight() {
+        return spotlight;
+    }
+
     @Override
     public void init(GLAutoDrawable drawable) {
         GL3 gl = drawable.getGL().getGL3();
@@ -131,15 +135,14 @@ public class Museum_GLEventListener implements GLEventListener {
         // For more efficiency, if the object is static, its vertices could be defined once in the correct world positions.
 
         // Lights
-//        light1.setPosition(12, 15, 0);
-        light1.setPosition(-2, 1, 1);
+        light1.setPosition(-10, 15, 15);
         light1.render(gl);
-        light2.setPosition(-10, 15, 15);
+        light2.setPosition(12, 15, 0);
         light2.render(gl);
-        spotlight.setPosition(1, 1, 1);
-//        spotlight.setPosition(camera.getPosition());
-//        spotlight.setDirection(camera.getFront());
+
+        spotlight.setPosition(2, 2, 2);
         spotlight.render(gl);
+
 
         // Floor
         floor.render(gl);
