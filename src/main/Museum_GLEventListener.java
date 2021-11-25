@@ -29,6 +29,7 @@ public class Museum_GLEventListener implements GLEventListener {
     // Lights
     private Light light1;
     private Light light2;
+    private Spotlight spotlight;
 
     // Figures from which objects are made
     private Model rectangle;
@@ -47,7 +48,7 @@ public class Museum_GLEventListener implements GLEventListener {
         return light1;
     }
 
-    public core.Light getLight2() {
+    public Light getLight2() {
         return light2;
     }
 
@@ -80,6 +81,8 @@ public class Museum_GLEventListener implements GLEventListener {
         light1.setCamera(camera);
         light2 = new Light(gl);
         light2.setCamera(camera);
+        spotlight = new Spotlight(gl);
+        spotlight.setCamera(camera);
 
         // Initialises rectangle, used walls and floor
         Mesh m = new Mesh(gl, Rectangle.vertices.clone(), Rectangle.indices.clone());
@@ -88,14 +91,14 @@ public class Museum_GLEventListener implements GLEventListener {
         // Sets up materials used for walls
         Material material = new Material(new Vec3(0.1f, 0.5f, 0.91f), new Vec3(0.1f, 0.5f, 0.91f), new Vec3(0.3f, 0.3f, 0.3f), 4.0f);
         // Sets up texture used for walls
-        rectangle = new Model(gl, camera, light1, light2, shader, material, new Mat4(1), m, textureId1);
+        rectangle = new Model(gl, camera, light1, light2, spotlight, shader, material, new Mat4(1), m, textureId1);
         // Initialises Front Wall
         frontWall = new FrontWall(rectangle);
         // Initialises Side Wall
         sideWall = new SideWall(rectangle);
 
         // Sets up texture used for floor
-        rectangle = new Model(gl, camera, light1, light2, shader, material, new Mat4(1), m, textureId0);
+        rectangle = new Model(gl, camera, light1, light2, spotlight, shader, material, new Mat4(1), m, textureId0);
         // Sets up materials used for floor
         // TODO light for different materials should be different
         // Initialises Floor
@@ -128,10 +131,15 @@ public class Museum_GLEventListener implements GLEventListener {
         // For more efficiency, if the object is static, its vertices could be defined once in the correct world positions.
 
         // Lights
-        light1.setPosition(12, 15, 0);
+//        light1.setPosition(12, 15, 0);
+        light1.setPosition(-2, 1, 1);
         light1.render(gl);
         light2.setPosition(-10, 15, 15);
         light2.render(gl);
+        spotlight.setPosition(1, 1, 1);
+//        spotlight.setPosition(camera.getPosition());
+//        spotlight.setDirection(camera.getFront());
+        spotlight.render(gl);
 
         // Floor
         floor.render(gl);
@@ -154,6 +162,7 @@ public class Museum_GLEventListener implements GLEventListener {
         rectangle.dispose(gl);
         light1.dispose(gl);
         light2.dispose(gl);
+        spotlight.dispose(gl);
     }
 
     /**

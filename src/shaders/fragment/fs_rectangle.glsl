@@ -16,8 +16,23 @@ struct Light {
   vec3 specular;
 };
 
+struct Spotlight {
+  vec3 position;
+  vec3 ambient;
+  vec3 diffuse;
+  vec3 specular;
+
+  vec3 direction;
+  float cutOff;
+
+  float constant;
+  float linear;
+  float quadratic;
+};
+
 uniform Light light1;
 uniform Light light2;
+uniform Spotlight spotlight;
 
 struct Material {
   vec3 ambient;
@@ -28,6 +43,7 @@ struct Material {
   
 uniform Material material;
 
+// Calculates the light impact of the general lights
 vec3 calculateLight(Light light, vec3 norm, vec3 viewDir){
   // Ambient
   vec3 ambient = light.ambient * material.ambient * vec3(texture(first_texture, aTexCoord));
@@ -45,6 +61,43 @@ vec3 calculateLight(Light light, vec3 norm, vec3 viewDir){
   return (ambient + diffuse + specular);
 }
 
+// Calcualtes the light impact of the spotlight
+vec3 calculateSpotlight(Spotlight spotlight, vec3 norm, vec3 aPos, vec3 viewDir){
+  // Initialisation
+  vec3 ambient = vec3(0.0, 0.0, 0.0);
+  vec3 diffuse = vec3(0.0, 0.0, 0.0);
+  vec3 specular = vec3(0.0, 0.0, 0.0);
+
+  // Variables for light direction and spotlight area determination
+  vec3 lightDir = normalize(spotlight.position - aPos);
+  float theta = dot(lightDir, normalize(spotlight.position - aPos));
+
+  // Attenuation
+  float distance = length(spotlight.position - aPos);
+  float attenuation = 1.0 / (spotlight.constant + spotlight.linear * distance + spotlight.quadratic * (distance * distance));
+
+  // If fragment is in the spotlight 'cone', applies the light
+  if(theta > spotlight.cutOff){
+    // Ambient
+    ambient = spotlight.ambient * material.ambient * vec3(texture(first_texture, aTexCoord));
+    //ambient *= attenuation;
+
+    // Diffuse
+    float diff = max(dot(norm, lightDir), 0.0);
+    diffuse = spotlight.diffuse * diff * vec3(texture(first_texture, aTexCoord));
+    //diffuse *= attenuation;
+
+    // Specular
+    vec3 reflectDir = reflect(-lightDir, norm);
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
+    specular = spotlight.specular * spec;
+    //specular *= attenuation;
+  }
+
+  return (ambient + diffuse + specular);
+}
+
+
 void main() {
 
   vec3 norm = normalize(aNormal);
@@ -54,6 +107,8 @@ void main() {
   vec3 result = calculateLight(light1, norm, viewDir);
   // Calculates impact of second general light
   result += calculateLight(light2, norm, viewDir);
+  // Calculates the impact of the spotlight
+  result += calculateSpotlight(spotlight, norm, aPos, viewDir);
 
   fragColor = vec4(result, 1.0);
 }

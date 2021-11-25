@@ -53,6 +53,14 @@ public class Camera {
         updateCameraVectors();
     }
 
+    public Vec3 getFront() {
+        return front;
+    }
+
+    public Vec3 getTarget() {
+        return target;
+    }
+
     public Vec3 getPosition() {
         return new Vec3(position);
     }

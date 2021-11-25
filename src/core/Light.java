@@ -22,8 +22,9 @@ public class Light {
     private Shader shader;
     private Camera camera;
 
-    private final float LIGHT_ON_1 = 0.15f;
-    private final float LIGHT_ON_2 = LIGHT_ON_1*2;
+    protected final float LIGHT_ON_1 = 0.15f;
+    protected final float LIGHT_ON_2 = LIGHT_ON_1*2;
+    protected final float LIGHT_OFF = 0f;
 
     public Light(GL3 gl) {
         material = new Material();
@@ -32,7 +33,7 @@ public class Light {
         material.setSpecular(LIGHT_ON_2, LIGHT_ON_2, LIGHT_ON_2);
         position = new Vec3(3f,2f,1f);
         model = new Mat4(1);
-        shader = new Shader(gl, "vs_light_01.glsl", "fs_light_01.glsl");
+        shader = new Shader(gl, "vs_light.glsl", "fs_light.glsl");
         fillBuffers(gl);
     }
 
@@ -64,13 +65,17 @@ public class Light {
         this.camera = camera;
     }
 
+    public Camera getCamera() {
+        return camera;
+    }
+
     /**
      * Method which sets the light's intensity.
      *
      * @param intensity intensity of the light
      */
     public void setIntensity(float intensity){
-        // TODO Change the intensity of the as well
+        // TODO Change the intensity of the cube representing the light as well
         material.setAmbient(intensity*0.5f, intensity*0.5f, intensity*0.5f);
         material.setDiffuse(intensity, intensity, intensity);
         material.setSpecular(intensity, intensity, intensity);
