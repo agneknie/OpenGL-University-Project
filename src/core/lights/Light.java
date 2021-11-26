@@ -29,6 +29,9 @@ public class Light {
     public static final float LIGHT_ON_2 = LIGHT_ON_1*2;
     protected static final float LIGHT_OFF = 0f;
 
+    public static final Vec3 DEFAULT_POSITION_1 = new Vec3(-10, 15, 15);
+    public static final Vec3 DEFAULT_POSITION_2 = new Vec3(10, 15, 0);
+
     public Light(GL3 gl, Camera camera) {
         shader = new Shader(gl, "vs_light.glsl", "fs_light.glsl");
         material = new Material();
@@ -150,6 +153,14 @@ public class Light {
     private int[] vertexBufferId = new int[1];
     private int[] vertexArrayId = new int[1];
     private int[] elementBufferId = new int[1];
+
+    protected int[] getVertexArrayId() {
+        return vertexArrayId;
+    }
+
+    protected int[] getIndices() {
+        return indices;
+    }
 
     private void fillBuffers(GL3 gl) {
         gl.glGenVertexArrays(1, vertexArrayId, 0);

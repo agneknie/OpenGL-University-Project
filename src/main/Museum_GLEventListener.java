@@ -42,7 +42,7 @@ public class Museum_GLEventListener implements GLEventListener {
     private Model rectangle;
     private Model cube;
 
-    // Constructed core.objects
+    // Constructed objects
     private Floor floor;
     private FrontWall frontWall;
     private SideWall sideWall;
@@ -132,9 +132,9 @@ public class Museum_GLEventListener implements GLEventListener {
         gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
 
         // Lights
-        light1.setPosition(-10, 15, 15);
+        light1.setPosition(Light.DEFAULT_POSITION_1);
         light1.render(gl);
-        light2.setPosition(12, 15, 0);
+        light2.setPosition(Light.DEFAULT_POSITION_2);
         light2.render(gl);
 
         // Floor
@@ -147,6 +147,7 @@ public class Museum_GLEventListener implements GLEventListener {
         sideWall.render(gl);
 
         // Spotlight Stand
+        swingingSpotlight.animateSpotlight();
         swingingSpotlight.render(gl);
     }
 

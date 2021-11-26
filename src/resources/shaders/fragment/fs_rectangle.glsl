@@ -84,7 +84,7 @@ vec3 calculateSpotlight(Spotlight spotlight, vec3 norm, vec3 aPos, vec3 viewDir)
   }
 
   // Reduces the intensity of the spotlight for a neater effect
-  float normalise = 0.3;
+  float normalise = 0.2;
   return (ambient*normalise + diffuse*normalise + specular*normalise);
 }
 

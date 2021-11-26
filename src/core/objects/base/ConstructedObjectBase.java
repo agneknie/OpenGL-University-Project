@@ -25,6 +25,17 @@ public abstract class ConstructedObjectBase {
     }
 
     /**
+     * Method which replaces a matrix in the calculatedMatrices List
+     * at the index location with the given matrix.
+     *
+     * @param index location of the element to replace
+     * @param matrix matrix to replace with
+     */
+    protected void setCalculatedMatrix(int index, Mat4 matrix){
+        calculatedMatrices.set(index, matrix);
+    }
+
+    /**
      * Calculates and assigns matrix/matrices, which are needed for the
      * rendering of this collective object.
      */
