@@ -5,6 +5,9 @@ import gmaths.Vec3;
 /**
  * Class taken from COM3503 Online Tutorial Materials
  * by Dr Steve Maddock at The University of Sheffield, 2021.
+ *
+ * Adapted to suit the needs of this project.
+ * By Agne Knietaite, 2021
  */
 public class Material {
     public static final Vec3 DEFAULT_AMBIENT = new Vec3(0.2f, 0.2f, 0.2f);
