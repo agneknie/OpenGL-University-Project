@@ -1,10 +1,12 @@
 package core.lights;
 
 import com.jogamp.opengl.GL3;
-import core.lights.Light;
 import gmaths.Vec3;
+import resources.Colours;
 
 public class Spotlight extends Light {
+
+    public static final float LIGHT_ON = Colours.SPOTLIGHT_YELLOW.x;
 
     private Vec3 direction = new Vec3(0,-1 ,0);
     private final float cutOff = (float) Math.cos(Math.toRadians(12.5));
@@ -12,6 +14,11 @@ public class Spotlight extends Light {
     public Spotlight(GL3 gl) {
         super(gl);
         this.setIntensity(LIGHT_ON);
+
+        // Sets spotlight colour to a slight yellow
+        this.getMaterial().setAmbient(Colours.SPOTLIGHT_YELLOW_AMBIENT);
+        this.getMaterial().setDiffuse(Colours.SPOTLIGHT_YELLOW);
+        this.getMaterial().setSpecular(Colours.SPOTLIGHT_YELLOW);
     }
 
     public void setDirection(Vec3 direction) {
@@ -36,16 +43,25 @@ public class Spotlight extends Light {
      * @param lightOn light on if true, light off if false
      */
     public void turnLightOn(boolean lightOn) {
-        if(lightOn) setIntensity(LIGHT_ON);
-        else setIntensity(this.LIGHT_OFF);
+        if(lightOn) {
+            this.getMaterial().setAmbient(Colours.SPOTLIGHT_YELLOW_AMBIENT);
+            this.getMaterial().setDiffuse(Colours.SPOTLIGHT_YELLOW);
+            this.getMaterial().setSpecular(Colours.SPOTLIGHT_YELLOW);
+        }
+
+        else {
+            this.getMaterial().setAmbient(LIGHT_OFF, LIGHT_OFF, LIGHT_OFF);
+            this.getMaterial().setDiffuse(LIGHT_OFF, LIGHT_OFF, LIGHT_OFF);
+            this.getMaterial().setSpecular(LIGHT_OFF, LIGHT_OFF, LIGHT_OFF);
+        }
     }
 
-    public void renderLightCubeIntensity(GL3 gl){
+    public void renderLightObjectIntensity(GL3 gl){
         Vec3 lightIntensity = this.getMaterial().getDiffuse();
 
         if(this.getMaterial().getDiffuse().x == LIGHT_OFF)
             this.getShader().setVec3(gl, "lightIntensity", new Vec3(0f, 0f, 0f));
 
-        else this.getShader().setVec3(gl, "lightIntensity", new Vec3(1f, 1f, 1f));
+        else this.getShader().setVec3(gl, "lightIntensity", Colours.SPOTLIGHT_YELLOW);
     }
 }

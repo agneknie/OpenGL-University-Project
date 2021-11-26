@@ -93,6 +93,8 @@ void main() {
   vec3 norm = normalize(aNormal);
   vec3 viewDir = normalize(viewPos - aPos);
 
+  vec3 spotlightImpact = calculateSpotlight(spotlight, norm, aPos, viewDir);
+
   // Calculates impact of first general light
   vec3 result = calculateLight(light1, norm, viewDir);
 
@@ -100,7 +102,7 @@ void main() {
   result += calculateLight(light2, norm, viewDir);
 
   // Calculates the impact of the spotlight
-  result += calculateSpotlight(spotlight, norm, aPos, viewDir);
+  result += spotlightImpact;
 
   fragColor = vec4(result, 1.0);
 }

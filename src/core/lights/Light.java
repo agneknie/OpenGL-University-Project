@@ -4,6 +4,7 @@ import camera.Camera;
 import com.jogamp.common.nio.Buffers;
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL3;
+import core.objects.base.Sphere;
 import core.structure.Material;
 import core.structure.Shader;
 import gmaths.Mat4;
@@ -27,16 +28,17 @@ public class Light {
     protected final float LIGHT_ON_1 = 0.15f;
     protected final float LIGHT_ON_2 = LIGHT_ON_1*2;
     protected final float LIGHT_OFF = 0f;
-    public static final float LIGHT_ON = 0.5f;
 
     public Light(GL3 gl) {
+        shader = new Shader(gl, "vs_light.glsl", "fs_light.glsl");
         material = new Material();
+
         material.setAmbient(LIGHT_ON_1, LIGHT_ON_1, LIGHT_ON_1);
         material.setDiffuse(LIGHT_ON_2, LIGHT_ON_2, LIGHT_ON_2);
         material.setSpecular(LIGHT_ON_2, LIGHT_ON_2, LIGHT_ON_2);
+
         position = new Vec3(0f,0f,0f);
         model = new Mat4(1);
-        shader = new Shader(gl, "vs_light.glsl", "fs_light.glsl");
         fillBuffers(gl);
     }
 
@@ -76,6 +78,14 @@ public class Light {
         return camera;
     }
 
+    protected void setIndices(int[] indices) {
+        this.indices = indices;
+    }
+
+    protected void setVertices(float[] vertices) {
+        this.vertices = vertices;
+    }
+
     /**
      * Method which sets the light's intensity.
      *
@@ -93,7 +103,7 @@ public class Light {
      * Renders the cube as lit up if the light is on.
      * @param gl
      */
-    public void renderLightCubeIntensity(GL3 gl){
+    public void renderLightObjectIntensity(GL3 gl){
         Vec3 lightIntensity = material.getDiffuse();
 
         if(this.material.getDiffuse().x != LIGHT_OFF)
@@ -112,7 +122,7 @@ public class Light {
         shader.use(gl);
         shader.setFloatArray(gl, "mvpMatrix", mvpMatrix.toFloatArrayForGLSL());
 
-        renderLightCubeIntensity(gl);
+        renderLightObjectIntensity(gl);
 
         gl.glBindVertexArray(vertexArrayId[0]);
         gl.glDrawElements(GL.GL_TRIANGLES, indices.length, GL.GL_UNSIGNED_INT, 0);
@@ -126,33 +136,11 @@ public class Light {
     }
 
     // VERTEX DATA
-    private float[] vertices = new float[] {  // x,y,z
-            -0.5f, -0.5f, -0.5f,  // 0
-            -0.5f, -0.5f,  0.5f,  // 1
-            -0.5f,  0.5f, -0.5f,  // 2
-            -0.5f,  0.5f,  0.5f,  // 3
-            0.5f, -0.5f, -0.5f,  // 4
-            0.5f, -0.5f,  0.5f,  // 5
-            0.5f,  0.5f, -0.5f,  // 6
-            0.5f,  0.5f,  0.5f   // 7
-    };
+    private float[] vertices = Sphere.vertices.clone();
 
-    private int[] indices =  new int[] {
-            0,1,3, // x -ve
-            3,2,0, // x -ve
-            4,6,7, // x +ve
-            7,5,4, // x +ve
-            1,5,7, // z +ve
-            7,3,1, // z +ve
-            6,4,0, // z -ve
-            0,2,6, // z -ve
-            0,4,5, // y -ve
-            5,1,0, // y -ve
-            2,3,7, // y +ve
-            7,6,2  // y +ve
-    };
+    private int[] indices = Sphere.indices.clone();
 
-    private int vertexStride = 3;
+    private int vertexStride = 8;
     private int vertexXYZFloats = 3;
 
     // LIGHT BUFFERS

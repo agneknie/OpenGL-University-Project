@@ -14,7 +14,7 @@ public final class Sphere {
     public static final float[] vertices = createVertices();
     public static final int[] indices = createIndices();
 
-    private static float[] createVertices() {
+    public static float[] createVertices() {
         double r = 0.5;
         int step = 8;
         float[] vertices = new float[XLONG*YLAT*step];
@@ -43,7 +43,7 @@ public final class Sphere {
         return vertices;
     }
 
-    private static int[] createIndices() {
+    public static int[] createIndices() {
         int[] indices = new int[(XLONG-1)*(YLAT-1)*6];
 
         for (int j = 0; j<YLAT-1; ++j) {
