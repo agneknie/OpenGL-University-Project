@@ -1,5 +1,6 @@
 package core.lights;
 
+import camera.Camera;
 import com.jogamp.opengl.GL3;
 import gmaths.Vec3;
 import core.constants.Colours;
@@ -8,11 +9,11 @@ public class Spotlight extends Light {
 
     public static final float LIGHT_ON = Colours.SPOTLIGHT_YELLOW.x;
 
-    private Vec3 direction = new Vec3(0,-1 ,0);
-    private final float cutOff = (float) Math.cos(Math.toRadians(12.5));
+    private Vec3 direction = new Vec3(0f,-1f ,0);
+    private final float cutOff = (float) Math.cos(Math.toRadians(10));
 
-    public Spotlight(GL3 gl) {
-        super(gl);
+    public Spotlight(GL3 gl, Camera camera) {
+        super(gl, camera);
         this.setIntensity(LIGHT_ON);
 
         // Sets spotlight colour to a slight yellow

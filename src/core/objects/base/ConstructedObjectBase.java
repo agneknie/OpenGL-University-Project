@@ -8,16 +8,16 @@ import java.util.List;
 
 /**
  * Base class to form constructed objects, which use a single
- * type of model (rectangle) for their construction.
+ * type of object.base model for their construction.
  *
  * @author Agne Knietaite
  */
-public abstract class RectangleBase {
+public abstract class ConstructedObjectBase {
 
     private final Model model;
     private List<Mat4> calculatedMatrices;
 
-    public RectangleBase(Model model){
+    public ConstructedObjectBase(Model model){
         this.model = model;
 
         // Calculates the matrix/matrices once, when initialising the object

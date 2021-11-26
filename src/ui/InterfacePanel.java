@@ -91,7 +91,7 @@ public class InterfacePanel extends JPanel {
     private void addSliders(Museum museum, JPanel panel){
         final int MIN = 0;
         final int MAX = 100;
-        final int CURRENT = 30;
+        final int CURRENT = (int) (Light.LIGHT_ON_2*100);
 
         // Creating slider for light 1
         light1Slider = new JSlider(MIN, MAX, CURRENT);

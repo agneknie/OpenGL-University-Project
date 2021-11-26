@@ -65,11 +65,11 @@ vec3 calculateSpotlight(Spotlight spotlight, vec3 norm, vec3 aPos, vec3 viewDir)
   vec3 specular = vec3(0.0, 0.0, 0.0);
 
   // Variables for light direction and spotlight area determination
-  vec3 lightDir = normalize(spotlight.direction - aPos);
-  float theta = dot(lightDir, normalize(spotlight.position - aPos));
+  vec3 lightDir = normalize(spotlight.position - aPos);
+  float theta = dot(lightDir, normalize(-spotlight.direction));
 
   // If fragment is in the spotlight 'cone', applies the light
-  if(theta < spotlight.cutOff){
+  if(theta > spotlight.cutOff){
     // Ambient
     ambient = spotlight.ambient * vec3(texture(first_texture, aTexCoord));
 
@@ -77,23 +77,22 @@ vec3 calculateSpotlight(Spotlight spotlight, vec3 norm, vec3 aPos, vec3 viewDir)
     float diff = max(dot(norm, lightDir), 0.0);
     diffuse = spotlight.diffuse * diff * vec3(texture(first_texture, aTexCoord));
 
-
     // Specular
     vec3 reflectDir = reflect(-lightDir, norm);
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
     specular = spotlight.specular * spec;
   }
 
-  return (ambient + diffuse + specular);
+  // Reduces the intensity of the spotlight for a neater effect
+  float normalise = 0.3;
+  return (ambient*normalise + diffuse*normalise + specular*normalise);
 }
-
 
 void main() {
 
   vec3 norm = normalize(aNormal);
   vec3 viewDir = normalize(viewPos - aPos);
 
-  vec3 spotlightImpact = calculateSpotlight(spotlight, norm, aPos, viewDir);
 
   // Calculates impact of first general light
   vec3 result = calculateLight(light1, norm, viewDir);
@@ -102,7 +101,7 @@ void main() {
   result += calculateLight(light2, norm, viewDir);
 
   // Calculates the impact of the spotlight
-  result += spotlightImpact;
+  result += calculateSpotlight(spotlight, norm, aPos, viewDir);
 
   fragColor = vec4(result, 1.0);
 }

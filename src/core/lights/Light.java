@@ -25,11 +25,11 @@ public class Light {
     private Shader shader;
     private Camera camera;
 
-    protected final float LIGHT_ON_1 = 0.15f;
-    protected final float LIGHT_ON_2 = LIGHT_ON_1*2;
-    protected final float LIGHT_OFF = 0f;
+    protected static final float LIGHT_ON_1 = 0.17f;
+    public static final float LIGHT_ON_2 = LIGHT_ON_1*2;
+    protected static final float LIGHT_OFF = 0f;
 
-    public Light(GL3 gl) {
+    public Light(GL3 gl, Camera camera) {
         shader = new Shader(gl, "vs_light.glsl", "fs_light.glsl");
         material = new Material();
 
@@ -39,6 +39,9 @@ public class Light {
 
         position = new Vec3(0f,0f,0f);
         model = new Mat4(1);
+
+        this.camera = camera;
+
         fillBuffers(gl);
     }
 

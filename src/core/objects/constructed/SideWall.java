@@ -1,6 +1,6 @@
 package core.objects.constructed;
 
-import core.objects.base.RectangleBase;
+import core.objects.base.ConstructedObjectBase;
 import core.structure.Model;
 import gmaths.Mat4;
 import gmaths.Mat4Transform;
@@ -17,7 +17,7 @@ import static core.constants.Measurements.WALL_WIDTH;
  *
  * @author Agne Knietaite
  */
-public class SideWall extends RectangleBase {
+public class SideWall extends ConstructedObjectBase {
 
     public SideWall(Model rectangle){
         super(rectangle);

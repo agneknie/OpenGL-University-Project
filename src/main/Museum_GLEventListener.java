@@ -7,7 +7,9 @@ import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;
 import core.lights.Light;
 import core.lights.Spotlight;
+import core.objects.base.Cube;
 import core.objects.base.Rectangle;
+import core.objects.constructed.SwingingSpotlight;
 import core.structure.Material;
 import core.structure.Mesh;
 import core.structure.Model;
@@ -36,13 +38,15 @@ public class Museum_GLEventListener implements GLEventListener {
     private Light light2;
     private Spotlight spotlight;
 
-    // Figures from which core.objects are made
+    // Base objects from which constructed objects are made
     private Model rectangle;
+    private Model cube;
 
     // Constructed core.objects
     private Floor floor;
     private FrontWall frontWall;
     private SideWall sideWall;
+    private SwingingSpotlight swingingSpotlight;
 
     public Museum_GLEventListener(Camera camera){
         this.camera = camera;
@@ -84,21 +88,25 @@ public class Museum_GLEventListener implements GLEventListener {
     public void initialise(GL3 gl) {
         int[] textureId0 = TextureLibrary.loadTexture(gl, "floorWood.jpg");
         int[] textureId1 = TextureLibrary.loadTexture(gl, "wallPaint.jpg");
+        int[] textureId2 = TextureLibrary.loadTexture(gl, "standMarble.jpg");
 
         // Initialises the lights
-        light1 = new Light(gl);
-        light1.setCamera(camera);
-        light2 = new Light(gl);
-        light2.setCamera(camera);
-        spotlight = new Spotlight(gl);
-        spotlight.setCamera(camera);
+        light1 = new Light(gl, camera);
+        light2 = new Light(gl, camera);
+        spotlight = new Spotlight(gl, camera);
 
         // Initialises rectangle, used walls and floor
         Mesh m = new Mesh(gl, Rectangle.vertices.clone(), Rectangle.indices.clone());
         Shader shader = new Shader(gl, "vs_rectangle.glsl", "fs_rectangle.glsl");
 
-        // Sets up materials used for walls
+        // Initialises cube, used for spotlight and exhibit stands
+        Mesh m1 = new Mesh(gl, Cube.vertices.clone(), Cube.indices.clone());
+        Shader shader1 = new Shader(gl, "vs_rectangle.glsl", "fs_rectangle.glsl");
+
+        // Sets up materials used for walls, floor and stands
+        // TODO light (below variable material) for different materials could be different
         Material material = new Material(new Vec3(0.1f, 0.5f, 0.91f), new Vec3(0.1f, 0.5f, 0.91f), new Vec3(0.3f, 0.3f, 0.3f), 4.0f);
+
         // Sets up texture used for walls
         rectangle = new Model(gl, camera, light1, light2, spotlight, shader, material, new Mat4(1), m, textureId1);
         // Initialises Front Wall
@@ -108,13 +116,12 @@ public class Museum_GLEventListener implements GLEventListener {
 
         // Sets up texture used for floor
         rectangle = new Model(gl, camera, light1, light2, spotlight, shader, material, new Mat4(1), m, textureId0);
-        // Sets up materials used for floor
-        // TODO light for different materials could be different
         // Initialises Floor
         floor = new Floor(rectangle);
 
-        // Swinging Spotlight
-
+        // Sets up model used for spotlight stand
+        cube = new Model(gl, camera, light1, light2, spotlight, shader1, material, new Mat4(1), m1, textureId2);
+        swingingSpotlight = new SwingingSpotlight(cube, spotlight);
     }
 
     /**
@@ -130,10 +137,6 @@ public class Museum_GLEventListener implements GLEventListener {
         light2.setPosition(12, 15, 0);
         light2.render(gl);
 
-        spotlight.setPosition(2, 2, 2);
-        spotlight.render(gl);
-
-
         // Floor
         floor.render(gl);
 
@@ -142,6 +145,9 @@ public class Museum_GLEventListener implements GLEventListener {
 
         // Side Wall
         sideWall.render(gl);
+
+        // Spotlight Stand
+        swingingSpotlight.render(gl);
     }
 
     /**

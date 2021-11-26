@@ -1,6 +1,6 @@
 package core.objects.constructed;
 
-import core.objects.base.RectangleBase;
+import core.objects.base.ConstructedObjectBase;
 import core.structure.Model;
 import gmaths.Mat4;
 import gmaths.Mat4Transform;
@@ -16,7 +16,7 @@ import static core.constants.Measurements.*;
  *
  * @author Agne Knietaite
  */
-public class Floor extends RectangleBase {
+public class Floor extends ConstructedObjectBase {
 
     public Floor(Model rectangle){
         super(rectangle);
