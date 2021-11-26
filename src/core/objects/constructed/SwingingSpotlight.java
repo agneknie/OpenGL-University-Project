@@ -192,6 +192,6 @@ public class SwingingSpotlight extends ConstructedObjectBase {
      * @param animationAngle
      */
     private void changeLightDirection(float animationAngle){
-
+        //TODO spotlight light direction
     }
 }
