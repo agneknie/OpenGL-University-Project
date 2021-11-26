@@ -1,7 +1,7 @@
-package figures.objects;
+package core.objects.figures;
 
 /**
- * Class which defines all constant values used for objects
+ * Class which defines all constant values used for core.objects
  * in the program.
  */
 public final class Measurements {

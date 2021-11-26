@@ -1,4 +1,4 @@
-package core;
+package core.structure;
 
 import com.jogamp.opengl.GL3;
 import com.jogamp.opengl.util.glsl.ShaderCode;
@@ -28,13 +28,13 @@ public class Shader {
     /**
      * Constructor for the shader.
      *
-     * Default path for vertex shaders: src/shaders/vertex/
-     * Default path for fragment shaders: src/shaders/fragment/
+     * Default path for vertex resources.shaders: src/resources.shaders/vertex/
+     * Default path for fragment resources.shaders: src/resources.shaders/fragment/
      */
     public Shader(GL3 gl, String vertexName, String fragmentName) {
         try {
-            vertexShaderSource = new String(Files.readAllBytes(Paths.get("src/shaders/vertex/", vertexName)), Charset.defaultCharset());
-            fragmentShaderSource = new String(Files.readAllBytes(Paths.get("src/shaders/fragment/", fragmentName)), Charset.defaultCharset());
+            vertexShaderSource = new String(Files.readAllBytes(Paths.get("src/resources/shaders/vertex/", vertexName)), Charset.defaultCharset());
+            fragmentShaderSource = new String(Files.readAllBytes(Paths.get("src/resources/shaders/fragment/", fragmentName)), Charset.defaultCharset());
         }
         catch (IOException e) {
             e.printStackTrace();

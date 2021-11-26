@@ -1,4 +1,4 @@
-package figures.base;
+package core.objects.base;
 
 /**
  * Class taken from COM3503 Online Tutorial Materials

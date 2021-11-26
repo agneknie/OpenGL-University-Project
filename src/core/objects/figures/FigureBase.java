@@ -1,23 +1,23 @@
-package figures.objects;
+package core.objects.figures;
 
 import com.jogamp.opengl.GL3;
-import core.Model;
+import core.structure.Model;
 import gmaths.Mat4;
 
 import java.util.List;
 
 /**
- * Base class to collect objects, which use a single
+ * Base class to collect core.objects, which use a single
  * type of model for their construction.
  *
  * @author Agne Knietaite
  */
-public abstract class ObjectBase {
+public abstract class FigureBase {
 
     private final Model model;
     private List<Mat4> calculatedMatrices;
 
-    public ObjectBase(Model model){
+    public FigureBase(Model model){
         this.model = model;
 
         // Calculates the matrix/matrices once, when initialising the object

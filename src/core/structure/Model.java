@@ -1,8 +1,10 @@
-package core;
+package core.structure;
 
 import camera.Camera;
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL3;
+import core.lights.Light;
+import core.lights.Spotlight;
 import gmaths.Mat4;
 
 /**

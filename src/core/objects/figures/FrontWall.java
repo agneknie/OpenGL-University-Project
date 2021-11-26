@@ -1,14 +1,14 @@
-package figures.objects;
+package core.objects.figures;
 
-import core.Model;
+import core.structure.Model;
 import gmaths.Mat4;
 import gmaths.Mat4Transform;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static figures.objects.Measurements.*;
-import static figures.objects.Measurements.WALL_WIDTH;
+import static core.objects.figures.Measurements.*;
+import static core.objects.figures.Measurements.WALL_WIDTH;
 
 /**
  * Class, which defines matrices for and renders the front
@@ -16,7 +16,7 @@ import static figures.objects.Measurements.WALL_WIDTH;
  *
  * @author Agne Knietaite
  */
-public class FrontWall extends ObjectBase{
+public class FrontWall extends FigureBase {
 
     public FrontWall(Model rectangle){
         super(rectangle);

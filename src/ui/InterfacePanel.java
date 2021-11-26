@@ -1,7 +1,7 @@
 package ui;
 
-import core.Light;
-import core.Spotlight;
+import core.lights.Light;
+import core.lights.Spotlight;
 import main.Museum;
 import main.Museum_GLEventListener;
 

@@ -1,9 +1,11 @@
-package core;
+package core.lights;
 
 import camera.Camera;
 import com.jogamp.common.nio.Buffers;
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL3;
+import core.structure.Material;
+import core.structure.Shader;
 import gmaths.Mat4;
 import gmaths.Mat4Transform;
 import gmaths.Vec3;

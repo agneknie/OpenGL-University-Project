@@ -1,9 +1,10 @@
-package core;
+package core.lights;
 
 import com.jogamp.opengl.GL3;
+import core.lights.Light;
 import gmaths.Vec3;
 
-public class Spotlight extends Light{
+public class Spotlight extends Light {
 
     private Vec3 direction = new Vec3(0,-1 ,0);
     private final float cutOff = (float) Math.cos(Math.toRadians(12.5));

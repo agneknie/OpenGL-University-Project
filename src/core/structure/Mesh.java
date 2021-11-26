@@ -1,4 +1,4 @@
-package core;
+package core.structure;
 
 import com.jogamp.common.nio.Buffers;
 import com.jogamp.opengl.GL;

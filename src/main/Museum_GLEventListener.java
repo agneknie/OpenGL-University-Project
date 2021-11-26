@@ -5,15 +5,20 @@ import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL3;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;
-import core.*;
-import figures.base.Rectangle;
+import core.lights.Light;
+import core.lights.Spotlight;
+import core.objects.base.Rectangle;
+import core.structure.Material;
+import core.structure.Mesh;
+import core.structure.Model;
+import core.structure.Shader;
 import gmaths.Mat4;
 import gmaths.Mat4Transform;
 import gmaths.Vec3;
-import figures.objects.Floor;
-import figures.objects.FrontWall;
-import figures.objects.SideWall;
-import textures.TextureLibrary;
+import core.objects.figures.Floor;
+import core.objects.figures.FrontWall;
+import core.objects.figures.SideWall;
+import resources.textures.TextureLibrary;
 
 /**
  * Class, which handles the main program- start.Museum Assignment for COM3503.
@@ -31,10 +36,10 @@ public class Museum_GLEventListener implements GLEventListener {
     private Light light2;
     private Spotlight spotlight;
 
-    // Figures from which objects are made
+    // Figures from which core.objects are made
     private Model rectangle;
 
-    // Constructed objects
+    // Constructed core.objects
     private Floor floor;
     private FrontWall frontWall;
     private SideWall sideWall;
@@ -128,7 +133,7 @@ public class Museum_GLEventListener implements GLEventListener {
     public void render(GL3 gl) {
         gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
 
-        // Transforms may be altered each frame for objects so they are set in the render method.
+        // Transforms may be altered each frame for core.objects so they are set in the render method.
         // If the transforms do not change each frame, then the model matrix could be set in initialise() and then only retrieved here,
         // although if the same object is being used in multiple positions, then
         // the transforms would need updating for each use of the object.
