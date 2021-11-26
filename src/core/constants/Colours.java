@@ -1,4 +1,4 @@
-package resources;
+package core.constants;
 
 import gmaths.Vec3;
 
@@ -26,4 +26,7 @@ public final class Colours {
     private static Vec3 convertRGBAmbient(int r, int g, int b){
         return new Vec3(r/255f/2, g/255f/2, b/255f/2);
     }
+
+    // Class cannot be instantiated
+    private Colours(){}
 }

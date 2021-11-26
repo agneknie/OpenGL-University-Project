@@ -1,4 +1,4 @@
-package core.objects.figures;
+package core.constants;
 
 /**
  * Class which defines all constant values used for core.objects

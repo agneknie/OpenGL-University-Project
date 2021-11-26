@@ -1,5 +1,6 @@
-package core.objects.figures;
+package core.objects.constructed;
 
+import core.objects.base.RectangleBase;
 import core.structure.Model;
 import gmaths.Mat4;
 import gmaths.Mat4Transform;
@@ -7,8 +8,8 @@ import gmaths.Mat4Transform;
 import java.util.ArrayList;
 import java.util.List;
 
-import static core.objects.figures.Measurements.*;
-import static core.objects.figures.Measurements.WALL_WIDTH;
+import static core.constants.Measurements.*;
+import static core.constants.Measurements.WALL_WIDTH;
 
 /**
  * Class, which defines matrices for and renders the side
@@ -16,7 +17,7 @@ import static core.objects.figures.Measurements.WALL_WIDTH;
  *
  * @author Agne Knietaite
  */
-public class SideWall extends FigureBase {
+public class SideWall extends RectangleBase {
 
     public SideWall(Model rectangle){
         super(rectangle);

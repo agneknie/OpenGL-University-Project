@@ -1,5 +1,6 @@
-package core.objects.figures;
+package core.objects.constructed;
 
+import core.objects.base.RectangleBase;
 import core.structure.Model;
 import gmaths.Mat4;
 import gmaths.Mat4Transform;
@@ -7,7 +8,7 @@ import gmaths.Mat4Transform;
 import java.util.ArrayList;
 import java.util.List;
 
-import static core.objects.figures.Measurements.*;
+import static core.constants.Measurements.*;
 
 /**
  * Class, which defines matrices for and renders the floor
@@ -15,7 +16,7 @@ import static core.objects.figures.Measurements.*;
  *
  * @author Agne Knietaite
  */
-public class Floor extends FigureBase {
+public class Floor extends RectangleBase {
 
     public Floor(Model rectangle){
         super(rectangle);

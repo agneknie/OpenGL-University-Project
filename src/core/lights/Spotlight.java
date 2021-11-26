@@ -2,7 +2,7 @@ package core.lights;
 
 import com.jogamp.opengl.GL3;
 import gmaths.Vec3;
-import resources.Colours;
+import core.constants.Colours;
 
 public class Spotlight extends Light {
 

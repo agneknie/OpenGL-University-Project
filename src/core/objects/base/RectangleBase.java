@@ -1,4 +1,4 @@
-package core.objects.figures;
+package core.objects.base;
 
 import com.jogamp.opengl.GL3;
 import core.structure.Model;
@@ -7,17 +7,17 @@ import gmaths.Mat4;
 import java.util.List;
 
 /**
- * Base class to collect core.objects, which use a single
- * type of model for their construction.
+ * Base class to form constructed objects, which use a single
+ * type of model (rectangle) for their construction.
  *
  * @author Agne Knietaite
  */
-public abstract class FigureBase {
+public abstract class RectangleBase {
 
     private final Model model;
     private List<Mat4> calculatedMatrices;
 
-    public FigureBase(Model model){
+    public RectangleBase(Model model){
         this.model = model;
 
         // Calculates the matrix/matrices once, when initialising the object
