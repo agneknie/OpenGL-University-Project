@@ -5,6 +5,7 @@ import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL3;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;
+import core.constants.Colours;
 import core.lights.Light;
 import core.lights.Spotlight;
 import core.objects.base.Cube;
@@ -101,11 +102,16 @@ public class Museum_GLEventListener implements GLEventListener {
 
         // Initialises cube, used for spotlight and exhibit stands
         Mesh m1 = new Mesh(gl, Cube.vertices.clone(), Cube.indices.clone());
-        Shader shader1 = new Shader(gl, "vs_rectangle.glsl", "fs_rectangle.glsl");
+        Shader shader1 = new Shader(gl, "vs_rectangle.glsl", "fs_cube.glsl");
 
-        // Sets up materials used for walls, floor and stands
-        // TODO light (below variable material) for different materials could be different
-        Material material = new Material(new Vec3(0.1f, 0.5f, 0.91f), new Vec3(0.1f, 0.5f, 0.91f), new Vec3(0.3f, 0.3f, 0.3f), 4.0f);
+        // Sets up material used for walls, floor and stands. Currently configured to stand colour, as this is
+        // the only one showing material as other objects are textured
+        // TODO light (below variable material) for different materials could be different. Currently adjusted for stands
+        Material material = new Material(
+                Colours.STAND_BLUE_AMBIENT,
+                Colours.STAND_BLUE,
+                Colours.STAND_BLUE,
+                32);
 
         // Sets up texture used for walls
         rectangle = new Model(gl, camera, light1, light2, spotlight, shader, material, new Mat4(1), m, textureId1);
@@ -120,7 +126,7 @@ public class Museum_GLEventListener implements GLEventListener {
         floor = new Floor(rectangle);
 
         // Sets up model used for spotlight stand
-        cube = new Model(gl, camera, light1, light2, spotlight, shader1, material, new Mat4(1), m1, textureId2);
+        cube = new Model(gl, camera, light1, light2, spotlight, shader1, material, new Mat4(1), m1);
         swingingSpotlight = new SwingingSpotlight(cube, spotlight);
     }
 

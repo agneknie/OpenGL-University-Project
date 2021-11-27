@@ -9,7 +9,7 @@ public class Spotlight extends Light {
 
     public static final float LIGHT_ON = Colours.SPOTLIGHT_YELLOW.x;
 
-    private Vec3 direction = new Vec3(0,-1f ,0);
+    private final Vec3 direction = new Vec3(0,-1f ,0);
     private final float cutOff = (float) Math.cos(Math.toRadians(10));
 
     public Spotlight(GL3 gl, Camera camera) {
@@ -20,14 +20,6 @@ public class Spotlight extends Light {
         this.getMaterial().setAmbient(Colours.SPOTLIGHT_YELLOW_AMBIENT);
         this.getMaterial().setDiffuse(Colours.SPOTLIGHT_YELLOW);
         this.getMaterial().setSpecular(Colours.SPOTLIGHT_YELLOW);
-    }
-
-    public void setDirection(Vec3 direction) {
-        this.direction = direction;
-    }
-
-    public void setDirection(float x, float y, float z){
-        setDirection(new Vec3(x, y, z));
     }
 
     public Vec3 getDirection() {

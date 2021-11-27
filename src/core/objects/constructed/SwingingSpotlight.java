@@ -25,8 +25,8 @@ public class SwingingSpotlight extends ConstructedObjectBase {
     public static final float MEASUREMENT_2 = MEASUREMENT_1*4f;             // 0.4f
     public static final float MEASUREMENT_3 = MEASUREMENT_1*6f;             // 0.6f;
     public static final float MEASUREMENT_4 = MEASUREMENT_1*10f;            // 1f
-    public static final float MEASUREMENT_5 = MEASUREMENT_4*2f;             // 2f
-    public static final float MEASUREMENT_6 = MEASUREMENT_5*4f;             // 8f
+    public static final float MEASUREMENT_5 = MEASUREMENT_4*3f;             // 2f
+    public static final float MEASUREMENT_6 = MEASUREMENT_5*3f;             // 8f
 
     // Variables used for spotlight animation
     private static final float MAX_Z_VALUE = SPOTLIGHT_POSITION_Z+ MEASUREMENT_3 * 0.5f-MEASUREMENT_2*0.5f;

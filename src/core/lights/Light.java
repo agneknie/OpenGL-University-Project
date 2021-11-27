@@ -64,32 +64,12 @@ public class Light {
         return position;
     }
 
-    public void setMaterial(Material m) {
-        material = m;
-    }
-
     public Material getMaterial() {
         return material;
     }
 
-    public void setCamera(Camera camera) {
-        this.camera = camera;
-    }
-
     protected Shader getShader() {
         return shader;
-    }
-
-    public Camera getCamera() {
-        return camera;
-    }
-
-    protected void setIndices(int[] indices) {
-        this.indices = indices;
-    }
-
-    protected void setVertices(float[] vertices) {
-        this.vertices = vertices;
     }
 
     /**
@@ -118,7 +98,7 @@ public class Light {
         shader.setVec3(gl, "lightIntensity", lightIntensity);
     }
 
-    public void render(GL3 gl) { //, Mat4 perspective, Mat4 view) {
+    public void render(GL3 gl) {
         Mat4 model = new Mat4(1);
         model = Mat4.multiply(Mat4Transform.scale(0.3f,0.3f,0.3f), model);
         model = Mat4.multiply(Mat4Transform.translate(position), model);

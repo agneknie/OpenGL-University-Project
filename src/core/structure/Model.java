@@ -54,15 +54,8 @@ public class Model {
         modelMatrix = m;
     }
 
-    public void setCamera(Camera camera) {
-        this.camera = camera;
-    }
-
-    public void setLight1(Light light) {
-        this.light1 = light;
-    }
-    public void setLight2(Light light) {
-        this.light2 = light;
+    public void setMaterial(Material material) {
+        this.material = material;
     }
 
     public void render(GL3 gl, Mat4 modelMatrix) {
