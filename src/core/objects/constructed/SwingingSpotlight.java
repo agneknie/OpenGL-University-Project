@@ -21,17 +21,19 @@ import static core.constants.Measurements.*;
 public class SwingingSpotlight extends ConstructedObjectBase {
 
     // Varying MEASUREMENT_1 changes whole lamp size
-    public static final float MEASUREMENT_1 = 0.2f;
-    public static final float MEASUREMENT_2 = MEASUREMENT_1*2f;
-    public static final float MEASUREMENT_3 = MEASUREMENT_1*5f;
-    public static final float MEASUREMENT_4 = MEASUREMENT_3*2f;
-    public static final float MEASUREMENT_5 = MEASUREMENT_4*4f;
+    public static final float MEASUREMENT_1 = 0.1f;                         // 0.1f
+    public static final float MEASUREMENT_2 = MEASUREMENT_1*4f;             // 0.4f
+    public static final float MEASUREMENT_3 = MEASUREMENT_1*6f;             // 0.6f;
+    public static final float MEASUREMENT_4 = MEASUREMENT_1*10f;            // 1f
+    public static final float MEASUREMENT_5 = MEASUREMENT_4*2f;             // 2f
+    public static final float MEASUREMENT_6 = MEASUREMENT_5*4f;             // 8f
 
     // Variables used for spotlight animation
-    private float animationAngle = 0;
-    private float animationAngleIncrease = 0.005f;
-    private static final float MAX_ANIMATION_ANGLE = 0.3f;
-    private boolean animatingTowardsWall = true;
+    private static final float MAX_Z_VALUE = SPOTLIGHT_POSITION_Z+ MEASUREMENT_3 * 0.5f-MEASUREMENT_2*0.5f;
+    private static final float MIN_Z_VALUE = SPOTLIGHT_POSITION_Z- MEASUREMENT_3 * 0.5f+MEASUREMENT_2*0.5f;
+    private float currentZValue = SPOTLIGHT_POSITION_Z;
+    private static final float increaseZValue = 0.005f;
+    private boolean moveTowardsWall = true;
 
     Spotlight spotlight;
 
@@ -45,14 +47,9 @@ public class SwingingSpotlight extends ConstructedObjectBase {
     public SwingingSpotlight(Model cube, Spotlight spotlight){
         this(cube);
         this.spotlight = spotlight;
-
-        Mat4 spotlightModelMatrix = Mat4.multiply(
-                Mat4Transform.scale(0.3f,0.3f,0.3f), new Mat4(1f));
-        spotlightModelMatrix = Mat4.multiply(
-                Mat4Transform.translate(SPOTLIGHT_POSITION_X-MEASUREMENT_4+MEASUREMENT_2*0.5f,
-                        MEASUREMENT_5+MEASUREMENT_1-MEASUREMENT_3,
-                        SPOTLIGHT_POSITION_Z), spotlightModelMatrix);
-        spotlight.setModelMatrix(spotlightModelMatrix);
+        spotlight.setPosition(SPOTLIGHT_POSITION_X -MEASUREMENT_5+MEASUREMENT_1*0.5f+MEASUREMENT_2*0.5f,
+                MEASUREMENT_6 +MEASUREMENT_1- MEASUREMENT_4,
+                SPOTLIGHT_POSITION_Z);
     }
 
     @Override
@@ -61,33 +58,33 @@ public class SwingingSpotlight extends ConstructedObjectBase {
 
         // Component 1
         Mat4 firstComponent = Mat4.multiply(
-                Mat4Transform.scale(MEASUREMENT_3, MEASUREMENT_1 , MEASUREMENT_3), new Mat4(1));
+                Mat4Transform.scale(MEASUREMENT_4, MEASUREMENT_1 , MEASUREMENT_4), new Mat4(1));
         firstComponent = Mat4.multiply(
                 Mat4Transform.translate(SPOTLIGHT_POSITION_X, MEASUREMENT_1*0.5f, SPOTLIGHT_POSITION_Z), firstComponent);
         matricesList.add(firstComponent);
 
         // Component 2
         Mat4 secondComponent = Mat4.multiply(
-                Mat4Transform.scale(MEASUREMENT_1, MEASUREMENT_5, MEASUREMENT_1), new Mat4(1));
+                Mat4Transform.scale(MEASUREMENT_1, MEASUREMENT_6, MEASUREMENT_3), new Mat4(1));
         secondComponent = Mat4.multiply(
-                Mat4Transform.translate(SPOTLIGHT_POSITION_X, MEASUREMENT_1+MEASUREMENT_5*0.5f ,SPOTLIGHT_POSITION_Z), secondComponent);
+                Mat4Transform.translate(SPOTLIGHT_POSITION_X, MEASUREMENT_1+ MEASUREMENT_6 *0.5f ,SPOTLIGHT_POSITION_Z), secondComponent);
         matricesList.add(secondComponent);
 
         // Component 3
         Mat4 thirdComponent = Mat4.multiply(
-                Mat4Transform.scale(MEASUREMENT_4, MEASUREMENT_1 , MEASUREMENT_1), new Mat4(1));
+                Mat4Transform.scale(MEASUREMENT_5, MEASUREMENT_1 , MEASUREMENT_3), new Mat4(1));
         thirdComponent = Mat4.multiply(
-                Mat4Transform.translate(SPOTLIGHT_POSITION_X-MEASUREMENT_4*0.5f+MEASUREMENT_1*0.5f,
-                        MEASUREMENT_1+MEASUREMENT_5+MEASUREMENT_1*0.5f,
+                Mat4Transform.translate(SPOTLIGHT_POSITION_X- MEASUREMENT_5 *0.5f+MEASUREMENT_1*0.5f,
+                        MEASUREMENT_1+ MEASUREMENT_6 +MEASUREMENT_1*0.5f,
                         SPOTLIGHT_POSITION_Z), thirdComponent);
         matricesList.add(thirdComponent);
 
         // Component 4
         Mat4 fourthComponent = Mat4.multiply(
-                Mat4Transform.scale(MEASUREMENT_2, MEASUREMENT_3, MEASUREMENT_2), new Mat4(1));
+                Mat4Transform.scale(MEASUREMENT_2, MEASUREMENT_4, MEASUREMENT_2), new Mat4(1));
         fourthComponent = Mat4.multiply(
-                Mat4Transform.translate(SPOTLIGHT_POSITION_X-MEASUREMENT_4+MEASUREMENT_2*0.5f,
-                        MEASUREMENT_5+MEASUREMENT_1-MEASUREMENT_3*0.5f,
+                Mat4Transform.translate(SPOTLIGHT_POSITION_X -MEASUREMENT_5+MEASUREMENT_1*0.5f+MEASUREMENT_2*0.5f,
+                        MEASUREMENT_6 +MEASUREMENT_1- MEASUREMENT_4 *0.5f,
                         SPOTLIGHT_POSITION_Z), fourthComponent);
         matricesList.add(fourthComponent);
         // Saves component, because it is used for animation
@@ -106,92 +103,58 @@ public class SwingingSpotlight extends ConstructedObjectBase {
      * Method which animates the spotlight by swinging it.
      */
     public void animateSpotlight(){
-        // Swings towards the wall
-        if(animatingTowardsWall){
-            animationAngle += animationAngleIncrease;
+        if(moveTowardsWall) {
+            currentZValue -= increaseZValue;
 
-            // Applies transform for the 4th component (spotlight head)
-            rotateSpotlightHolder(animationAngle);
-            // Applies transform to spotlight itself
-            rotateSpotlight(animationAngle);
-            changeLightDirection(animationAngle);
+            // Moves spotlight holder
+            moveSpotlightHolder();
 
-            // If max angle reached, changes animation direction
-            if(animationAngle >= MAX_ANIMATION_ANGLE) {
-                animatingTowardsWall = false;
-            }
+            // Moves spotlight itself
+            moveSpotlight();
+
+            // Checks if movement should change direction
+            if(currentZValue <= MIN_Z_VALUE) moveTowardsWall = false;
         }
-
-        // Swing from the wall
         else {
-            animationAngle -= animationAngleIncrease;
+            currentZValue += increaseZValue;
 
-            // Applies transform for the 4th component (spotlight head)
-            rotateSpotlightHolder(animationAngle);
-            // Applies transform to spotlight itself
-            rotateSpotlight(animationAngle);
-            changeLightDirection(animationAngle);
+            // Moves spotlight holder
+            moveSpotlightHolder();
 
-            // If max angle reached, changes animation direction
-            if(animationAngle <= -MAX_ANIMATION_ANGLE) {
-                animatingTowardsWall = true;
-            }
+            // Moves spotlight itself
+            moveSpotlight();
+
+            // Checks if movement should change direction
+            if(currentZValue >= MAX_Z_VALUE) moveTowardsWall = true;
         }
+    }
+
+    /**
+     * Method which animates the movement of the spotlight
+     * holder.
+     */
+    private void moveSpotlightHolder(){
+        movingComponent = Mat4.multiply(Mat4Transform.scale(
+                MEASUREMENT_2, MEASUREMENT_4, MEASUREMENT_2) , new Mat4(1));
+        movingComponent = Mat4.multiply(Mat4Transform.translate(
+                SPOTLIGHT_POSITION_X -MEASUREMENT_5+MEASUREMENT_1*0.5f+MEASUREMENT_2*0.5f,
+                MEASUREMENT_6 +MEASUREMENT_1- MEASUREMENT_4 *0.5f,
+                currentZValue
+        ), movingComponent);
 
         // Updates matrices list for object rendering
         this.setCalculatedMatrix(3, movingComponent);
     }
 
     /**
-     * Helper method, which animates the spotlight holder whilst the spotlight
-     * swings.
-     *
-     * @param animationAngle angle to animate
+     * Method which animates the movement of the spotlight
+     * bulb itself.
      */
-    private void rotateSpotlightHolder(float animationAngle){
-        movingComponent = Mat4.multiply(Mat4Transform.translate(
-                -(SPOTLIGHT_POSITION_X-MEASUREMENT_4+MEASUREMENT_2*0.5f),
-                -(MEASUREMENT_5+MEASUREMENT_1),
-                -SPOTLIGHT_POSITION_Z), movingComponent);
-
-        movingComponent = Mat4.multiply(Mat4Transform.rotateAroundX(animationAngle), movingComponent);
-
-        movingComponent = Mat4.multiply(Mat4Transform.translate(
-                SPOTLIGHT_POSITION_X-MEASUREMENT_4+MEASUREMENT_2*0.5f,
-                MEASUREMENT_5+MEASUREMENT_1,
-                SPOTLIGHT_POSITION_Z), movingComponent);
-    }
-
-    /**
-     * Helper method, which animates the spotlight itself whilst the spotlight
-     * swings.
-     *
-     * @param animationAngle angle to animate
-     */
-    private void rotateSpotlight(float animationAngle){
-        Mat4 modelMatrix = spotlight.getModelMatrix();
-
-        modelMatrix = Mat4.multiply(Mat4Transform.translate(
-                -(SPOTLIGHT_POSITION_X-MEASUREMENT_4+MEASUREMENT_2*0.5f),
-                -(MEASUREMENT_5+MEASUREMENT_1),
-                -SPOTLIGHT_POSITION_Z), modelMatrix);
-
-        modelMatrix = Mat4.multiply(Mat4Transform.rotateAroundX(animationAngle), modelMatrix);
-
-        modelMatrix = Mat4.multiply(Mat4Transform.translate(
-                SPOTLIGHT_POSITION_X-MEASUREMENT_4+MEASUREMENT_2*0.5f,
-                MEASUREMENT_5+MEASUREMENT_1,
-                SPOTLIGHT_POSITION_Z), modelMatrix);
-
-        spotlight.setModelMatrix(modelMatrix);
-    }
-
-    /**
-     * Helper method, which changes the spotlight direction.
-     *
-     * @param animationAngle
-     */
-    private void changeLightDirection(float animationAngle){
-        //TODO spotlight light direction
+    private void moveSpotlight(){
+        spotlight.setPosition(
+                spotlight.getPosition().x,
+                spotlight.getPosition().y,
+                currentZValue
+        );
     }
 }
