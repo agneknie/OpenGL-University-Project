@@ -10,17 +10,13 @@ import core.lights.Light;
 import core.lights.Spotlight;
 import core.objects.base.Cube;
 import core.objects.base.Rectangle;
-import core.objects.constructed.SwingingSpotlight;
+import core.objects.constructed.*;
 import core.structure.Material;
 import core.structure.Mesh;
 import core.structure.Model;
 import core.structure.Shader;
 import gmaths.Mat4;
 import gmaths.Mat4Transform;
-import gmaths.Vec3;
-import core.objects.constructed.Floor;
-import core.objects.constructed.FrontWall;
-import core.objects.constructed.SideWall;
 import resources.textures.TextureLibrary;
 
 /**
@@ -47,6 +43,7 @@ public class Museum_GLEventListener implements GLEventListener {
     private Floor floor;
     private FrontWall frontWall;
     private SideWall sideWall;
+    private Entrance entrance;
     private SwingingSpotlight swingingSpotlight;
 
     public Museum_GLEventListener(Camera camera){
@@ -88,6 +85,8 @@ public class Museum_GLEventListener implements GLEventListener {
     public void initialise(GL3 gl) {
         int[] textureId0 = TextureLibrary.loadTexture(gl, "floorWood.jpg");
         int[] textureId1 = TextureLibrary.loadTexture(gl, "wallPaint.jpg");
+        int[] textureId2 = TextureLibrary.loadTexture(gl, "entranceDoor.jpg");
+        int[] textureId3 = TextureLibrary.loadTexture(gl, "windowSea.jpg");
 
         // Initialises the lights
         light1 = new Light(gl, camera);
@@ -123,7 +122,11 @@ public class Museum_GLEventListener implements GLEventListener {
         // Initialises Floor
         floor = new Floor(rectangle);
 
-        // Sets up model used for spotlight stand
+        // Sets up texture used for museum entrance
+        rectangle = new Model(gl, camera, light1, light2, spotlight, shader, material, new Mat4(1), m, textureId2);
+        entrance = new Entrance(rectangle);
+
+        // Sets up material used for spotlight stand
         cube = new Model(gl, camera, light1, light2, spotlight, shader1, material, new Mat4(1), m1);
         swingingSpotlight = new SwingingSpotlight(cube, spotlight);
     }
@@ -150,6 +153,9 @@ public class Museum_GLEventListener implements GLEventListener {
         // Side Wall
         sideWall.render(gl);
 
+        // Entrance
+        entrance.render(gl);
+
         // Spotlight Stand
         swingingSpotlight.animateSpotlight();
         swingingSpotlight.render(gl);
@@ -164,6 +170,7 @@ public class Museum_GLEventListener implements GLEventListener {
         GL3 gl = drawable.getGL().getGL3();
 
         rectangle.dispose(gl);
+        cube.dispose(gl);
         light1.dispose(gl);
         light2.dispose(gl);
         spotlight.dispose(gl);
