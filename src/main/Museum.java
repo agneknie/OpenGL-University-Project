@@ -59,15 +59,15 @@ public class Museum extends JFrame{
 
         // TODO Change to production
         // Initialises the camera
-//        camera = new Camera(Camera.DEFAULT_POSITION_DEVELOPMENT,
-//                Camera.DEFAULT_TARGET_DEVELOPMENT,
-//                Camera.DEFAULT_UP);
-//        glEventListener = new Museum_GLEventListener(camera);
-
-        camera = new Camera(Camera.DEFAULT_POSITION_PRODUCTION,
-                Camera.DEFAULT_TARGET_PRODUCTION,
+        camera = new Camera(Camera.DEFAULT_POSITION_DEVELOPMENT,
+                Camera.DEFAULT_TARGET_DEVELOPMENT,
                 Camera.DEFAULT_UP);
         glEventListener = new Museum_GLEventListener(camera);
+
+//        camera = new Camera(Camera.DEFAULT_POSITION_PRODUCTION,
+//                Camera.DEFAULT_TARGET_PRODUCTION,
+//                Camera.DEFAULT_UP);
+//        glEventListener = new Museum_GLEventListener(camera);
 
         // Adds the canvas
         getContentPane().add(canvas, BorderLayout.CENTER);

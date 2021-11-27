@@ -44,7 +44,10 @@ public class Museum_GLEventListener implements GLEventListener {
     private FrontWall frontWall;
     private SideWall sideWall;
     private Entrance entrance;
+    private WindowView windowView;
     private SwingingSpotlight swingingSpotlight;
+
+    private double startTime;
 
     public Museum_GLEventListener(Camera camera){
         this.camera = camera;
@@ -60,6 +63,10 @@ public class Museum_GLEventListener implements GLEventListener {
 
     public Spotlight getSpotlight() {
         return spotlight;
+    }
+
+    public double getCurrentSeconds() {
+        return System.currentTimeMillis()/1000.0;
     }
 
     @Override
@@ -83,23 +90,32 @@ public class Museum_GLEventListener implements GLEventListener {
     }
 
     public void initialise(GL3 gl) {
+        // Loads textures
         int[] textureId0 = TextureLibrary.loadTexture(gl, "floorWood.jpg");
         int[] textureId1 = TextureLibrary.loadTexture(gl, "wallPaint.jpg");
         int[] textureId2 = TextureLibrary.loadTexture(gl, "entranceDoor.jpg");
         int[] textureId3 = TextureLibrary.loadTexture(gl, "windowSea.jpg");
+        int[] textureId4 = TextureLibrary.loadTexture(gl, "windowClouds.jpg");
+
+        // Sets start time
+        startTime = getCurrentSeconds();
 
         // Initialises the lights
         light1 = new Light(gl, camera);
         light2 = new Light(gl, camera);
         spotlight = new Spotlight(gl, camera);
 
-        // Initialises rectangle, used walls and floor
+        // Initialises rectangle, used for walls and floor
         Mesh m = new Mesh(gl, Rectangle.vertices.clone(), Rectangle.indices.clone());
+        // Initialises shader used for walls and floor
         Shader shader = new Shader(gl, "vs_rectangle.glsl", "fs_rectangle.glsl");
 
         // Initialises cube, used for spotlight and exhibit stands
         Mesh m1 = new Mesh(gl, Cube.vertices.clone(), Cube.indices.clone());
+        // Initialises shader used for spotlight and exhibit stands
         Shader shader1 = new Shader(gl, "vs_rectangle.glsl", "fs_cube.glsl");
+        // Initialises shader, used for window view
+        Shader shader2 = new Shader(gl, "vs_windowView.glsl", "fs_windowView.glsl");
 
         // Sets up material used for walls, floor and stands. Currently configured to stand colour, as this is
         // the only one showing material as other objects are textured
@@ -125,6 +141,11 @@ public class Museum_GLEventListener implements GLEventListener {
         // Sets up texture used for museum entrance
         rectangle = new Model(gl, camera, light1, light2, spotlight, shader, material, new Mat4(1), m, textureId2);
         entrance = new Entrance(rectangle);
+
+        // Sets up texture used for the window view
+        rectangle = new Model(gl, camera, light1, light2, spotlight, shader2, material, new Mat4(1), m, textureId3, textureId4);
+        windowView = new WindowView(rectangle);
+        windowView.saveModel(rectangle);
 
         // Sets up material used for spotlight stand
         cube = new Model(gl, camera, light1, light2, spotlight, shader1, material, new Mat4(1), m1);
@@ -155,6 +176,10 @@ public class Museum_GLEventListener implements GLEventListener {
 
         // Entrance
         entrance.render(gl);
+
+        // Window View
+        windowView.animateTexture(startTime-getCurrentSeconds());
+        windowView.render(gl);
 
         // Spotlight Stand
         swingingSpotlight.animateSpotlight();

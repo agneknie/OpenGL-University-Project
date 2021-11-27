@@ -27,6 +27,15 @@ public class Model {
     private Light light2;
     private Spotlight spotlight;
 
+    // Used for texture animation
+    private float offsetX;
+    private boolean offsetExists = false;
+
+    public void setOffsetX(float offsetX) {
+        this.offsetX = offsetX;
+        offsetExists = true;
+    }
+
     public Model(GL3 gl, Camera camera, Light light1, Light light2, Spotlight spotlight, Shader shader, Material material, Mat4 modelMatrix, Mesh mesh, int[] textureId1, int[] textureId2) {
         this.mesh = mesh;
         this.material = material;
@@ -98,6 +107,9 @@ public class Model {
             gl.glActiveTexture(GL.GL_TEXTURE1);
             gl.glBindTexture(GL.GL_TEXTURE_2D, textureId2[0]);
         }
+
+        if(offsetExists) shader.setFloat(gl, "offset", this.offsetX, 0);
+
         mesh.render(gl);
     }
 
