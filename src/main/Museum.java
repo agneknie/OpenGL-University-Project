@@ -56,7 +56,12 @@ public class Museum extends JFrame{
         // Initialises necessary variables
         GLCapabilities glCapabilities = new GLCapabilities(GLProfile.get(GLProfile.GL3));
         canvas = new GLCanvas(glCapabilities);
-        camera = new Camera(Camera.DEFAULT_POSITION, Camera.DEFAULT_TARGET, Camera.DEFAULT_UP);
+
+        // TODO Change to production
+        camera = new Camera(Camera.DEFAULT_POSITION_DEVELOPMENT,
+                Camera.DEFAULT_TARGET_DEVELOPMENT,
+                Camera.DEFAULT_UP);
+
         glEventListener = new Museum_GLEventListener(camera);
 
         // Adds the canvas

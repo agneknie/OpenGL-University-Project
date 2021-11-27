@@ -1,5 +1,6 @@
 package camera;
 
+import core.constants.Measurements;
 import gmaths.Mat4;
 import gmaths.Mat4Transform;
 import gmaths.Vec3;
@@ -15,10 +16,17 @@ public class Camera {
     public enum CameraMovement {NO_MOVEMENT, LEFT, RIGHT, UP, DOWN, FORWARD, BACK};
 
     private static final float DEFAULT_RADIUS = 25;
-    public static final Vec3 DEFAULT_POSITION = new Vec3(0,0,25);
-    public static final Vec3 DEFAULT_POSITION_2 = new Vec3(25,0,0);
-    public static final Vec3 DEFAULT_TARGET = new Vec3(0,0,0);
     public static final Vec3 DEFAULT_UP = new Vec3(0,1,0);
+
+    public static final Vec3 DEFAULT_POSITION_DEVELOPMENT = new Vec3(
+            Measurements.WALL_WIDTH*0.5f, Measurements.WALL_WIDTH*0.6f,Measurements.WALL_WIDTH*1.3f);
+    public static final Vec3 DEFAULT_TARGET_DEVELOPMENT = new Vec3(
+            Measurements.WALL_WIDTH*-0.1f,Measurements.WALL_HEIGHT*0.2f, 0);
+
+    public static final Vec3 DEFAULT_POSITION_PRODUCTION = new Vec3(
+            Measurements.WALL_WIDTH*0.5f, Measurements.WALL_HEIGHT*0.5f,Measurements.WALL_WIDTH*0.8f);
+    public static final Vec3 DEFAULT_TARGET_PRODUCTION = new Vec3(
+            Measurements.WALL_WIDTH*-0.1f,Measurements.WALL_HEIGHT*0.4f, 0);
 
     public final float YAW = -90f;
     public final float PITCH = 0f;
@@ -75,8 +83,8 @@ public class Camera {
 
     public void setCamera(CameraType c) {
         switch (c) {
-            case X : setupCamera(DEFAULT_POSITION, DEFAULT_TARGET, DEFAULT_UP) ; break;
-            case Z : setupCamera(DEFAULT_POSITION_2, DEFAULT_TARGET, DEFAULT_UP); break;
+            case X : setupCamera(DEFAULT_POSITION_DEVELOPMENT, DEFAULT_TARGET_DEVELOPMENT, DEFAULT_UP) ; break;
+            case Z : setupCamera(DEFAULT_POSITION_PRODUCTION, DEFAULT_TARGET_PRODUCTION, DEFAULT_UP); break;
         }
     }
 

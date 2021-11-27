@@ -51,7 +51,6 @@ public class Museum_GLEventListener implements GLEventListener {
 
     public Museum_GLEventListener(Camera camera){
         this.camera = camera;
-        this.camera.setPosition(new Vec3(4f,12f,18f));
     }
 
     public Light getLight1(){
@@ -89,7 +88,6 @@ public class Museum_GLEventListener implements GLEventListener {
     public void initialise(GL3 gl) {
         int[] textureId0 = TextureLibrary.loadTexture(gl, "floorWood.jpg");
         int[] textureId1 = TextureLibrary.loadTexture(gl, "wallPaint.jpg");
-        int[] textureId2 = TextureLibrary.loadTexture(gl, "standMarble.jpg");
 
         // Initialises the lights
         light1 = new Light(gl, camera);
