@@ -6,8 +6,9 @@ import gmaths.Vec3;
  * Class taken from COM3503 Online Tutorial Materials
  * by Dr Steve Maddock at The University of Sheffield, 2021.
  *
- * Adapted to suit the needs of this project.
- * By Agne Knietaite, 2021
+ * Modified and restructured to suit the needs of this project.
+ *
+ * @author Agne Knietaite, 2021
  */
 public class Material {
     public static final Vec3 DEFAULT_AMBIENT = new Vec3(0.2f, 0.2f, 0.2f);
@@ -144,47 +145,6 @@ public class Material {
      */
     public Vec3 getSpecular() {
         return new Vec3(specular);
-    }
-
-    /**
-     * Sets the emission value (as used in OpenGL lighting model)
-     *
-     * @param  red    the red value in the range 0.0..1.0
-     * @param  green  the green value in the range 0.0..1.0
-     * @param  blue   the blue value in the range 0.0..1.0
-     */
-    public void setEmission(float red, float green, float blue) {
-        emission.x = red;
-        emission.y = green;
-        emission.z = blue;
-    }
-
-    /**
-     * Sets the emission value (as used in OpenGL lighting model)
-     *
-     * @param  rgb  vector of 3 values, where the 3 values are the values for red, green and blue,
-    in the range 0.0..1.0.
-     */
-    public void setEmission(Vec3 rgb) {
-        setEmission(rgb.x, rgb.y, rgb.z);
-    }
-
-    /**
-     * Gets the emission value (clone) (as used in OpenGL lighting model)
-     *
-     * @return  vector of 3 values, where the  3 values are the values for red, green and blue.
-     */
-    public Vec3 getEmission() {
-        return new Vec3(emission);
-    }
-
-    /**
-     * Sets the shininess value (as used in Phong local reflection model)
-     *
-     * @param  shininess  the shininess value.
-     */
-    public void setShininess(float shininess) {
-        this.shininess = shininess;
     }
 
     /**

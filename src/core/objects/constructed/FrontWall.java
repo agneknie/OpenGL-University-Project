@@ -9,13 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static core.constants.Measurements.*;
-import static core.constants.Measurements.WALL_WIDTH;
 
 /**
  * Class, which defines matrices for and renders the front
  * wall of the museum.
  *
- * @author Agne Knietaite
+ * @author Agne Knietaite, 2021
  */
 public class FrontWall extends ConstructedObjectBase {
 

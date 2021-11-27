@@ -15,7 +15,6 @@ import core.structure.Material;
 import core.structure.Mesh;
 import core.structure.Model;
 import core.structure.Shader;
-import gmaths.Mat4;
 import gmaths.Mat4Transform;
 import resources.textures.TextureLibrary;
 
@@ -25,7 +24,7 @@ import resources.textures.TextureLibrary;
  * Made with code examples from COM3503 Online Tutorial Materials by
  * Dr Steve Maddock at The University of Sheffield.
  *
- * @author Agne Knietaite
+ * @author Agne Knietaite, 2021
  */
 public class Museum_GLEventListener implements GLEventListener {
     private Camera camera;
@@ -73,23 +72,29 @@ public class Museum_GLEventListener implements GLEventListener {
     public void init(GLAutoDrawable drawable) {
         GL3 gl = drawable.getGL().getGL3();
 
-        // Prints out OpenGL parameters
-        // System.err.println("Chosen GLCapabilities: " + drawable.getChosenGLCapabilities());
+        // OpenGL configuration
+        configureOpenGL(gl);
 
-        // OpenGL configuration related
-        gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-        gl.glClearDepth(1.0f);
-        gl.glEnable(GL.GL_DEPTH_TEST);
-        gl.glDepthFunc(GL.GL_LESS);
-        gl.glFrontFace(GL.GL_CCW);    // default is 'CCW'
-        gl.glEnable(GL.GL_CULL_FACE); // default is 'not enabled'
-        gl.glCullFace(GL.GL_BACK);   // default is 'back', assuming CCW
-
-        // Calls the method, to initialise figures
+        // Initialises all objects
         initialise(gl);
     }
 
+    /**
+     * Method which handles OpenGL configuration.
+     */
+    private void configureOpenGL(GL3 gl){
+        gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        gl.glClearDepth(1.0f);
+
+        gl.glEnable(GL.GL_DEPTH_TEST);
+        gl.glDepthFunc(GL.GL_LESS);
+        gl.glFrontFace(GL.GL_CCW);
+        gl.glEnable(GL.GL_CULL_FACE);
+        gl.glCullFace(GL.GL_BACK);
+    }
+
     public void initialise(GL3 gl) {
+        // TODO Clean up this method
         // Loads textures
         int[] textureId0 = TextureLibrary.loadTexture(gl, "floorWood.jpg");
         int[] textureId1 = TextureLibrary.loadTexture(gl, "wallPaint.jpg");
@@ -106,12 +111,12 @@ public class Museum_GLEventListener implements GLEventListener {
         spotlight = new Spotlight(gl, camera);
 
         // Initialises rectangle, used for walls and floor
-        Mesh m = new Mesh(gl, Rectangle.vertices.clone(), Rectangle.indices.clone());
+        Mesh m = new Mesh(gl, Rectangle.VERTICES.clone(), Rectangle.INDICES.clone());
         // Initialises shader used for walls and floor
         Shader shader = new Shader(gl, "vs_rectangle.glsl", "fs_rectangle.glsl");
 
         // Initialises cube, used for spotlight and exhibit stands
-        Mesh m1 = new Mesh(gl, Cube.vertices.clone(), Cube.indices.clone());
+        Mesh m1 = new Mesh(gl, Cube.VERTICES.clone(), Cube.INDICES.clone());
         // Initialises shader used for spotlight and exhibit stands
         Shader shader1 = new Shader(gl, "vs_rectangle.glsl", "fs_cube.glsl");
         // Initialises shader, used for window view
@@ -127,28 +132,28 @@ public class Museum_GLEventListener implements GLEventListener {
                 32);
 
         // Sets up texture used for walls
-        rectangle = new Model(gl, camera, light1, light2, spotlight, shader, material, new Mat4(1), m, textureId1);
+        rectangle = new Model(camera, light1, light2, spotlight, shader, material, m, textureId1);
         // Initialises Front Wall
         frontWall = new FrontWall(rectangle);
         // Initialises Side Wall
         sideWall = new SideWall(rectangle);
 
         // Sets up texture used for floor
-        rectangle = new Model(gl, camera, light1, light2, spotlight, shader, material, new Mat4(1), m, textureId0);
+        rectangle = new Model(camera, light1, light2, spotlight, shader, material, m, textureId0);
         // Initialises Floor
         floor = new Floor(rectangle);
 
         // Sets up texture used for museum entrance
-        rectangle = new Model(gl, camera, light1, light2, spotlight, shader, material, new Mat4(1), m, textureId2);
+        rectangle = new Model(camera, light1, light2, spotlight, shader, material, m, textureId2);
         entrance = new Entrance(rectangle);
 
         // Sets up texture used for the window view
-        rectangle = new Model(gl, camera, light1, light2, spotlight, shader2, material, new Mat4(1), m, textureId3, textureId4);
+        rectangle = new Model(camera, light1, light2, spotlight, shader2, material, m, textureId3, textureId4);
         windowView = new WindowView(rectangle);
         windowView.saveModel(rectangle);
 
         // Sets up material used for spotlight stand
-        cube = new Model(gl, camera, light1, light2, spotlight, shader1, material, new Mat4(1), m1);
+        cube = new Model(camera, light1, light2, spotlight, shader1, material, m1);
         swingingSpotlight = new SwingingSpotlight(cube, spotlight);
     }
 

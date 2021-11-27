@@ -14,12 +14,12 @@ import java.awt.*;
 import java.awt.event.*;
 
 /**
- * Class, which starts the main program- start.Museum Assignment for COM3503.
+ * Class, which starts the main program Museum Assignment for COM3503.
  *
  * Made with code examples from COM3503 Online Tutorial Materials by
  * Dr Steve Maddock at The University of Sheffield.
  *
- * @author Agne Knietaite
+ * @author Agne Knietaite, 2021
  */
 public class Museum extends JFrame{
 
@@ -27,13 +27,12 @@ public class Museum extends JFrame{
     private static final int HEIGHT = 900;
     private static final Dimension dimension = new Dimension(WIDTH, HEIGHT);
 
-    private GLCanvas canvas;
-    private Museum_GLEventListener glEventListener;
+    private final GLCanvas canvas;
+    private final Museum_GLEventListener glEventListener;
     private static final int TARGET_FPS = 60;
     private final FPSAnimator animator;
-    private InterfacePanel interfacePanel;
 
-    private Camera camera;
+    private final Camera camera;
 
     public Museum_GLEventListener getGlEventListener(){
         return glEventListener;
@@ -41,7 +40,6 @@ public class Museum extends JFrame{
 
     /**
      * Start point of the application.
-     * @param args
      */
     public static void main(String[] args) {
         Museum museum = new Museum("Museum by Agne Knietaite");
@@ -64,16 +62,11 @@ public class Museum extends JFrame{
                 Camera.DEFAULT_UP);
         glEventListener = new Museum_GLEventListener(camera);
 
-//        camera = new Camera(Camera.DEFAULT_POSITION_PRODUCTION,
-//                Camera.DEFAULT_TARGET_PRODUCTION,
-//                Camera.DEFAULT_UP);
-//        glEventListener = new Museum_GLEventListener(camera);
-
         // Adds the canvas
         getContentPane().add(canvas, BorderLayout.CENTER);
 
         // Adds the user interface
-        interfacePanel = new InterfacePanel(this);
+        InterfacePanel interfacePanel = new InterfacePanel(this);
         this.add(interfacePanel, BorderLayout.SOUTH);
 
         // Adds all listeners

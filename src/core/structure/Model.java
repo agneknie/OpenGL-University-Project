@@ -11,8 +11,9 @@ import gmaths.Mat4;
  * Class taken from COM3503 Online Tutorial Materials
  * by Dr Steve Maddock at The University of Sheffield, 2021.
  *
- * Modified to suit the requirements of the assignment.
- * Agne Knietaite, 2021.
+ * Modified and restructured to suit the needs of this project.
+ *
+ * @author Agne Knietaite, 2021
  */
 public class Model {
 
@@ -36,10 +37,10 @@ public class Model {
         offsetExists = true;
     }
 
-    public Model(GL3 gl, Camera camera, Light light1, Light light2, Spotlight spotlight, Shader shader, Material material, Mat4 modelMatrix, Mesh mesh, int[] textureId1, int[] textureId2) {
+    public Model(Camera camera, Light light1, Light light2, Spotlight spotlight, Shader shader, Material material, Mesh mesh, int[] textureId1, int[] textureId2) {
         this.mesh = mesh;
         this.material = material;
-        this.modelMatrix = modelMatrix;
+        this.modelMatrix = new Mat4(1);
         this.shader = shader;
         this.camera = camera;
         this.light1 = light1;
@@ -49,22 +50,16 @@ public class Model {
         this.textureId2 = textureId2;
     }
 
-    public Model(GL3 gl, Camera camera, Light light1, Light light2, Spotlight spotlight,  Shader shader, Material material, Mat4 modelMatrix, Mesh mesh, int[] textureId1) {
-        this(gl, camera, light1, light2, spotlight, shader, material, modelMatrix, mesh, textureId1, null);
+    public Model(Camera camera, Light light1, Light light2, Spotlight spotlight,  Shader shader, Material material, Mesh mesh, int[] textureId1) {
+        this(camera, light1, light2, spotlight, shader, material, mesh, textureId1, null);
     }
 
-    public Model(GL3 gl, Camera camera, Light light1, Light light2, Spotlight spotlight, Shader shader, Material material, Mat4 modelMatrix, Mesh mesh) {
-        this(gl, camera, light1, light2, spotlight, shader, material, modelMatrix, mesh, null, null);
+    public Model(Camera camera, Light light1, Light light2, Spotlight spotlight, Shader shader, Material material, Mesh mesh) {
+        this(camera, light1, light2, spotlight, shader, material, mesh, null, null);
     }
-
-    // add constructors without modelMatrix? and then set to identity as the default?
 
     public void setModelMatrix(Mat4 m) {
         modelMatrix = m;
-    }
-
-    public void setMaterial(Material material) {
-        this.material = material;
     }
 
     public void render(GL3 gl, Mat4 modelMatrix) {
@@ -98,7 +93,7 @@ public class Model {
         shader.setFloat(gl, "material.shininess", material.getShininess());
 
         if (textureId1!=null) {
-            shader.setInt(gl, "first_texture", 0);  // be careful to match these with GL_TEXTURE0 and GL_TEXTURE1
+            shader.setInt(gl, "first_texture", 0);
             gl.glActiveTexture(GL.GL_TEXTURE0);
             gl.glBindTexture(GL.GL_TEXTURE_2D, textureId1[0]);
         }
@@ -122,5 +117,4 @@ public class Model {
         if (textureId1!=null) gl.glDeleteBuffers(1, textureId1, 0);
         if (textureId2!=null) gl.glDeleteBuffers(1, textureId2, 0);
     }
-
 }

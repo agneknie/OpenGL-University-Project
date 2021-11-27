@@ -9,10 +9,12 @@ import java.awt.event.MouseMotionAdapter;
  * by Dr Steve Maddock at The University of Sheffield, 2021.
  *
  * Restructured, to better suit this project.
+ *
+ * @author Agne Knietaite, 2021
  */
 public class CameraMouseInput extends MouseMotionAdapter {
     private Point lastPoint;
-    private Camera camera;
+    private  Camera camera;
 
     public CameraMouseInput(Camera camera){
         this.camera = camera;
@@ -30,7 +32,6 @@ public class CameraMouseInput extends MouseMotionAdapter {
 
         lastPoint = ms;
     }
-
     public void mouseMoved(MouseEvent e) {
         lastPoint = e.getPoint();
     }

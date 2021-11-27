@@ -5,6 +5,14 @@ import com.jogamp.opengl.GL3;
 import gmaths.Vec3;
 import core.constants.Colours;
 
+/**
+ * Class representing the spotlight bulb in the program.
+ *
+ * Extends class Light, provided by Dr. Steve Maddock in COM3503
+ * Online Tutorials at The University of Sheffield.
+ *
+ * @author Agne Knietaite, 2021
+ */
 public class Spotlight extends Light {
 
     public static final float LIGHT_ON = Colours.SPOTLIGHT_YELLOW.x;
@@ -52,7 +60,7 @@ public class Spotlight extends Light {
     public void renderLightObjectIntensity(GL3 gl){
         Vec3 lightIntensity = this.getMaterial().getDiffuse();
 
-        if(this.getMaterial().getDiffuse().x == LIGHT_OFF)
+        if(lightIntensity.x == LIGHT_OFF)
             this.getShader().setVec3(gl, "lightIntensity", new Vec3(0f, 0f, 0f));
 
         else this.getShader().setVec3(gl, "lightIntensity", Colours.SPOTLIGHT_YELLOW);

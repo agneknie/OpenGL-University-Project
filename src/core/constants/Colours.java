@@ -6,7 +6,7 @@ import gmaths.Vec3;
  * Class which collects all of the component colours used
  * throughout the application.
  *
- * @author Agne Knietaite
+ * @author Agne Knietaite, 2021
  */
 public final class Colours {
 

@@ -13,11 +13,9 @@ import java.awt.*;
  * Class describing the user interface with all of its
  * buttons.
  *
- * @author Agne Knietaite
+ * @author Agne Knietaite, 2021
  */
 public class InterfacePanel extends JPanel {
-    private JSlider light1Slider;
-    private JSlider light2Slider;
 
     public InterfacePanel (Museum museum){
         super();
@@ -94,12 +92,12 @@ public class InterfacePanel extends JPanel {
         final int CURRENT = (int) (Light.LIGHT_ON_2*100);
 
         // Creating slider for light 1
-        light1Slider = new JSlider(MIN, MAX, CURRENT);
+        JSlider light1Slider = new JSlider(MIN, MAX, CURRENT);
         panel.add(new JLabel("Light 1:"));
         panel.add(light1Slider);
 
         // Creating slider for light 2
-        light2Slider = new JSlider(MIN, MAX, CURRENT);
+        JSlider light2Slider = new JSlider(MIN, MAX, CURRENT);
         panel.add(new JLabel("Light 2:"));
         panel.add(light2Slider);
 
@@ -138,7 +136,6 @@ public class InterfacePanel extends JPanel {
     /**
      * Method which initiates relevant action when a button on the user interface is clicked.
      *
-     * @param gl
      * @param buttonName name of the button
      */
     public void buttonClicked(Museum_GLEventListener gl, String buttonName){
@@ -147,26 +144,31 @@ public class InterfacePanel extends JPanel {
             case "Pose 1":
                 System.out.println("Pose 1");
                 break;
+
             case "Pose 2":
                 System.out.println("Pose 2");
                 break;
+
             case "Pose 3":
                 System.out.println("Pose 3");
                 break;
+
             case "Pose 4":
                 System.out.println("Pose 4");
                 break;
+
             case "Pose 5":
                 System.out.println("Pose 5");
                 break;
+
             case "Spotlight On/Off":
                 // Finds current light setting
                 boolean lightOn = gl.getSpotlight().getMaterial().getSpecular().x
                                     == Spotlight.LIGHT_ON;
                 // Changes to the opposite value
                 gl.getSpotlight().turnLightOn(!lightOn);
-
                 break;
+
             case "Animate":
                 System.out.println("Animate");
                 break;

@@ -14,7 +14,7 @@ import static core.constants.Measurements.*;
  * Class, which defines matrices for and renders the entrance
  * of the museum.
  *
- * @author Agne Knietaite
+ * @author Agne Knietaite, 2021
  */
 public class Entrance extends ConstructedObjectBase {
 

@@ -10,15 +10,15 @@ import java.nio.IntBuffer;
 /**
  * Class taken from COM3503 Online Tutorial Materials
  * by Dr Steve Maddock at The University of Sheffield, 2021.
+ *
+ * Modified and restructured to suit the needs of this project.
+ *
+ * @author Agne Knietaite, 2021
  */
 public class Mesh {
 
     private float[] vertices;
     private int[] indices;
-    private int vertexStride = 8;
-    private int vertexXYZFloats = 3;
-    private int vertexNormalFloats = 3;
-    private int vertexTexFloats = 2;
     private int[] vertexBufferId = new int[1];
     private int[] vertexArrayId = new int[1];
     private int[] elementBufferId = new int[1];
@@ -42,34 +42,28 @@ public class Mesh {
         gl.glBindBuffer(GL.GL_ARRAY_BUFFER, vertexBufferId[0]);
         FloatBuffer fb = Buffers.newDirectFloatBuffer(vertices);
 
-        gl.glBufferData(GL.GL_ARRAY_BUFFER, Float.BYTES * vertices.length, fb, GL.GL_STATIC_DRAW);
+        gl.glBufferData(GL.GL_ARRAY_BUFFER, (long) Float.BYTES * vertices.length, fb, GL.GL_STATIC_DRAW);
 
-        int stride = vertexStride;
-        int numXYZFloats = vertexXYZFloats;
+        final int STRIDE = 8;
+        final int NUM_XYZ_FLOATS = 3;
         int offset = 0;
-        gl.glVertexAttribPointer(0, numXYZFloats, GL.GL_FLOAT, false, stride*Float.BYTES, offset);
+        gl.glVertexAttribPointer(0, NUM_XYZ_FLOATS, GL.GL_FLOAT, false, STRIDE*Float.BYTES, offset);
         gl.glEnableVertexAttribArray(0);
 
-        int numNormalFloats = vertexNormalFloats; // x,y,z for each vertex
-        offset = numXYZFloats*Float.BYTES;  // the normal values are three floats after the three x,y,z values
-        // so change the offset value
-        gl.glVertexAttribPointer(1, numNormalFloats, GL.GL_FLOAT, false, stride*Float.BYTES, offset);
-        // the vertex shader uses location 1 (sometimes called index 1)
-        // for the normal information
-        // location, size, type, normalize, stride, offset
-        // offset is relative to the start of the array of data
-        gl.glEnableVertexAttribArray(1);// Enable the vertex attribute array at location 1
+        int numNormalFloats = 3; // x,y,z for each vertex
+        offset = NUM_XYZ_FLOATS*Float.BYTES;
+        gl.glVertexAttribPointer(1, numNormalFloats, GL.GL_FLOAT, false, STRIDE*Float.BYTES, offset);
+        gl.glEnableVertexAttribArray(1);
 
-        // now do the texture coordinates  in vertex attribute 2
-        int numTexFloats = vertexTexFloats;
-        offset = (numXYZFloats+numNormalFloats)*Float.BYTES;
-        gl.glVertexAttribPointer(2, numTexFloats, GL.GL_FLOAT, false, stride*Float.BYTES, offset);
+        int numTexFloats = 2;
+        offset = (NUM_XYZ_FLOATS+numNormalFloats)*Float.BYTES;
+        gl.glVertexAttribPointer(2, numTexFloats, GL.GL_FLOAT, false, STRIDE*Float.BYTES, offset);
         gl.glEnableVertexAttribArray(2);
 
         gl.glGenBuffers(1, elementBufferId, 0);
         IntBuffer ib = Buffers.newDirectIntBuffer(indices);
         gl.glBindBuffer(GL.GL_ELEMENT_ARRAY_BUFFER, elementBufferId[0]);
-        gl.glBufferData(GL.GL_ELEMENT_ARRAY_BUFFER, Integer.BYTES * indices.length, ib, GL.GL_STATIC_DRAW);
+        gl.glBufferData(GL.GL_ELEMENT_ARRAY_BUFFER, (long) Integer.BYTES * indices.length, ib, GL.GL_STATIC_DRAW);
         gl.glBindVertexArray(0);
     }
 

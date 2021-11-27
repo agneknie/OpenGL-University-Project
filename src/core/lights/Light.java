@@ -17,11 +17,14 @@ import java.nio.IntBuffer;
 /**
  * Class taken from COM3503 Online Tutorial Materials
  * by Dr Steve Maddock at The University of Sheffield, 2021.
+ *
+ * Modified and restructured to suit the needs of this project.
+ *
+ * @author Agne Knietaite, 2021
  */
 public class Light {
     private Material material;
     private Vec3 position;
-    private Mat4 model;
     private Shader shader;
     private Camera camera;
 
@@ -41,7 +44,6 @@ public class Light {
         material.setSpecular(LIGHT_ON_2, LIGHT_ON_2, LIGHT_ON_2);
 
         position = new Vec3(0f,0f,0f);
-        model = new Mat4(1);
 
         this.camera = camera;
 
@@ -87,7 +89,6 @@ public class Light {
      * Method which checks if light is off and renders the
      * object which represents the light as dark if light is off.
      * Renders the cube as lit up if the light is on.
-     * @param gl
      */
     public void renderLightObjectIntensity(GL3 gl){
         Vec3 lightIntensity = material.getDiffuse();
@@ -121,26 +122,14 @@ public class Light {
         gl.glDeleteBuffers(1, elementBufferId, 0);
     }
 
-    // VERTEX DATA
-    private float[] vertices = Sphere.vertices.clone();
+    // Vertex Data
+    private float[] vertices = Sphere.VERTICES.clone();
+    private int[] indices = Sphere.INDICES.clone();
 
-    private int[] indices = Sphere.indices.clone();
-
-    private int vertexStride = 8;
-    private int vertexXYZFloats = 3;
-
-    // LIGHT BUFFERS
+    // Light Buffers
     private int[] vertexBufferId = new int[1];
     private int[] vertexArrayId = new int[1];
     private int[] elementBufferId = new int[1];
-
-    protected int[] getVertexArrayId() {
-        return vertexArrayId;
-    }
-
-    protected int[] getIndices() {
-        return indices;
-    }
 
     private void fillBuffers(GL3 gl) {
         gl.glGenVertexArrays(1, vertexArrayId, 0);
@@ -149,18 +138,18 @@ public class Light {
         gl.glBindBuffer(GL.GL_ARRAY_BUFFER, vertexBufferId[0]);
         FloatBuffer fb = Buffers.newDirectFloatBuffer(vertices);
 
-        gl.glBufferData(GL.GL_ARRAY_BUFFER, Float.BYTES * vertices.length, fb, GL.GL_STATIC_DRAW);
+        gl.glBufferData(GL.GL_ARRAY_BUFFER, (long) Float.BYTES * vertices.length, fb, GL.GL_STATIC_DRAW);
 
-        int stride = vertexStride;
-        int numXYZFloats = vertexXYZFloats;
-        int offset = 0;
-        gl.glVertexAttribPointer(0, numXYZFloats, GL.GL_FLOAT, false, stride*Float.BYTES, offset);
+        final int STRIDE = 8;
+        final int NUM_XYZ_FLOATS = 3;
+        final int OFFSET = 0;
+        gl.glVertexAttribPointer(0, NUM_XYZ_FLOATS, GL.GL_FLOAT, false, STRIDE*Float.BYTES, OFFSET);
         gl.glEnableVertexAttribArray(0);
 
         gl.glGenBuffers(1, elementBufferId, 0);
         IntBuffer ib = Buffers.newDirectIntBuffer(indices);
         gl.glBindBuffer(GL.GL_ELEMENT_ARRAY_BUFFER, elementBufferId[0]);
-        gl.glBufferData(GL.GL_ELEMENT_ARRAY_BUFFER, Integer.BYTES * indices.length, ib, GL.GL_STATIC_DRAW);
+        gl.glBufferData(GL.GL_ELEMENT_ARRAY_BUFFER, (long) Integer.BYTES * indices.length, ib, GL.GL_STATIC_DRAW);
         gl.glBindVertexArray(0);
     }
 }

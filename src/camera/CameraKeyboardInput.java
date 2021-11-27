@@ -8,6 +8,8 @@ import java.awt.event.KeyEvent;
  * by Dr Steve Maddock at The University of Sheffield, 2021.
  *
  * Restructured, to better suit this project.
+ *
+ * @author Agne Knietaite, 2021
  */
 public class CameraKeyboardInput extends KeyAdapter {
     private Camera camera;
@@ -27,7 +29,6 @@ public class CameraKeyboardInput extends KeyAdapter {
             case KeyEvent.VK_A:  m = Camera.CameraMovement.FORWARD;  break;
             case KeyEvent.VK_Z:  m = Camera.CameraMovement.BACK;  break;
         }
-
         camera.keyboardInput(m);
     }
 }

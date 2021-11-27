@@ -14,8 +14,9 @@ import java.nio.file.Paths;
  * Class taken from COM3503 Online Tutorial Materials
  * by Dr Steve Maddock at The University of Sheffield, 2021.
  *
- * Adapted to better suit this project for COM3503.
- * By Agne Knietaite, 2021.
+ * Modified and restructured to suit the needs of this project.
+ *
+ * @author Agne Knietaite, 2021
  */
 public class Shader {
 
@@ -43,10 +44,6 @@ public class Shader {
         ID = compileAndLink(gl);
     }
 
-    public int getID() {
-        return ID;
-    }
-
     public void use(GL3 gl) {
         gl.glUseProgram(ID);
     }
@@ -64,16 +61,6 @@ public class Shader {
     public void setFloat(GL3 gl, String name, float f1, float f2) {
         int location = gl.glGetUniformLocation(ID, name);
         gl.glUniform2f(location, f1, f2);
-    }
-
-    public void setFloat(GL3 gl, String name, float f1, float f2, float f3) {
-        int location = gl.glGetUniformLocation(ID, name);
-        gl.glUniform3f(location, f1, f2, f3);
-    }
-
-    public void setFloat(GL3 gl, String name, float f1, float f2, float f3, float f4) {
-        int location = gl.glGetUniformLocation(ID, name);
-        gl.glUniform4f(location, f1, f2, f3, f4);
     }
 
     public void setFloatArray(GL3 gl, String name, float[] f) {

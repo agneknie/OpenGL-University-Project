@@ -10,7 +10,7 @@ import java.util.List;
  * Base class to form constructed objects, which use a single
  * type of object.base model for their construction.
  *
- * @author Agne Knietaite
+ * @author Agne Knietaite, 2021
  */
 public abstract class ConstructedObjectBase {
 
@@ -45,8 +45,6 @@ public abstract class ConstructedObjectBase {
      * Renders all object components thus rendering
      * the object itself. Instead of recalculating the matrices each time,
      * looks up already calculated matrices.
-     *
-     * @param gl
      */
     public void render(GL3 gl){
         for(Mat4 calculatedMatrix : calculatedMatrices){

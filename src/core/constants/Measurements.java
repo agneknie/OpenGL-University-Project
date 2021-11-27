@@ -1,10 +1,10 @@
 package core.constants;
 
 /**
- * Class which defines all constant values used for core.objects
- * in the program.
+ * Class which defines constant values used by multiple components
+ * throughout the application.
  *
- * @author Agne Knietaite
+ * @author Agne Knietaite, 2021
  */
 public final class Measurements {
 

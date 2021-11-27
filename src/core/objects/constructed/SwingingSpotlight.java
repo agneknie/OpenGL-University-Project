@@ -16,7 +16,7 @@ import static core.constants.Measurements.*;
  * Class meant to represent the lamp, which has a
  * swinging spotlight.
  *
- * @author Agne Knietaite
+ * @author Agne Knietaite, 2021
  */
 public class SwingingSpotlight extends ConstructedObjectBase {
 

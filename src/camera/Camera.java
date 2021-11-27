@@ -9,13 +9,14 @@ import gmaths.Vec3;
  * Camera class taken from COM3503 Online Tutorial Materials
  * by Dr Steve Maddock at The University of Sheffield, 2021.
  *
- * Minimal modifications and restruction, to better suit this project.
+ * Minimal modifications and restructuring to better suit this project
+ * and clean up the class.
+ *
+ * @author Agne Knietaite, 2021
  */
 public class Camera {
-    public enum CameraType {X, Z};
-    public enum CameraMovement {NO_MOVEMENT, LEFT, RIGHT, UP, DOWN, FORWARD, BACK};
+    public enum CameraMovement {NO_MOVEMENT, LEFT, RIGHT, UP, DOWN, FORWARD, BACK}
 
-    private static final float DEFAULT_RADIUS = 25;
     public static final Vec3 DEFAULT_UP = new Vec3(0,1,0);
 
     public static final Vec3 DEFAULT_POSITION_DEVELOPMENT = new Vec3(
@@ -28,10 +29,7 @@ public class Camera {
     public static final Vec3 DEFAULT_TARGET_PRODUCTION = new Vec3(
             Measurements.WALL_WIDTH*-0.1f,Measurements.WALL_HEIGHT*0.4f, 0);
 
-    public final float YAW = -90f;
-    public final float PITCH = 0f;
     public final float KEYBOARD_SPEED = 0.2f;
-    public final float MOUSE_SPEED = 1.0f;
 
     private Vec3 position;
     private Vec3 target;
@@ -61,31 +59,8 @@ public class Camera {
         updateCameraVectors();
     }
 
-    public Vec3 getFront() {
-        return front;
-    }
-
-    public Vec3 getTarget() {
-        return target;
-    }
-
     public Vec3 getPosition() {
         return new Vec3(position);
-    }
-
-    public void setPosition(Vec3 p) {
-        setupCamera(p, target, up);
-    }
-
-    public void setTarget(Vec3 t) {
-        setupCamera(position, t, up);
-    }
-
-    public void setCamera(CameraType c) {
-        switch (c) {
-            case X : setupCamera(DEFAULT_POSITION_DEVELOPMENT, DEFAULT_TARGET_DEVELOPMENT, DEFAULT_UP) ; break;
-            case Z : setupCamera(DEFAULT_POSITION_PRODUCTION, DEFAULT_TARGET_PRODUCTION, DEFAULT_UP); break;
-        }
     }
 
     public Mat4 getViewMatrix() {
