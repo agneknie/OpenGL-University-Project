@@ -31,6 +31,57 @@ public final class Colours {
     public static final Vec3 STAND_BLUE_AMBIENT =
             convertRGBAmbient(STAND_BLUE_R, STAND_BLUE_G, STAND_BLUE_B);
 
+    // Robot colour darker
+    private static final int ROBOT_DARKER_R = 250;
+    private static final int ROBOT_DARKER_G = 130;
+    private static final int ROBOT_DARKER_B = 75;
+
+    public static final Vec3 ROBOT_DARKER =
+            convertRGB(ROBOT_DARKER_R, ROBOT_DARKER_G, ROBOT_DARKER_B);
+    public static final Vec3 ROBOT_DARKER_AMBIENT =
+            convertRGBAmbient(ROBOT_DARKER_R, ROBOT_DARKER_G, ROBOT_DARKER_B);
+
+
+    // Robot colour lighter
+    private static final int ROBOT_LIGHTER_R = 250;
+    private static final int ROBOT_LIGHTER_G = 180;
+    private static final int ROBOT_LIGHTER_B = 150;
+
+    public static final Vec3 ROBOT_LIGHTER =
+            convertRGB(ROBOT_LIGHTER_R, ROBOT_LIGHTER_G, ROBOT_LIGHTER_B);
+    public static final Vec3 ROBOT_LIGHTER_AMBIENT =
+            convertRGBAmbient(ROBOT_LIGHTER_R, ROBOT_LIGHTER_G, ROBOT_LIGHTER_B);
+
+    // Robot lip colour
+    private static final int ROBOT_LIP_R = 170;
+    private static final int ROBOT_LIP_G = 35;
+    private static final int ROBOT_LIP_B = 25;
+
+    public static final Vec3 ROBOT_LIP =
+            convertRGB(ROBOT_LIP_R, ROBOT_LIP_G, ROBOT_LIP_B);
+    public static final Vec3 ROBOT_LIP_AMBIENT =
+            convertRGBAmbient(ROBOT_LIP_R, ROBOT_LIP_G, ROBOT_LIP_B);
+
+    // Robot outer eye colour
+    private static final int ROBOT_OUTER_EYE_R = 255;
+    private static final int ROBOT_OUTER_EYE_G = 255;
+    private static final int ROBOT_OUTER_EYE_B = 255;
+
+    public static final Vec3 ROBOT_OUTER_EYE =
+            convertRGB(ROBOT_OUTER_EYE_R, ROBOT_OUTER_EYE_G, ROBOT_OUTER_EYE_B);
+    public static final Vec3 ROBOT_OUTER_EYE_AMBIENT =
+            convertRGBAmbient(ROBOT_OUTER_EYE_R, ROBOT_OUTER_EYE_G, ROBOT_OUTER_EYE_B);
+
+    // Robot inner eye colour
+    private static final int ROBOT_INNER_EYE_R = 0;
+    private static final int ROBOT_INNER_EYE_G = 0;
+    private static final int ROBOT_INNER_EYE_B = 0;
+
+    public static final Vec3 ROBOT_INNER_EYE =
+            convertRGB(ROBOT_INNER_EYE_R, ROBOT_INNER_EYE_G, ROBOT_INNER_EYE_B);
+    public static final Vec3 ROBOT_INNER_EYE_AMBIENT =
+            convertRGBAmbient(ROBOT_INNER_EYE_R, ROBOT_INNER_EYE_G, ROBOT_INNER_EYE_B);
+
     /**
      * Converts rgb values into colour vector with value ranges 0.0 to 1.0.
      *
