@@ -47,7 +47,8 @@ public class SwingingSpotlight extends ConstructedObjectBase {
     public SwingingSpotlight(Model cube, Spotlight spotlight){
         this(cube);
         this.spotlight = spotlight;
-        spotlight.setPosition(SPOTLIGHT_POSITION_X -MEASUREMENT_5+MEASUREMENT_1*0.5f+MEASUREMENT_2*0.5f,
+        spotlight.setPosition(
+                SPOTLIGHT_POSITION_X -MEASUREMENT_5+MEASUREMENT_1*0.5f+MEASUREMENT_2*0.5f,
                 MEASUREMENT_6 +MEASUREMENT_1- MEASUREMENT_4,
                 SPOTLIGHT_POSITION_Z);
     }
@@ -58,34 +59,61 @@ public class SwingingSpotlight extends ConstructedObjectBase {
 
         // Component 1
         Mat4 firstComponent = Mat4.multiply(
-                Mat4Transform.scale(MEASUREMENT_4, MEASUREMENT_1 , MEASUREMENT_4), new Mat4(1));
+                Mat4Transform.scale(
+                        MEASUREMENT_4,
+                        MEASUREMENT_1 ,
+                        MEASUREMENT_4), new Mat4(1));
+
         firstComponent = Mat4.multiply(
-                Mat4Transform.translate(SPOTLIGHT_POSITION_X, MEASUREMENT_1*0.5f, SPOTLIGHT_POSITION_Z), firstComponent);
+                Mat4Transform.translate(
+                        SPOTLIGHT_POSITION_X,
+                        MEASUREMENT_1*0.5f,
+                        SPOTLIGHT_POSITION_Z), firstComponent);
+
         matricesList.add(firstComponent);
 
         // Component 2
         Mat4 secondComponent = Mat4.multiply(
-                Mat4Transform.scale(MEASUREMENT_1, MEASUREMENT_6, MEASUREMENT_3), new Mat4(1));
+                Mat4Transform.scale(
+                        MEASUREMENT_1,
+                        MEASUREMENT_6,
+                        MEASUREMENT_3), new Mat4(1));
+
         secondComponent = Mat4.multiply(
-                Mat4Transform.translate(SPOTLIGHT_POSITION_X, MEASUREMENT_1+ MEASUREMENT_6 *0.5f ,SPOTLIGHT_POSITION_Z), secondComponent);
+                Mat4Transform.translate(
+                        SPOTLIGHT_POSITION_X,
+                        MEASUREMENT_1+ MEASUREMENT_6 *0.5f ,
+                        SPOTLIGHT_POSITION_Z), secondComponent);
+
         matricesList.add(secondComponent);
 
         // Component 3
         Mat4 thirdComponent = Mat4.multiply(
-                Mat4Transform.scale(MEASUREMENT_5, MEASUREMENT_1 , MEASUREMENT_3), new Mat4(1));
+                Mat4Transform.scale(
+                        MEASUREMENT_5,
+                        MEASUREMENT_1 ,
+                        MEASUREMENT_3), new Mat4(1));
+
         thirdComponent = Mat4.multiply(
-                Mat4Transform.translate(SPOTLIGHT_POSITION_X- MEASUREMENT_5 *0.5f+MEASUREMENT_1*0.5f,
+                Mat4Transform.translate(
+                        SPOTLIGHT_POSITION_X- MEASUREMENT_5 *0.5f+MEASUREMENT_1*0.5f,
                         MEASUREMENT_1+ MEASUREMENT_6 +MEASUREMENT_1*0.5f,
                         SPOTLIGHT_POSITION_Z), thirdComponent);
         matricesList.add(thirdComponent);
 
         // Component 4
         Mat4 fourthComponent = Mat4.multiply(
-                Mat4Transform.scale(MEASUREMENT_2, MEASUREMENT_4, MEASUREMENT_2), new Mat4(1));
+                Mat4Transform.scale(
+                        MEASUREMENT_2,
+                        MEASUREMENT_4,
+                        MEASUREMENT_2), new Mat4(1));
+
         fourthComponent = Mat4.multiply(
-                Mat4Transform.translate(SPOTLIGHT_POSITION_X -MEASUREMENT_5+MEASUREMENT_1*0.5f+MEASUREMENT_2*0.5f,
+                Mat4Transform.translate(
+                        SPOTLIGHT_POSITION_X -MEASUREMENT_5+MEASUREMENT_1*0.5f+MEASUREMENT_2*0.5f,
                         MEASUREMENT_6 +MEASUREMENT_1- MEASUREMENT_4 *0.5f,
                         SPOTLIGHT_POSITION_Z), fourthComponent);
+
         matricesList.add(fourthComponent);
         // Saves component, because it is used for animation
         movingComponent = fourthComponent;
@@ -134,13 +162,17 @@ public class SwingingSpotlight extends ConstructedObjectBase {
      * holder.
      */
     private void moveSpotlightHolder(){
-        movingComponent = Mat4.multiply(Mat4Transform.scale(
-                MEASUREMENT_2, MEASUREMENT_4, MEASUREMENT_2) , new Mat4(1));
-        movingComponent = Mat4.multiply(Mat4Transform.translate(
-                SPOTLIGHT_POSITION_X -MEASUREMENT_5+MEASUREMENT_1*0.5f+MEASUREMENT_2*0.5f,
-                MEASUREMENT_6 +MEASUREMENT_1- MEASUREMENT_4 *0.5f,
-                currentZValue
-        ), movingComponent);
+        movingComponent = Mat4.multiply(
+                Mat4Transform.scale(
+                        MEASUREMENT_2,
+                        MEASUREMENT_4,
+                        MEASUREMENT_2) , new Mat4(1));
+
+        movingComponent = Mat4.multiply(
+                Mat4Transform.translate(
+                        SPOTLIGHT_POSITION_X -MEASUREMENT_5+MEASUREMENT_1*0.5f+MEASUREMENT_2*0.5f,
+                        MEASUREMENT_6 +MEASUREMENT_1- MEASUREMENT_4 *0.5f,
+                        currentZValue), movingComponent);
 
         // Updates matrices list for object rendering
         this.setCalculatedMatrix(3, movingComponent);

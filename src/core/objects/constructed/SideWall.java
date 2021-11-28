@@ -28,34 +28,60 @@ public class SideWall extends ConstructedObjectBase {
 
         // First component
         Mat4 firstComponent = Mat4.multiply(
-                Mat4Transform.scale(WALL_WIDTH, WALL_INCREMENT, WALL_HEIGHT/3f), new Mat4(1));
+                Mat4Transform.scale(
+                        WALL_WIDTH,
+                        WALL_INCREMENT,
+                        WALL_HEIGHT/3f), new Mat4(1));
+
         firstComponent = Mat4.multiply(
                 Mat4Transform.rotateAroundX(90), firstComponent);
         firstComponent = Mat4.multiply(
                 Mat4Transform.rotateAroundY(90), firstComponent);
+
         firstComponent = Mat4.multiply(
-                Mat4Transform.translate(-WALL_WIDTH*0.5f, WALL_HEIGHT-(WALL_HEIGHT/3f)*0.5f,0), firstComponent);
+                Mat4Transform.translate(
+                        -WALL_WIDTH*0.5f,
+                        WALL_HEIGHT-(WALL_HEIGHT/3f)*0.5f,
+                        0), firstComponent);
+
         matricesList.add(firstComponent);
 
         // Second component
         Mat4 secondComponent = Mat4.multiply(
-                Mat4Transform.translate(0, -WALL_HEIGHT/3f*2f, 0), firstComponent);
+                Mat4Transform.translate(
+                        0,
+                        -WALL_HEIGHT/3f*2f,
+                        0), firstComponent);
+
         matricesList.add(secondComponent);
 
         // Third component
         Mat4 thirdComponent = Mat4.multiply(
-                Mat4Transform.scale(WALL_WIDTH/3f, WALL_INCREMENT, WALL_HEIGHT/3f), new Mat4(1));
+                Mat4Transform.scale(
+                        WALL_WIDTH/3f,
+                        WALL_INCREMENT,
+                        WALL_HEIGHT/3f), new Mat4(1));
+
         thirdComponent = Mat4.multiply(
                 Mat4Transform.rotateAroundX(90), thirdComponent);
         thirdComponent = Mat4.multiply(
                 Mat4Transform.rotateAroundY(90), thirdComponent);
+
         thirdComponent = Mat4.multiply(
-                Mat4Transform.translate(-WALL_WIDTH*0.5f, WALL_HEIGHT/3f*2f-(WALL_HEIGHT/3f*0.5f), WALL_WIDTH/3f), thirdComponent);
+                Mat4Transform.translate(
+                        -WALL_WIDTH*0.5f,
+                        WALL_HEIGHT/3f*2f-(WALL_HEIGHT/3f*0.5f),
+                        WALL_WIDTH/3f), thirdComponent);
+
         matricesList.add(thirdComponent);
 
         // Fourth component
         Mat4 fourthComponent = Mat4.multiply(
-                Mat4Transform.translate(0, 0, -WALL_WIDTH/3f*2f), thirdComponent);
+                Mat4Transform.translate(
+                        0,
+                        0,
+                        -WALL_WIDTH/3f*2f), thirdComponent);
+
         matricesList.add(fourthComponent);
 
         return matricesList;
