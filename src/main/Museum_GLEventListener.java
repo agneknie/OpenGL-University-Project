@@ -131,30 +131,32 @@ public class Museum_GLEventListener implements GLEventListener {
                 Colours.STAND_BLUE,
                 32);
 
-        // Sets up texture used for walls
+        // Sets up model used for walls
         rectangle = new Model(camera, light1, light2, spotlight, shader, material, m, textureId1);
         // Initialises Front Wall
         frontWall = new FrontWall(rectangle);
         // Initialises Side Wall
         sideWall = new SideWall(rectangle);
 
-        // Sets up texture used for floor
+        // Sets up model used for floor
         rectangle = new Model(camera, light1, light2, spotlight, shader, material, m, textureId0);
         // Initialises Floor
         floor = new Floor(rectangle);
 
-        // Sets up texture used for museum entrance
+        // Sets up model used for museum entrance
         rectangle = new Model(camera, light1, light2, spotlight, shader, material, m, textureId2);
         entrance = new Entrance(rectangle);
 
-        // Sets up texture used for the window view
+        // Sets up model used for the window view
         rectangle = new Model(camera, light1, light2, spotlight, shader2, material, m, textureId3, textureId4);
         windowView = new WindowView(rectangle);
         windowView.saveModel(rectangle);
 
-        // Sets up material used for spotlight stand
+        // Sets up model used for spotlight stand
         cube = new Model(camera, light1, light2, spotlight, shader1, material, m1);
         swingingSpotlight = new SwingingSpotlight(cube, spotlight);
+
+        // Sets up model used for mobile phone
     }
 
     /**

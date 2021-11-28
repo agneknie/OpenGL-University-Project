@@ -29,13 +29,13 @@ public class Shader {
     /**
      * Constructor for the shader.
      *
-     * Default path for vertex resources.shaders: src/resources.shaders/vertex/
-     * Default path for fragment resources.shaders: src/resources.shaders/fragment/
+     * Default path for vertex shaders: src/core/shaders/vertex/
+     * Default path for fragment shaders: src/core/shaders/fragment/
      */
     public Shader(GL3 gl, String vertexName, String fragmentName) {
         try {
-            vertexShaderSource = new String(Files.readAllBytes(Paths.get("src/resources/shaders/vertex/", vertexName)), Charset.defaultCharset());
-            fragmentShaderSource = new String(Files.readAllBytes(Paths.get("src/resources/shaders/fragment/", fragmentName)), Charset.defaultCharset());
+            vertexShaderSource = new String(Files.readAllBytes(Paths.get("src/core/shaders/vertex/", vertexName)), Charset.defaultCharset());
+            fragmentShaderSource = new String(Files.readAllBytes(Paths.get("src/core/shaders/fragment/", fragmentName)), Charset.defaultCharset());
         }
         catch (IOException e) {
             e.printStackTrace();
