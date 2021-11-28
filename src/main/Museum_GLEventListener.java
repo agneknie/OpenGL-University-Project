@@ -17,7 +17,6 @@ import core.structure.Mesh;
 import core.structure.Model;
 import core.structure.Shader;
 import gmaths.Mat4Transform;
-import gmaths.Vec3;
 import resources.textures.TextureLibrary;
 
 /**
@@ -38,7 +37,7 @@ public class Museum_GLEventListener implements GLEventListener {
 
     // Base objects from which constructed objects are made
     private Model rectangle;
-    private Model cube;
+    private Model cube1;
     private Model cube2;
     private Model sphere;
 
@@ -128,11 +127,11 @@ public class Museum_GLEventListener implements GLEventListener {
         Mesh m2 = new Mesh(gl, Sphere.VERTICES.clone(), Sphere.INDICES.clone());
 
         // Initialises shader used for walls and floor
-        Shader shader = new Shader(gl, "vs_objects.glsl", "fs_wallsAndFloors.glsl");
+        Shader shader = new Shader(gl, "vs_objects.glsl", "fs_singleTexture.glsl");
         // Initialises shader used for spotlight and exhibit stands
-        Shader shader1 = new Shader(gl, "vs_objects.glsl", "fs_exhibitionStand.glsl");
+        Shader shader1 = new Shader(gl, "vs_objects.glsl", "fs_singleColour.glsl");
         // Initialises shader, used for window view
-        Shader shader2 = new Shader(gl, "vs_windowView.glsl", "fs_windowView.glsl");
+        Shader shader2 = new Shader(gl, "vs_movingTexture.glsl", "fs_doubleTextureNoLight.glsl");
         // Initialises shader, used for mobile phone and shining egg
         Shader shader3 = new Shader(gl, "vs_objects.glsl", "fs_diffuseAndSpecular.glsl");
 
@@ -165,19 +164,19 @@ public class Museum_GLEventListener implements GLEventListener {
         windowView.saveModel(rectangle);
 
         // Sets up model used for spotlight stand
-        cube = new Model(camera, light1, light2, spotlight, shader1, material, m1);
-        swingingSpotlight = new SwingingSpotlight(cube, spotlight);
+        cube1 = new Model(camera, light1, light2, spotlight, shader1, material, m1);
+        swingingSpotlight = new SwingingSpotlight(cube1, spotlight);
 
         // Sets up model used for mobile phone
-        cube = new Model(camera, light1, light2, spotlight, shader1, material, m1);
+        cube1 = new Model(camera, light1, light2, spotlight, shader1, material, m1);
         cube2 = new Model(camera, light1, light2, spotlight, shader3, material, m1, textureId5, textureId6);
         // First model is for stand, second model is for mobile phone itself
-        mobilePhone = new MobilePhone(cube, cube2);
+        mobilePhone = new MobilePhone(cube1, cube2);
 
         // Sets up model used for shining egg
-        cube = new Model(camera, light1, light2, spotlight, shader1, material, m1);
+        cube1 = new Model(camera, light1, light2, spotlight, shader1, material, m1);
         sphere = new Model(camera, light1, light2, spotlight,shader3, material, m2, textureId7, textureId8);
-        shiningEgg = new ShiningEgg(cube, sphere);
+        shiningEgg = new ShiningEgg(cube1, sphere);
     }
 
     /**
@@ -185,6 +184,7 @@ public class Museum_GLEventListener implements GLEventListener {
      * Adapted from COM3503 Tutorials.
      */
     public void render(GL3 gl) {
+        // TODO is it possible to clean up this method?
         gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
 
         // Lights
@@ -229,7 +229,7 @@ public class Museum_GLEventListener implements GLEventListener {
         GL3 gl = drawable.getGL().getGL3();
 
         rectangle.dispose(gl);
-        cube.dispose(gl);
+        cube1.dispose(gl);
         cube2.dispose(gl);
         light1.dispose(gl);
         light2.dispose(gl);
