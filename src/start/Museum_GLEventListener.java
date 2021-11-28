@@ -12,6 +12,7 @@ import core.objects.base.Cube;
 import core.objects.base.Rectangle;
 import core.objects.base.Sphere;
 import core.objects.constructed.*;
+import core.objects.constructed.robot.Robot;
 import core.structure.Material;
 import core.structure.Mesh;
 import core.structure.Model;
@@ -50,6 +51,7 @@ public class Museum_GLEventListener implements GLEventListener {
     private SwingingSpotlight swingingSpotlight;
     private MobilePhone mobilePhone;
     private ShiningEgg shiningEgg;
+    private Robot robot;
 
     private double startTime;
 
@@ -67,6 +69,10 @@ public class Museum_GLEventListener implements GLEventListener {
 
     public Spotlight getSpotlight() {
         return spotlight;
+    }
+
+    public Robot getRobot(){
+        return robot;
     }
 
     public double getCurrentSeconds() {

@@ -20,6 +20,7 @@ public final class Colours {
     public static final Vec3 SPOTLIGHT_YELLOW_AMBIENT =
             convertRGBAmbient(SPOTLIGHT_YELLOW_R, SPOTLIGHT_YELLOW_G, SPOTLIGHT_YELLOW_B);
 
+    // TODO change this colour
     // Exhibition stands dark blue
     private static final int STAND_BLUE_R = 50;
     private static final int STAND_BLUE_G = 55;

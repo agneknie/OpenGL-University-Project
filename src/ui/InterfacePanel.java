@@ -113,20 +113,20 @@ public class InterfacePanel extends JPanel {
      * Method which changes first light's intensity when slider is adjusted.
      */
     private void light1SliderStateChanged(Museum_GLEventListener gl, ChangeEvent event){
-        lightSliderStateChanged(gl, event, gl.getLight1());
+        lightSliderStateChanged(event, gl.getLight1());
     }
 
     /**
      * Method which changes second light's intensity when slider is adjusted.
      */
     private void light2SliderStateChanged(Museum_GLEventListener gl, ChangeEvent event){
-        lightSliderStateChanged(gl, event, gl.getLight2());
+        lightSliderStateChanged(event, gl.getLight2());
     }
 
     /**
      * Method which changes light's intensity when slider is adjusted.
      */
-    private void lightSliderStateChanged(Museum_GLEventListener gl, ChangeEvent event, Light light){
+    private void lightSliderStateChanged(ChangeEvent event, Light light){
         JSlider source = (JSlider)event.getSource();
         float lightIntensity = source.getValue()/100f;
 
@@ -142,23 +142,23 @@ public class InterfacePanel extends JPanel {
         // TODO Implement button clicks
         switch (buttonName){
             case "Pose 1":
-                System.out.println("Pose 1");
+                gl.getRobot().makePose1();
                 break;
 
             case "Pose 2":
-                System.out.println("Pose 2");
+                gl.getRobot().makePose2();
                 break;
 
             case "Pose 3":
-                System.out.println("Pose 3");
+                gl.getRobot().makePose3();
                 break;
 
             case "Pose 4":
-                System.out.println("Pose 4");
+                gl.getRobot().makePose4();
                 break;
 
             case "Pose 5":
-                System.out.println("Pose 5");
+                gl.getRobot().makePose5();
                 break;
 
             case "Spotlight On/Off":
@@ -170,6 +170,7 @@ public class InterfacePanel extends JPanel {
                 break;
 
             case "Animate":
+                // TODO robot animation
                 System.out.println("Animate");
                 break;
         }
