@@ -13,16 +13,15 @@ import static core.constants.Measurements.*;
 /**
  * Class meant to represent the mobile phone.
  *
- * @author Agne Knietaite
+ * @author Agne Knietaite, 2021
  */
 public class MobilePhone extends ConstructedObjectBase {
 
-    // Varying MEASUREMENT_1 changes whole mobile phone with stand size
-    private static final float MEASUREMENT_1 = 0.5f;
-    private static final float MEASUREMENT_2 = 1f;
-    private static final float MEASUREMENT_3 = 3f;
-    private static final float MEASUREMENT_4 = 4f;
-    private static final float MEASUREMENT_5 = 8f;
+    private static final float MEASUREMENT_1 = 0.5f;                // 0.5f
+    private static final float MEASUREMENT_2 = 1f;                  // 1f
+    private static final float MEASUREMENT_3 = 3f;                  // 3f
+    private static final float MEASUREMENT_4 = 4f;                  // 4f
+    private static final float MEASUREMENT_5 = 8f;                  // 8f
 
     public MobilePhone(Model model, Model model2) {
         super(model, model2);

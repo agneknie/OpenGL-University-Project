@@ -10,6 +10,7 @@ import core.lights.Light;
 import core.lights.Spotlight;
 import core.objects.base.Cube;
 import core.objects.base.Rectangle;
+import core.objects.base.Sphere;
 import core.objects.constructed.*;
 import core.structure.Material;
 import core.structure.Mesh;
@@ -39,6 +40,7 @@ public class Museum_GLEventListener implements GLEventListener {
     private Model rectangle;
     private Model cube;
     private Model cube2;
+    private Model sphere;
 
     // Constructed objects
     private Floor floor;
@@ -48,6 +50,7 @@ public class Museum_GLEventListener implements GLEventListener {
     private WindowView windowView;
     private SwingingSpotlight swingingSpotlight;
     private MobilePhone mobilePhone;
+    private ShiningEgg shiningEgg;
 
     private double startTime;
 
@@ -106,6 +109,8 @@ public class Museum_GLEventListener implements GLEventListener {
         int[] textureId4 = TextureLibrary.loadTexture(gl, "windowClouds.jpg");
         int[] textureId5 = TextureLibrary.loadTexture(gl, "mobilePhone.jpg");
         int[] textureId6 = TextureLibrary.loadTexture(gl, "mobilePhoneSpecular.jpg");
+        int[] textureId7 = TextureLibrary.loadTexture(gl, "shiningEgg.jpg");
+        int[] textureId8 = TextureLibrary.loadTexture(gl, "shiningEggSpecular.jpg");
 
         // Sets start time
         startTime = getCurrentSeconds();
@@ -117,21 +122,21 @@ public class Museum_GLEventListener implements GLEventListener {
 
         // Initialises rectangle, used for walls and floor
         Mesh m = new Mesh(gl, Rectangle.VERTICES.clone(), Rectangle.INDICES.clone());
-        // Initialises shader used for walls and floor
-        Shader shader = new Shader(gl, "vs_objects.glsl", "fs_wallsAndFloors.glsl");
-
         // Initialises cube, used for spotlight and exhibit stands
         Mesh m1 = new Mesh(gl, Cube.VERTICES.clone(), Cube.INDICES.clone());
+        // Initialises sphere, used for egg
+        Mesh m2 = new Mesh(gl, Sphere.VERTICES.clone(), Sphere.INDICES.clone());
+
+        // Initialises shader used for walls and floor
+        Shader shader = new Shader(gl, "vs_objects.glsl", "fs_wallsAndFloors.glsl");
         // Initialises shader used for spotlight and exhibit stands
         Shader shader1 = new Shader(gl, "vs_objects.glsl", "fs_exhibitionStand.glsl");
         // Initialises shader, used for window view
         Shader shader2 = new Shader(gl, "vs_windowView.glsl", "fs_windowView.glsl");
-        // Initialises shader, used for mobile phone
+        // Initialises shader, used for mobile phone and shining egg
         Shader shader3 = new Shader(gl, "vs_objects.glsl", "fs_diffuseAndSpecular.glsl");
 
-        // Sets up material used for walls, floor and stands. Currently configured to stand colour, as this is
-        // the only one showing material as other objects are textured
-        // TODO light (below variable material) for different materials could be different. Currently adjusted for stands
+        // Sets up material used every object. Currently configured to stand colour, as this is the only one showing material as other objects are textured
         Material material = new Material(
                 Colours.STAND_BLUE_AMBIENT,
                 Colours.STAND_BLUE,
@@ -168,6 +173,11 @@ public class Museum_GLEventListener implements GLEventListener {
         cube2 = new Model(camera, light1, light2, spotlight, shader3, material, m1, textureId5, textureId6);
         // First model is for stand, second model is for mobile phone itself
         mobilePhone = new MobilePhone(cube, cube2);
+
+        // Sets up model used for shining egg
+        cube = new Model(camera, light1, light2, spotlight, shader1, material, m1);
+        sphere = new Model(camera, light1, light2, spotlight,shader3, material, m2, textureId7, textureId8);
+        shiningEgg = new ShiningEgg(cube, sphere);
     }
 
     /**
@@ -205,6 +215,9 @@ public class Museum_GLEventListener implements GLEventListener {
 
         // Mobile Phone
         mobilePhone.render(gl);
+
+        // Shining Egg
+        shiningEgg.render(gl);
     }
 
     /**
@@ -221,6 +234,7 @@ public class Museum_GLEventListener implements GLEventListener {
         light1.dispose(gl);
         light2.dispose(gl);
         spotlight.dispose(gl);
+        sphere.dispose(gl);
     }
 
     /**
