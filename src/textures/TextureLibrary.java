@@ -1,4 +1,4 @@
-package resources.textures;
+package textures;
 
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL2;
@@ -23,7 +23,7 @@ public class TextureLibrary {
                                     int wrappingS, int wrappingT, int filterS, int filterT) {
         int[] textureId = new int[1];
         try {
-            File f = new File("src/resources/textures/images/"+filename);
+            File f = new File("src/textures/images/"+filename);
             JPEGImage img = JPEGImage.read(new FileInputStream(f));
             gl.glGenTextures(1, textureId, 0);
             gl.glBindTexture(GL.GL_TEXTURE_2D, textureId[0]);

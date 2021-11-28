@@ -24,6 +24,7 @@ public class Camera {
     public static final Vec3 DEFAULT_TARGET_DEVELOPMENT = new Vec3(
             Measurements.WALL_WIDTH*-0.1f,Measurements.WALL_HEIGHT*0.2f, 0);
 
+    // TODO Tinker with production
     public static final Vec3 DEFAULT_POSITION_PRODUCTION = new Vec3(
             Measurements.WALL_WIDTH*0.5f, Measurements.WALL_HEIGHT*0.5f,Measurements.WALL_WIDTH*0.8f);
     public static final Vec3 DEFAULT_TARGET_PRODUCTION = new Vec3(
