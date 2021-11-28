@@ -113,12 +113,12 @@ public class Museum_GLEventListener implements GLEventListener {
         // Initialises rectangle, used for walls and floor
         Mesh m = new Mesh(gl, Rectangle.VERTICES.clone(), Rectangle.INDICES.clone());
         // Initialises shader used for walls and floor
-        Shader shader = new Shader(gl, "vs_rectangle.glsl", "fs_rectangle.glsl");
+        Shader shader = new Shader(gl, "vs_objects.glsl", "fs_wallsAndFloors.glsl");
 
         // Initialises cube, used for spotlight and exhibit stands
         Mesh m1 = new Mesh(gl, Cube.VERTICES.clone(), Cube.INDICES.clone());
         // Initialises shader used for spotlight and exhibit stands
-        Shader shader1 = new Shader(gl, "vs_rectangle.glsl", "fs_cube.glsl");
+        Shader shader1 = new Shader(gl, "vs_objects.glsl", "fs_exhibitionStand.glsl");
         // Initialises shader, used for window view
         Shader shader2 = new Shader(gl, "vs_windowView.glsl", "fs_windowView.glsl");
 
