@@ -2,8 +2,8 @@ package ui;
 
 import core.lights.Light;
 import core.lights.Spotlight;
-import main.Museum;
-import main.Museum_GLEventListener;
+import start.Museum;
+import start.Museum_GLEventListener;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;

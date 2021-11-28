@@ -1,4 +1,4 @@
-package main;
+package start;
 
 import camera.Camera;
 import com.jogamp.opengl.GL;
@@ -17,7 +17,7 @@ import core.structure.Mesh;
 import core.structure.Model;
 import core.structure.Shader;
 import gmaths.Mat4Transform;
-import resources.textures.TextureLibrary;
+import textures.TextureLibrary;
 
 /**
  * Class, which handles the main program- start.Museum Assignment for COM3503.

@@ -1,4 +1,4 @@
-package main;
+package start;
 
 import camera.Camera;
 import camera.CameraKeyboardInput;
