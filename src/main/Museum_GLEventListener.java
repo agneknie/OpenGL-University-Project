@@ -16,6 +16,7 @@ import core.structure.Mesh;
 import core.structure.Model;
 import core.structure.Shader;
 import gmaths.Mat4Transform;
+import gmaths.Vec3;
 import resources.textures.TextureLibrary;
 
 /**
@@ -37,6 +38,7 @@ public class Museum_GLEventListener implements GLEventListener {
     // Base objects from which constructed objects are made
     private Model rectangle;
     private Model cube;
+    private Model cube2;
 
     // Constructed objects
     private Floor floor;
@@ -45,6 +47,7 @@ public class Museum_GLEventListener implements GLEventListener {
     private Entrance entrance;
     private WindowView windowView;
     private SwingingSpotlight swingingSpotlight;
+    private MobilePhone mobilePhone;
 
     private double startTime;
 
@@ -101,6 +104,8 @@ public class Museum_GLEventListener implements GLEventListener {
         int[] textureId2 = TextureLibrary.loadTexture(gl, "entranceDoor.jpg");
         int[] textureId3 = TextureLibrary.loadTexture(gl, "windowSea.jpg");
         int[] textureId4 = TextureLibrary.loadTexture(gl, "windowClouds.jpg");
+        int[] textureId5 = TextureLibrary.loadTexture(gl, "mobilePhone.jpg");
+        int[] textureId6 = TextureLibrary.loadTexture(gl, "mobilePhoneSpecular.jpg");
 
         // Sets start time
         startTime = getCurrentSeconds();
@@ -121,6 +126,8 @@ public class Museum_GLEventListener implements GLEventListener {
         Shader shader1 = new Shader(gl, "vs_objects.glsl", "fs_exhibitionStand.glsl");
         // Initialises shader, used for window view
         Shader shader2 = new Shader(gl, "vs_windowView.glsl", "fs_windowView.glsl");
+        // Initialises shader, used for mobile phone
+        Shader shader3 = new Shader(gl, "vs_objects.glsl", "fs_diffuseAndSpecular.glsl");
 
         // Sets up material used for walls, floor and stands. Currently configured to stand colour, as this is
         // the only one showing material as other objects are textured
@@ -157,6 +164,10 @@ public class Museum_GLEventListener implements GLEventListener {
         swingingSpotlight = new SwingingSpotlight(cube, spotlight);
 
         // Sets up model used for mobile phone
+        cube = new Model(camera, light1, light2, spotlight, shader1, material, m1);
+        cube2 = new Model(camera, light1, light2, spotlight, shader3, material, m1, textureId5, textureId6);
+        // First model is for stand, second model is for mobile phone itself
+        mobilePhone = new MobilePhone(cube, cube2);
     }
 
     /**
@@ -191,6 +202,9 @@ public class Museum_GLEventListener implements GLEventListener {
         // Spotlight Stand
         swingingSpotlight.animateSpotlight();
         swingingSpotlight.render(gl);
+
+        // Mobile Phone
+        mobilePhone.render(gl);
     }
 
     /**
@@ -203,6 +217,7 @@ public class Museum_GLEventListener implements GLEventListener {
 
         rectangle.dispose(gl);
         cube.dispose(gl);
+        cube2.dispose(gl);
         light1.dispose(gl);
         light2.dispose(gl);
         spotlight.dispose(gl);

@@ -52,7 +52,7 @@ vec3 calculateLight(Light light, vec3 norm, vec3 viewDir){
   // Specular
   vec3 reflectDir = reflect(-lightDir, norm);
   float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
-  vec3 specular = light.specular * spec;    // * vec3(texture(material.specular, aTexCoord))
+  vec3 specular = light.specular * spec;
 
   return (ambient + diffuse + specular);
 }

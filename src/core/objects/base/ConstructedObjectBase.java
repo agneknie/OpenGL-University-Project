@@ -7,18 +7,36 @@ import gmaths.Mat4;
 import java.util.List;
 
 /**
- * Base class to form constructed objects, which use a single
- * type of object.base model for their construction.
+ * Base class to form constructed objects from objects.base.
+ * Capable of using up to two different models.
+ *
+ * If one model is used, any number of objects.base can be used
+ * to construct the full object (e.g. SideWall, FrontWall, Floor).
+ *
+ * If two models are used, one object.base can be used for each model
+ * to construct the full object (e.g. MobilePhone, ShiningEgg).
+ * In this case, first matrix in the list is matched with first model,
+ * second matrix in the list is matched with second model.
  *
  * @author Agne Knietaite, 2021
  */
 public abstract class ConstructedObjectBase {
 
     private final Model model;
+    private Model model2;
+
     private List<Mat4> calculatedMatrices;
 
-    public ConstructedObjectBase(Model model){
+    protected ConstructedObjectBase(Model model){
         this.model = model;
+
+        // Calculates the matrix/matrices once, when initialising the object
+        calculatedMatrices = getCalculatedMatrices();
+    }
+
+    protected ConstructedObjectBase(Model model, Model model2){
+        this.model = model;
+        this.model2 = model2;
 
         // Calculates the matrix/matrices once, when initialising the object
         calculatedMatrices = getCalculatedMatrices();
@@ -47,9 +65,29 @@ public abstract class ConstructedObjectBase {
      * looks up already calculated matrices.
      */
     public void render(GL3 gl){
-        for(Mat4 calculatedMatrix : calculatedMatrices){
-            model.setModelMatrix(calculatedMatrix);
+        // If only one type of model is provided
+        if(model2 == null){
+            for(Mat4 calculatedMatrix : calculatedMatrices){
+                model.setModelMatrix(calculatedMatrix);
+                model.render(gl);
+            }
+        }
+
+        // If two models are provided, checks if only one object.base matrix is calculated per model
+        else if(calculatedMatrices.size()==2){
+            // First matrix in the list is matched with first model
+            model.setModelMatrix(calculatedMatrices.get(0));
             model.render(gl);
+
+            // Second matrix in the list is matched with second model
+            model2.setModelMatrix(calculatedMatrices.get(1));
+            model2.render(gl);
+        }
+
+        // If something is wrong, alerts the user that render was not successful
+        else{
+            System.err.println("Rendering of object was not successful in ConstructedObjectBase " +
+                    "for object " + this.getClass().getSimpleName());
         }
     }
 }
