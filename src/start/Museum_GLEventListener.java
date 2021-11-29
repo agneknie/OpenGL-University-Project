@@ -183,6 +183,9 @@ public class Museum_GLEventListener implements GLEventListener {
         cube1 = new Model(camera, light1, light2, spotlight, shader1, material, m1);
         sphere = new Model(camera, light1, light2, spotlight,shader3, material, m2, textureId7, textureId8);
         shiningEgg = new ShiningEgg(cube1, sphere);
+
+        // Sets up model used for robot
+        robot = new Robot(gl, camera, light1, light2, spotlight, m2);
     }
 
     /**
@@ -224,6 +227,10 @@ public class Museum_GLEventListener implements GLEventListener {
 
         // Shining Egg
         shiningEgg.render(gl);
+
+        // TODO add robot rendering
+        // Robot
+        // robot.draw(gl);
     }
 
     /**
