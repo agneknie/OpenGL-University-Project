@@ -27,8 +27,6 @@ import java.awt.event.*;
 // TODO Check access modifiers and remove unnecessary methods
 // TODO Check variable names
 // TODO Check that compiles from command line
-// TODO readme.txt
-// TODO Bash file for auto compile and start
 public class Museum extends JFrame{
 
     private static final int WIDTH = 1800;
