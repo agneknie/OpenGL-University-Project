@@ -29,8 +29,8 @@ import java.awt.event.*;
 // TODO Check that compiles from command line
 public class Museum extends JFrame{
 
-    private static final int WIDTH = 1800;
-    private static final int HEIGHT = 900;
+    private static final int WIDTH = 1400;
+    private static final int HEIGHT = 800;
     private static final Dimension dimension = new Dimension(WIDTH, HEIGHT);
 
     private GLCanvas canvas;

@@ -7,12 +7,29 @@ import com.jogamp.opengl.util.texture.spi.JPEGImage;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class taken from COM3503 Online Tutorial Materials
  * by Dr Steve Maddock at The University of Sheffield, 2021.
+ *
+ * Modified and restructured to suit the needs of this project.
+ *
+ * @author Agne Knietaite, 2021
  */
 public class TextureLibrary {
+
+    // Variables to indicate location of a texture in the generated texture list
+    public static final int FLOOR_WOOD = 0;
+    public static final int WALL_PAINT = 1;
+    public static final int ENTRANCE_DOOR = 2;
+    public static final int WINDOW_SEA = 3;
+    public static final int WINDOW_CLOUDS = 4;
+    public static final int MOBILE_PHONE = 5;
+    public static final int MOBILE_PHONE_SPECULAR = 6;
+    public static final int SHINING_EGG = 7;
+    public static final int SHINING_EGG_SPECULAR = 8;
 
     public static int[] loadTexture(GL3 gl, String filename) {
         return loadTexture(gl, filename, GL.GL_REPEAT, GL.GL_REPEAT,
@@ -42,5 +59,26 @@ public class TextureLibrary {
             e.printStackTrace();
         }
         return textureId;
+    }
+
+    /**
+     * Returns all textures, used by the program.
+     * @param gl
+     * @return texture list of int[]
+     */
+    public static List<int[]> populateTextureList(GL3 gl){
+        List<int[]> textureList = new ArrayList<>();
+
+        textureList.add(TextureLibrary.loadTexture(gl, "floorWood.jpg"));
+        textureList.add(TextureLibrary.loadTexture(gl, "wallPaint.jpg"));
+        textureList.add(TextureLibrary.loadTexture(gl, "entranceDoor.jpg"));
+        textureList.add(TextureLibrary.loadTexture(gl, "windowSea.jpg"));
+        textureList.add(TextureLibrary.loadTexture(gl, "windowClouds.jpg"));
+        textureList.add(TextureLibrary.loadTexture(gl, "mobilePhone.jpg"));
+        textureList.add(TextureLibrary.loadTexture(gl, "mobilePhoneSpecular.jpg"));
+        textureList.add(TextureLibrary.loadTexture(gl, "shiningEgg.jpg"));
+        textureList.add(TextureLibrary.loadTexture(gl, "shiningEggSpecular.jpg"));
+
+        return textureList;
     }
 }

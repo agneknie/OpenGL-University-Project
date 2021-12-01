@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class taken from COM3503 Online Tutorial Materials
@@ -100,5 +102,29 @@ public class Shader {
         if (!program.validateProgram(gl, System.out))
             System.err.println("[error] Unable to link program");
         return program.program();
+    }
+
+    public final static int SINGLE_TEXTURE = 0;
+    public final static int SINGLE_COLOUR = 1;
+    public final static int DOUBLE_TEXTURE = 2;
+    public final static int DIFFUSE_AND_SPECULAR = 3;
+
+
+    public static List<Shader> populateShaderList(GL3 gl){
+        List<Shader> shaderList = new ArrayList<>();
+
+        // Initialises shader used for walls and floor
+        shaderList.add(new Shader(gl, "vs_objects.glsl", "fs_singleTexture.glsl"));
+
+        // Initialises shader used for spotlight and exhibit stands
+        shaderList.add(new Shader(gl, "vs_objects.glsl", "fs_singleColour.glsl"));
+
+        // Initialises shader, used for window view
+        shaderList.add(new Shader(gl, "vs_movingTexture.glsl", "fs_doubleTextureNoLight.glsl"));
+
+        // Initialises shader, used for mobile phone and shining egg
+        shaderList.add(new Shader(gl, "vs_objects.glsl", "fs_diffuseAndSpecular.glsl"));
+
+        return shaderList;
     }
 }

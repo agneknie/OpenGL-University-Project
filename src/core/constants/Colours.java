@@ -25,9 +25,9 @@ public final class Colours {
     private static final int STAND_RED_G = 50;
     private static final int STAND_RED_B = 40;
 
-    public static final Vec3 STAND_BLUE =
+    public static final Vec3 STAND_RED =
             convertRGB(STAND_RED_R, STAND_RED_G, STAND_RED_B);
-    public static final Vec3 STAND_BLUE_AMBIENT =
+    public static final Vec3 STAND_RED_AMBIENT =
             convertRGBAmbient(STAND_RED_R, STAND_RED_G, STAND_RED_B);
 
     // Robot colour darker

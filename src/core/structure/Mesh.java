@@ -3,9 +3,14 @@ package core.structure;
 import com.jogamp.common.nio.Buffers;
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL3;
+import core.objects.base.Cube;
+import core.objects.base.Rectangle;
+import core.objects.base.Sphere;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class taken from COM3503 Online Tutorial Materials
@@ -16,6 +21,11 @@ import java.nio.IntBuffer;
  * @author Agne Knietaite, 2021
  */
 public class Mesh {
+
+    // Variables to indicate location of a mesh in the generated mesh list
+    public static final int RECTANGLE = 0;
+    public static final int CUBE = 1;
+    public static final int SPHERE = 2;
 
     private float[] vertices;
     private int[] indices;
@@ -73,4 +83,24 @@ public class Mesh {
         gl.glDeleteBuffers(1, elementBufferId, 0);
     }
 
+    /**
+     * Returns all meshes, used by the program.
+     *
+     * @param gl
+     * @return list of Mesh objects
+     */
+    public static List<Mesh> populateMeshList(GL3 gl){
+        List<Mesh> meshList = new ArrayList<>();
+
+        // Initialises rectangle, used for walls and floor
+        meshList.add(new Mesh(gl, Rectangle.VERTICES.clone(), Rectangle.INDICES.clone()));
+
+        // Initialises cube, used for spotlight and exhibit stands
+        meshList.add(new Mesh(gl, Cube.VERTICES.clone(), Cube.INDICES.clone()));
+
+        // Initialises sphere, used for egg and robot
+        meshList.add(new Mesh(gl, Sphere.VERTICES.clone(), Sphere.INDICES.clone()));
+
+        return meshList;
+    }
 }
