@@ -115,4 +115,19 @@ public class RobotHead {
         headRoot.addChild(moveLowerLip);
             moveLowerLip.addChild(lowerLip.getNameNode());
     }
+
+    /**
+     * Resets the robot head into the natural state (initial world position)
+     * so it can be modified into a different pose.
+     */
+    public void resetToNaturalState(){
+        moveRightLowerEar.setTransform(new Mat4(1));
+        moveRightUpperEar.setTransform(new Mat4(1));
+        moveLeftLowerEar.setTransform(new Mat4(1));
+        moveLeftUpperEar.setTransform(new Mat4(1));
+        moveUpperLip.setTransform(new Mat4(1));
+        moveLowerLip.setTransform(new Mat4(1));
+        moveRightInnerEye.setTransform(new Mat4(1));
+        moveLeftInnerEye.setTransform(new Mat4(1));
+    }
 }

@@ -11,9 +11,11 @@ import core.structure.Shader;
 import core.structure.nodes.NameNode;
 import core.structure.nodes.TransformNode;
 import gmaths.Mat4;
+import gmaths.Mat4Transform;
 import gmaths.Vec3;
 
 import static core.constants.Colours.*;
+import static core.constants.Measurements.*;
 
 /**
  * Class meant to represent the robot.
@@ -22,6 +24,8 @@ import static core.constants.Colours.*;
  */
 public class Robot {
     private NameNode robotRoot;
+
+    private RobotHead robotHead;
 
     private TransformNode moveFoot = new TransformNode("Move Foot", new Mat4(1));
     private TransformNode moveNeck = new TransformNode("Move Neck", new Mat4(1));
@@ -70,14 +74,17 @@ public class Robot {
                 spotlight, mesh, robotInnerEyeMaterial);
 
         // Creates all robot body parts
-        RobotHead head = new RobotHead(robotDarkModel, robotLightModel, robotLipsModel,
+        robotHead = new RobotHead(robotDarkModel, robotLightModel, robotLipsModel,
                 robotOuterEyeModel, robotInnerEyeModel);
         RobotPart neck = new RobotPart(RobotPartName.NECK, robotDarkModel);
         RobotPart body = new RobotPart(RobotPartName.BODY, robotLightModel);
         RobotPart foot = new RobotPart(RobotPartName.FOOT, robotDarkModel);
 
         // Calls the method, which creates the hierarchical model of the robot
-        constructHierarchy(head, neck, body, foot);
+        constructHierarchy(robotHead, neck, body, foot);
+
+        // Puts robot in pose 1: just entered the museum
+        makePose1();
     }
 
     /**
@@ -118,47 +125,107 @@ public class Robot {
      * so it can be modified into a different pose.
      */
     private void resetToNaturalState(){
-        // TODO resetToNaturalState
+        moveFoot.setTransform(new Mat4(1));
+        moveNeck.setTransform(new Mat4(1));
+
+        robotHead.resetToNaturalState();
+
+        robotRoot.update();
     }
 
     /**
-     * Method which puts the robot into pose 1.
+     * Method which puts the robot into pose 1:
+     * Just entered the museum.
      */
     public void makePose1(){
         resetToNaturalState();
+
+        // Moves to the right position
+        moveFoot.setTransform(Mat4Transform.translate(
+                -WALL_WIDTH*0.25f,
+                0,
+                -WALL_WIDTH*0.375f));
+
+        // Does the pose
         // TODO makePose1
+
+        robotRoot.update();
     }
 
     /**
-     * Method which puts the robot into pose 2.
+     * Method which puts the robot into pose 2:
+     * Looking at the mobile phone.
      */
     public void makePose2(){
         resetToNaturalState();
+
+        // Moves to the right position
+        moveFoot.setTransform(Mat4Transform.translate(
+                WALL_WIDTH*0.25f,
+                0,
+                0));
+
+        // Does the pose
         // TODO makePose2
+
+        robotRoot.update();
     }
 
     /**
-     * Method which puts the robot into pose 3.
+     * Method which puts the robot into pose 3:
+     * Looking at the spotlight.
      */
     public void makePose3(){
         resetToNaturalState();
+
+        // Moves to the right position
+        moveFoot.setTransform(Mat4Transform.translate(
+                WALL_WIDTH*0.25f,
+                0,
+                WALL_WIDTH*0.375f));
+
+        // Does the pose
         // TODO makePose3
+
+        robotRoot.update();
     }
 
     /**
-     * Method which puts the robot into pose 4.
+     * Method which puts the robot into pose 4:
+     * Looking at the shining egg.
      */
     public void makePose4(){
         resetToNaturalState();
+
+        // Moves to the right position
+        moveFoot.setTransform(Mat4Transform.translate(
+                -WALL_WIDTH*0.125f,
+                0,
+                WALL_WIDTH*0.375f));
+
+        // Does the pose
         // TODO makePose4
+
+        robotRoot.update();
     }
 
     /**
-     * Method which puts the robot into pose 5.
+     * Method which puts the robot into pose 5:
+     * Looking through the window.
      */
     public void makePose5(){
         resetToNaturalState();
+
+        // Moves to the right position
+        moveFoot.setTransform(Mat4Transform.translate(
+                -WALL_WIDTH*0.375f,
+                0,
+                0));
+
+        // Does the pose
         // TODO makePose5
+
+        robotRoot.update();
     }
 
     /**
