@@ -23,6 +23,10 @@ public class TransformNode extends SGNode {
         transform = new Mat4(m);
     }
 
+    public Mat4 getTransform() {
+        return transform;
+    }
+
     protected void update(Mat4 t) {
         worldTransform = t;
         t = Mat4.multiply(worldTransform, transform);

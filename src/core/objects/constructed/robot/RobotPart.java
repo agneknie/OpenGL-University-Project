@@ -509,7 +509,7 @@ public class RobotPart {
     /**
      * Method which creates node hierarchy within the part.
      *
-     * Indentation to show hierarchy
+     * Indentation to show hierarchy.
      */
     private void createHierarchy(){
         nameNode.addChild(transformNode);

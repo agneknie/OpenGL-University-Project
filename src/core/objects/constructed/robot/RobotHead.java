@@ -38,14 +38,14 @@ public class RobotHead {
     private RobotPart lowerLip;
 
     // Transform nodes to move the head parts
-    private TransformNode moveRightLowerEar = new TransformNode("Move Right Lower Ear", new Mat4(1));
-    private TransformNode moveRightUpperEar = new TransformNode("Move Right Upper Ear", new Mat4(1));
-    private TransformNode moveLeftLowerEar = new TransformNode("Move Left Lower Ear", new Mat4(1));
-    private TransformNode moveLeftUpperEar = new TransformNode("Move Left Upper Ear", new Mat4(1));
-    private TransformNode moveUpperLip = new TransformNode("Move Upper Lip", new Mat4(1));
-    private TransformNode moveLowerLip = new TransformNode("Move Lower Lip", new Mat4(1));
-    private TransformNode moveRightInnerEye = new TransformNode("Move Right Inner Ear", new Mat4(1));
-    private TransformNode moveLeftInnerEye = new TransformNode("Move Left Inner Ear", new Mat4(1));
+    protected TransformNode moveRightLowerEar = new TransformNode("Move Right Lower Ear", new Mat4(1));
+    protected TransformNode moveRightUpperEar = new TransformNode("Move Right Upper Ear", new Mat4(1));
+    protected TransformNode moveLeftLowerEar = new TransformNode("Move Left Lower Ear", new Mat4(1));
+    protected TransformNode moveLeftUpperEar = new TransformNode("Move Left Upper Ear", new Mat4(1));
+    protected TransformNode moveUpperLip = new TransformNode("Move Upper Lip", new Mat4(1));
+    protected TransformNode moveLowerLip = new TransformNode("Move Lower Lip", new Mat4(1));
+    protected TransformNode moveRightInnerEye = new TransformNode("Move Right Inner Ear", new Mat4(1));
+    protected TransformNode moveLeftInnerEye = new TransformNode("Move Left Inner Ear", new Mat4(1));
 
     protected RobotHead(Model robotDark, Model robotLight, Model robotLips, Model robotOuterEye, Model robotInnerEye){
         this.head = new RobotPart(RobotPartName.HEAD, robotLight);
@@ -94,7 +94,7 @@ public class RobotHead {
         headRoot.addChild(moveLeftLowerEar);
             moveLeftLowerEar.addChild(lowerLeftEar.getNameNode());
                 lowerLeftEar.getNameNode().addChild(moveLeftUpperEar);
-                    moveLeftLowerEar.addChild(upperLeftEar.getNameNode());
+                    moveLeftUpperEar.addChild(upperLeftEar.getNameNode());
 
         // Right Eye
         headRoot.addChild(outerRightEye.getNameNode());

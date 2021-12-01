@@ -228,7 +228,6 @@ public class Museum_GLEventListener implements GLEventListener {
         // Shining Egg
         shiningEgg.render(gl);
 
-        // TODO add robot rendering
         // Robot
         robot.draw(gl);
     }

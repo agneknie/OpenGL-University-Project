@@ -135,7 +135,7 @@ public class Robot {
 
     /**
      * Method which puts the robot into pose 1:
-     * Just entered the museum.
+     * Just entered the museum, the robot is amazed.
      */
     public void makePose1(){
         resetToNaturalState();
@@ -146,84 +146,247 @@ public class Robot {
                 0,
                 -WALL_WIDTH*0.375f));
 
-        // Does the pose
-        // TODO makePose1
+        // Opens the mouth
+        robotHead.moveUpperLip.setTransform(
+                Mat4Transform.translate(
+                        0,
+                        ROBOT_MEASUREMENT_1*0.5f,
+                        0));
+        robotHead.moveLowerLip.setTransform(
+                Mat4Transform.translate(
+                        0,
+                        -ROBOT_MEASUREMENT_1*0.5f,
+                        0));
+
+        // Moves eyes to the museum exhibits due to amazement
+        robotHead.moveRightInnerEye.setTransform(
+                Mat4Transform.translate(
+                        ROBOT_MEASUREMENT_2*0.5f,
+                        0,
+                        0));
+        robotHead.moveLeftInnerEye.setTransform(
+                Mat4Transform.translate(
+                        ROBOT_MEASUREMENT_2*0.5f,
+                        0,
+                        0));
 
         robotRoot.update();
     }
 
     /**
      * Method which puts the robot into pose 2:
-     * Looking at the mobile phone.
+     * Looking at the mobile phone, which greatly interests the robot.
      */
     public void makePose2(){
         resetToNaturalState();
 
-        // Moves to the right position
-        moveFoot.setTransform(Mat4Transform.translate(
-                WALL_WIDTH*0.25f,
-                0,
-                0));
+        // Rotates towards phone
+        moveFoot.setTransform((Mat4Transform.rotateAroundY(180)));
 
-        // Does the pose
-        // TODO makePose2
+        // Bends body forwards for more thorough phone inspection
+        moveFoot.setTransform(Mat4.multiply(
+                Mat4Transform.rotateAroundX(-30), moveFoot.getTransform()));
+
+        // Moves to the right position
+        moveFoot.setTransform(Mat4.multiply(
+                Mat4Transform.translate(
+                        WALL_WIDTH*0.25f,
+                        0,
+                        0), moveFoot.getTransform())
+        );
+
+        // Inspects phone closely
+        robotHead.moveRightInnerEye.setTransform(
+                Mat4Transform.translate(
+                        0,
+                        ROBOT_MEASUREMENT_2*0.5f,
+                        0));
+        robotHead.moveLeftInnerEye.setTransform(
+                Mat4Transform.translate(
+                        0,
+                        ROBOT_MEASUREMENT_2*0.5f,
+                        0));
+
+        // Moves the ears towards the phone
+        robotHead.moveRightLowerEar.setTransform(Mat4Transform.rotateAroundX(-1));
+        robotHead.moveLeftLowerEar.setTransform(Mat4Transform.rotateAroundX(-1));
 
         robotRoot.update();
     }
 
     /**
      * Method which puts the robot into pose 3:
-     * Looking at the spotlight.
+     * Looking at the spotlight, which amazes the robot.
      */
     public void makePose3(){
         resetToNaturalState();
 
+        // Rotates towards spotlight
+        moveFoot.setTransform(Mat4Transform.rotateAroundY(90));
+
+        // Bends body backwards to look at the spotlight
+        moveFoot.setTransform(Mat4.multiply(
+                Mat4Transform.rotateAroundZ(20), moveFoot.getTransform()));
+
         // Moves to the right position
-        moveFoot.setTransform(Mat4Transform.translate(
+        moveFoot.setTransform(Mat4.multiply(Mat4Transform.translate(
                 WALL_WIDTH*0.25f,
                 0,
-                WALL_WIDTH*0.375f));
+                WALL_WIDTH*0.375f), moveFoot.getTransform()));
 
-        // Does the pose
-        // TODO makePose3
+        // Looks down at the spotlight on its body
+        robotHead.moveRightInnerEye.setTransform(
+                Mat4Transform.translate(
+                        0,
+                        -ROBOT_MEASUREMENT_2*0.75f,
+                        0));
+        robotHead.moveLeftInnerEye.setTransform(
+                Mat4Transform.translate(
+                        0,
+                        -ROBOT_MEASUREMENT_2*0.75f,
+                        0));
+
+        // Moves ears to the side due to shock
+        robotHead.moveRightLowerEar.setTransform(
+                Mat4Transform.translate(
+                        0,
+                        -ROBOT_MEASUREMENT_7*0.25f,
+                        ROBOT_MEASUREMENT_7*0.1f
+                )
+        );
+        robotHead.moveLeftLowerEar.setTransform(
+                Mat4Transform.translate(
+                        0,
+                        -ROBOT_MEASUREMENT_7*0.25f,
+                        ROBOT_MEASUREMENT_7*0.1f
+                )
+        );
+
+        // Opens mouth in amazement
+        robotHead.moveUpperLip.setTransform(
+                Mat4Transform.translate(
+                        0,
+                        ROBOT_MEASUREMENT_1*0.5f,
+                        0));
+        robotHead.moveLowerLip.setTransform(
+                Mat4Transform.translate(
+                        0,
+                        -ROBOT_MEASUREMENT_1*0.5f,
+                        0));
 
         robotRoot.update();
     }
 
     /**
      * Method which puts the robot into pose 4:
-     * Looking at the shining egg.
+     * Looking at the shining egg, which is very confusing for the robot.
      */
     public void makePose4(){
         resetToNaturalState();
 
+        // Rotates towards egg
+        moveFoot.setTransform(Mat4Transform.rotateAroundY(180));
+
+        // Rotates in confusement
+        moveFoot.setTransform(Mat4.multiply(
+                Mat4Transform.rotateAroundZ(15), moveFoot.getTransform()));
+
         // Moves to the right position
-        moveFoot.setTransform(Mat4Transform.translate(
+        moveFoot.setTransform(Mat4.multiply(Mat4Transform.translate(
                 -WALL_WIDTH*0.125f,
                 0,
-                WALL_WIDTH*0.375f));
+                WALL_WIDTH*0.375f), moveFoot.getTransform()));
 
-        // Does the pose
-        // TODO makePose4
+        // Looks up at the egg
+        robotHead.moveRightInnerEye.setTransform(
+                Mat4Transform.translate(
+                        0,
+                        ROBOT_MEASUREMENT_2*0.5f,
+                        0));
+        robotHead.moveLeftInnerEye.setTransform(
+                Mat4Transform.translate(
+                        0,
+                        ROBOT_MEASUREMENT_2*0.5f,
+                        0));
+
+        // Lips move to due to confusement
+        robotHead.moveUpperLip.setTransform(
+                Mat4Transform.translate(
+                        ROBOT_MEASUREMENT_3*0.25f,
+                        0,
+                        0));
+        robotHead.moveLowerLip.setTransform(
+                Mat4Transform.translate(
+                        -ROBOT_MEASUREMENT_5*0.25f,
+                        0,
+                        0));
+
+        // Ears move due to confusement
+        robotHead.moveLeftLowerEar.setTransform(
+                Mat4Transform.translate(
+                        0,
+                        -ROBOT_MEASUREMENT_7*0.25f,
+                        ROBOT_MEASUREMENT_7*0.1f
+                )
+        );
+        robotHead.moveRightLowerEar.setTransform(
+                Mat4Transform.translate(
+                        -ROBOT_MEASUREMENT_7*0.25f,
+                        0,
+                        0
+                )
+        );
 
         robotRoot.update();
     }
 
     /**
      * Method which puts the robot into pose 5:
-     * Looking through the window.
+     * Looking through the window, enjoying the fresh seaside breeze.
      */
     public void makePose5(){
         resetToNaturalState();
 
+        // Rotates towards window
+        moveFoot.setTransform(Mat4Transform.rotateAroundY(-90));
+
+        // Sticks the head from the window
+        moveFoot.setTransform(Mat4.multiply(
+                Mat4Transform.rotateAroundZ(20), moveFoot.getTransform()));
+
         // Moves to the right position
-        moveFoot.setTransform(Mat4Transform.translate(
+        moveFoot.setTransform(Mat4.multiply(Mat4Transform.translate(
                 -WALL_WIDTH*0.375f,
                 0,
-                0));
+                0), moveFoot.getTransform()));
 
-        // Does the pose
-        // TODO makePose5
+        // Looks up at the sky
+        robotHead.moveRightInnerEye.setTransform(
+                Mat4Transform.translate(
+                        0,
+                        ROBOT_MEASUREMENT_2*0.75f,
+                        0));
+        robotHead.moveLeftInnerEye.setTransform(
+                Mat4Transform.translate(
+                        0,
+                        ROBOT_MEASUREMENT_2*0.75f,
+                        0));
+
+        // Ears move back due to the wind
+        robotHead.moveLeftLowerEar.setTransform(
+                Mat4Transform.translate(
+                        0,
+                        -ROBOT_MEASUREMENT_7*0.5f,
+                        -ROBOT_MEASUREMENT_7*0.25f
+                )
+        );
+        robotHead.moveRightLowerEar.setTransform(
+                Mat4Transform.translate(
+                        0,
+                        -ROBOT_MEASUREMENT_7*0.5f,
+                        -ROBOT_MEASUREMENT_7*0.25f
+                )
+        );
 
         robotRoot.update();
     }
