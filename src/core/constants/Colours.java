@@ -20,16 +20,15 @@ public final class Colours {
     public static final Vec3 SPOTLIGHT_YELLOW_AMBIENT =
             convertRGBAmbient(SPOTLIGHT_YELLOW_R, SPOTLIGHT_YELLOW_G, SPOTLIGHT_YELLOW_B);
 
-    // TODO change this colour
-    // Exhibition stands dark blue
-    private static final int STAND_BLUE_R = 50;
-    private static final int STAND_BLUE_G = 55;
-    private static final int STAND_BLUE_B = 75;
+    // Exhibition stands dark red
+    private static final int STAND_RED_R = 155;
+    private static final int STAND_RED_G = 50;
+    private static final int STAND_RED_B = 40;
 
     public static final Vec3 STAND_BLUE =
-            convertRGB(STAND_BLUE_R, STAND_BLUE_G, STAND_BLUE_B);
+            convertRGB(STAND_RED_R, STAND_RED_G, STAND_RED_B);
     public static final Vec3 STAND_BLUE_AMBIENT =
-            convertRGBAmbient(STAND_BLUE_R, STAND_BLUE_G, STAND_BLUE_B);
+            convertRGBAmbient(STAND_RED_R, STAND_RED_G, STAND_RED_B);
 
     // Robot colour darker
     private static final int ROBOT_DARKER_R = 250;

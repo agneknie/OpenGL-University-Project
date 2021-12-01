@@ -39,9 +39,7 @@ public class RobotHead {
 
     // Transform nodes to move the head parts
     protected TransformNode moveRightLowerEar = new TransformNode("Move Right Lower Ear", new Mat4(1));
-    protected TransformNode moveRightUpperEar = new TransformNode("Move Right Upper Ear", new Mat4(1));
     protected TransformNode moveLeftLowerEar = new TransformNode("Move Left Lower Ear", new Mat4(1));
-    protected TransformNode moveLeftUpperEar = new TransformNode("Move Left Upper Ear", new Mat4(1));
     protected TransformNode moveUpperLip = new TransformNode("Move Upper Lip", new Mat4(1));
     protected TransformNode moveLowerLip = new TransformNode("Move Lower Lip", new Mat4(1));
     protected TransformNode moveRightInnerEye = new TransformNode("Move Right Inner Ear", new Mat4(1));
@@ -87,14 +85,12 @@ public class RobotHead {
         // Right ear
         headRoot.addChild(moveRightLowerEar);
             moveRightLowerEar.addChild(lowerRightEar.getNameNode());
-                lowerRightEar.getNameNode().addChild(moveRightUpperEar);
-                    moveRightUpperEar.addChild(upperRightEar.getNameNode());
+                lowerRightEar.getNameNode().addChild(upperRightEar.getNameNode());
 
         // Left ear
         headRoot.addChild(moveLeftLowerEar);
             moveLeftLowerEar.addChild(lowerLeftEar.getNameNode());
-                lowerLeftEar.getNameNode().addChild(moveLeftUpperEar);
-                    moveLeftUpperEar.addChild(upperLeftEar.getNameNode());
+                lowerLeftEar.getNameNode().addChild(upperLeftEar.getNameNode());
 
         // Right Eye
         headRoot.addChild(outerRightEye.getNameNode());
@@ -122,9 +118,7 @@ public class RobotHead {
      */
     public void resetToNaturalState(){
         moveRightLowerEar.setTransform(new Mat4(1));
-        moveRightUpperEar.setTransform(new Mat4(1));
         moveLeftLowerEar.setTransform(new Mat4(1));
-        moveLeftUpperEar.setTransform(new Mat4(1));
         moveUpperLip.setTransform(new Mat4(1));
         moveLowerLip.setTransform(new Mat4(1));
         moveRightInnerEye.setTransform(new Mat4(1));

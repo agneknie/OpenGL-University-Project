@@ -139,7 +139,6 @@ public class InterfacePanel extends JPanel {
      * @param buttonName name of the button
      */
     public void buttonClicked(Museum_GLEventListener gl, String buttonName){
-        // TODO Implement button clicks
         switch (buttonName){
             case "Pose 1":
                 gl.getRobot().makePose1();
@@ -170,7 +169,7 @@ public class InterfacePanel extends JPanel {
                 break;
 
             case "Animate":
-                // TODO robot animation
+                // TODO Robot Animation
                 System.err.println("Animation not Implemented :(");
                 break;
         }

@@ -47,7 +47,6 @@ public class WindowView extends ConstructedObjectBase {
 
         component = Mat4.multiply(
                 Mat4Transform.translate(
-                        // TODO Vary X value, to see if making the view closer to the window helps when looking from the sides
                         -WALL_WIDTH*2f,
                         WALL_HEIGHT*0.75f,
                         -WALL_WIDTH*0.5f), component);
