@@ -33,12 +33,12 @@ public class Museum extends JFrame{
     private static final int HEIGHT = 900;
     private static final Dimension dimension = new Dimension(WIDTH, HEIGHT);
 
-    private final GLCanvas canvas;
-    private final Museum_GLEventListener glEventListener;
+    private GLCanvas canvas;
+    private Museum_GLEventListener glEventListener;
     private static final int TARGET_FPS = 60;
-    private final FPSAnimator animator;
+    private FPSAnimator animator;
 
-    private final Camera camera;
+    private Camera camera;
 
     public Museum_GLEventListener getGlEventListener(){
         return glEventListener;
@@ -57,29 +57,18 @@ public class Museum extends JFrame{
     public Museum(String titleBarText){
         super(titleBarText);
 
-        // Initialises necessary variables
-        GLCapabilities glCapabilities = new GLCapabilities(GLProfile.get(GLProfile.GL3));
-        canvas = new GLCanvas(glCapabilities);
+        // Initialise OpenGL
+        initialiseGL();
 
         // Initialises the camera
-        camera = new Camera(Camera.DEFAULT_POSITION_PRODUCTION,
-                Camera.DEFAULT_TARGET_PRODUCTION,
-                Camera.DEFAULT_UP);
-        glEventListener = new Museum_GLEventListener(camera);
-
-        // Adds the canvas
-        getContentPane().add(canvas, BorderLayout.CENTER);
-
-        // Adds the user interface
-        InterfacePanel interfacePanel = new InterfacePanel(this);
-        this.add(interfacePanel, BorderLayout.SOUTH);
+        initialiseCamera();
 
         // Adds all listeners
         addListeners();
 
-        // Configures animator
-        animator = new FPSAnimator(canvas, TARGET_FPS);
-        animator.start();
+        // Adds the user interface
+        InterfacePanel interfacePanel = new InterfacePanel(this);
+        this.add(interfacePanel, BorderLayout.SOUTH);
     }
 
     /**
@@ -98,5 +87,31 @@ public class Museum extends JFrame{
                 System.exit(0);
             }
         });
+    }
+
+    /**
+     * Method which initialises the camera for the scene.
+     */
+    private void initialiseCamera(){
+        camera = new Camera(Camera.DEFAULT_POSITION_PRODUCTION,
+                Camera.DEFAULT_TARGET_PRODUCTION,
+                Camera.DEFAULT_UP);
+        glEventListener = new Museum_GLEventListener(camera);
+    }
+
+    /**
+     * Method which initialises the GL components necessary for creating the scene.
+     */
+    private void initialiseGL(){
+        // Initialises GL
+        GLCapabilities glCapabilities = new GLCapabilities(GLProfile.get(GLProfile.GL3));
+
+        // Initialises canvas
+        canvas = new GLCanvas(glCapabilities);
+        getContentPane().add(canvas, BorderLayout.CENTER);
+
+        // Configures animator
+        animator = new FPSAnimator(canvas, TARGET_FPS);
+        animator.start();
     }
 }
