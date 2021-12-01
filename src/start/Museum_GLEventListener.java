@@ -138,6 +138,35 @@ public class Museum_GLEventListener implements GLEventListener {
         camera.setPerspectiveMatrix(Mat4Transform.perspective(45, aspect));
     }
 
+
+    /**
+     * Method which initialises all objects present on the canvas.
+     * @param gl
+     */
+    public void initialise(GL3 gl) {
+
+        // Set Application Start Time
+        startTime = getCurrentSeconds();
+
+        // Load Textures
+        List<int[]> textureList = TextureLibrary.populateTextureList(gl);
+
+        // Create Meshes
+        List<Mesh> meshList = Mesh.populateMeshList(gl);
+
+        // Load Shaders
+        List<Shader> shaderList = Shader.populateShaderList(gl);
+
+        // Initialise Lights
+        initialiseLights(gl);
+
+        // Initialise All Objects apart from Robot
+        initialiseObjects(textureList, meshList, shaderList);
+
+        // Initialise Robot
+        robot = new Robot(gl, camera, light1, light2, spotlight, meshList.get(Mesh.SPHERE), "Robot");
+    }
+
     /**
      * Called to render the scene.
      * Adapted from COM3503 Tutorials.
@@ -193,6 +222,77 @@ public class Museum_GLEventListener implements GLEventListener {
         gl.glCullFace(GL.GL_BACK);
     }
 
+
+    /**
+     * Method which initialises all objects apart from the robot in the scene.
+     *
+     * @param textureList list of textures to use for objects
+     * @param meshList list of meshes to use for objects
+     * @param shaderList list of shaders to use for objects
+     */
+    private void initialiseObjects(List<int[]> textureList, List<Mesh> meshList, List<Shader> shaderList){
+        // Sets up material used every object, except the robot, as it uses its own material
+        Material material = new Material(
+                Colours.STAND_RED_AMBIENT,
+                Colours.STAND_RED,
+                Colours.STAND_RED,
+                32);
+
+        // Initialise Walls
+        initialiseWalls(
+                shaderList.get(Shader.SINGLE_TEXTURE),
+                material,
+                meshList.get(Mesh.RECTANGLE),
+                textureList.get(TextureLibrary.WALL_PAINT));
+
+        // Initialise Floor
+        initialiseFloor(
+                shaderList.get(Shader.SINGLE_TEXTURE),
+                material,
+                meshList.get(Mesh.RECTANGLE),
+                textureList.get(TextureLibrary.FLOOR_WOOD));
+
+        // Initialise Entrance
+        initialiseEntrance(
+                shaderList.get(Shader.SINGLE_TEXTURE),
+                material,
+                meshList.get(Mesh.RECTANGLE),
+                textureList.get(TextureLibrary.ENTRANCE_DOOR));
+
+        // Initialise Window View
+        initialiseWindowView(shaderList.get(
+                Shader.DOUBLE_TEXTURE),
+                material,
+                meshList.get(Mesh.RECTANGLE),
+                textureList.get(TextureLibrary.WINDOW_SEA),
+                textureList.get(TextureLibrary.WINDOW_CLOUDS));
+
+        // Initialise Spotlight
+        initialiseSpotlight(
+                shaderList.get(Shader.SINGLE_COLOUR),
+                material,
+                meshList.get(Mesh.CUBE));
+
+        // Initialise Mobile Phone
+        initialiseMobilePhone(
+                shaderList.get(Shader.SINGLE_COLOUR),
+                shaderList.get(Shader.DIFFUSE_AND_SPECULAR),
+                material,
+                meshList.get(Mesh.CUBE),
+                textureList.get(TextureLibrary.MOBILE_PHONE),
+                textureList.get(TextureLibrary.MOBILE_PHONE_SPECULAR));
+
+        // Initialise Shining Egg
+        initialiseShiningEgg(
+                shaderList.get(Shader.SINGLE_COLOUR),
+                shaderList.get(Shader.DIFFUSE_AND_SPECULAR),
+                material,
+                meshList.get(Mesh.CUBE),
+                meshList.get(Mesh.SPHERE),
+                textureList.get(TextureLibrary.SHINING_EGG),
+                textureList.get(TextureLibrary.SHINING_EGG_SPECULAR));
+    }
+
     /**
      * Method which initialises the lights.
      */
@@ -206,68 +306,89 @@ public class Museum_GLEventListener implements GLEventListener {
 
     }
 
-    public void initialise(GL3 gl) {
-        // TODO Clean up this method
-
-        // Set start time
-        startTime = getCurrentSeconds();
-
-        // Load textures
-        List<int[]> textureList = TextureLibrary.populateTextureList(gl);
-
-        // Load meshes
-        List<Mesh> meshList = Mesh.populateMeshList(gl);
-
-        // Load shaders
-        List<Shader> shaderList = Shader.populateShaderList(gl);
-
-        // Sets up material used every object, except the robot, as it uses its own material
-        Material material = new Material(
-                Colours.STAND_RED_AMBIENT,
-                Colours.STAND_RED,
-                Colours.STAND_RED,
-                32);
-
-        // Initialise the lights
-        initialiseLights(gl);
-
+    /**
+     * Method which initialises the walls.
+     */
+    private void initialiseWalls(Shader shader, Material material, Mesh mesh, int[] texture){
         // Sets up model used for walls
-        rectangle = new Model(camera, light1, light2, spotlight, shaderList.get(Shader.SINGLE_TEXTURE), material, meshList.get(Mesh.RECTANGLE), textureList.get(TextureLibrary.WALL_PAINT));
+        rectangle = new Model(camera, light1, light2, spotlight, shader, material, mesh, texture);
+
         // Initialises Front Wall
         frontWall = new FrontWall(rectangle);
         // Initialises Side Wall
         sideWall = new SideWall(rectangle);
+    }
 
+    /**
+     * Method which initialises the floor.
+     */
+    private void initialiseFloor(Shader shader, Material material, Mesh mesh, int[] texture){
         // Sets up model used for floor
-        rectangle = new Model(camera, light1, light2, spotlight, shaderList.get(Shader.SINGLE_TEXTURE), material, meshList.get(Mesh.RECTANGLE), textureList.get(TextureLibrary.FLOOR_WOOD));
+        rectangle = new Model(camera, light1, light2, spotlight, shader, material, mesh, texture);
+
         // Initialises Floor
         floor = new Floor(rectangle);
+    }
 
+    /**
+     * Method which initialises the entrance.
+     */
+    private void initialiseEntrance(Shader shader, Material material, Mesh mesh, int[] texture){
         // Sets up model used for museum entrance
-        rectangle = new Model(camera, light1, light2, spotlight, shaderList.get(Shader.SINGLE_TEXTURE), material, meshList.get(Mesh.RECTANGLE), textureList.get(TextureLibrary.ENTRANCE_DOOR));
+        rectangle = new Model(camera, light1, light2, spotlight, shader, material, mesh, texture);
+
+        // Initialises Entrance
         entrance = new Entrance(rectangle);
+    }
 
+    /**
+     * Method which initialises the view through the window.
+     */
+    private void initialiseWindowView(Shader shader, Material material, Mesh mesh, int[] textureOriginal, int[] textureMoving){
         // Sets up model used for the window view
-        rectangle = new Model(camera, light1, light2, spotlight, shaderList.get(Shader.DOUBLE_TEXTURE), material, meshList.get(Mesh.RECTANGLE), textureList.get(TextureLibrary.WINDOW_SEA), textureList.get(TextureLibrary.WINDOW_CLOUDS));
+        rectangle = new Model(camera, light1, light2, spotlight, shader, material, mesh, textureOriginal, textureMoving);
+
+        // Initialises Window View
         windowView = new WindowView(rectangle);
+
+        // Saves the model for animation
         windowView.saveModel(rectangle);
+    }
 
+    /**
+     * Method which initialises the spotlight.
+     */
+    private void initialiseSpotlight(Shader shader, Material material, Mesh mesh){
         // Sets up model used for spotlight stand
-        cube1 = new Model(camera, light1, light2, spotlight, shaderList.get(Shader.SINGLE_COLOUR), material, meshList.get(Mesh.CUBE));
+        cube1 = new Model(camera, light1, light2, spotlight, shader, material, mesh);
+
+        // Initialises spotlight
         swingingSpotlight = new SwingingSpotlight(cube1, spotlight);
+    }
 
+    /**
+     * Method which initialises the mobile phone and its stand.
+     */
+    private void initialiseMobilePhone(Shader shaderStand, Shader shaderExhibit, Material material,
+                                       Mesh mesh, int[] textureOriginal, int[] textureSpecular){
         // Sets up model used for mobile phone
-        cube1 = new Model(camera, light1, light2, spotlight, shaderList.get(Shader.SINGLE_COLOUR), material,  meshList.get(Mesh.CUBE));
-        cube2 = new Model(camera, light1, light2, spotlight, shaderList.get(Shader.DIFFUSE_AND_SPECULAR), material,  meshList.get(Mesh.CUBE), textureList.get(TextureLibrary.MOBILE_PHONE), textureList.get(TextureLibrary.MOBILE_PHONE_SPECULAR));
-        // First model is for stand, second model is for mobile phone itself
+        cube1 = new Model(camera, light1, light2, spotlight, shaderStand, material, mesh);
+        cube2 = new Model(camera, light1, light2, spotlight, shaderExhibit, material, mesh, textureOriginal, textureSpecular);
+
+        // Initialises mobile phone. First model is for stand, second model is for mobile phone itself
         mobilePhone = new MobilePhone(cube1, cube2);
+    }
 
+    /**
+     * Method which initialises the shining egg and its stand.
+     */
+    private void initialiseShiningEgg(Shader shaderStand, Shader shaderExhibit, Material material,
+                                      Mesh meshCube, Mesh meshSphere, int[] textureOriginal, int[] textureSpecular){
         // Sets up model used for shining egg
-        cube1 = new Model(camera, light1, light2, spotlight, shaderList.get(Shader.SINGLE_COLOUR), material,  meshList.get(Mesh.CUBE));
-        sphere = new Model(camera, light1, light2, spotlight,shaderList.get(Shader.DIFFUSE_AND_SPECULAR), material,  meshList.get(Mesh.SPHERE), textureList.get(TextureLibrary.SHINING_EGG), textureList.get(TextureLibrary.SHINING_EGG_SPECULAR));
-        shiningEgg = new ShiningEgg(cube1, sphere);
+        cube1 = new Model(camera, light1, light2, spotlight, shaderStand, material, meshCube);
+        sphere = new Model(camera, light1, light2, spotlight, shaderExhibit, material, meshSphere, textureOriginal, textureSpecular);
 
-        // Sets up model used for robot
-        robot = new Robot(gl, camera, light1, light2, spotlight, meshList.get(Mesh.SPHERE), "Robot");
+        // Initialises shining egg. First model is for stand, second model is for shining egg itself
+        shiningEgg = new ShiningEgg(cube1, sphere);
     }
 }

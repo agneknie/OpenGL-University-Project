@@ -22,11 +22,6 @@ import java.awt.event.*;
  * @author Agne Knietaite, 2021
  */
 
-// TODO Clean up  warnings
-// TODO Comments: class, method and within methods
-// TODO Check access modifiers and remove unnecessary methods
-// TODO Check variable names
-// TODO Check that compiles from command line
 public class Museum extends JFrame{
 
     private static final int WIDTH = 1400;
