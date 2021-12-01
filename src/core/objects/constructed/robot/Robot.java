@@ -10,6 +10,7 @@ import core.structure.Model;
 import core.structure.Shader;
 import core.structure.nodes.NameNode;
 import core.structure.nodes.TransformNode;
+import gmaths.Mat4;
 import gmaths.Vec3;
 
 import static core.constants.Colours.*;
@@ -17,32 +18,17 @@ import static core.constants.Colours.*;
 /**
  * Class meant to represent the robot.
  *
- * @author Agne Knietaite
+ * @author Agne Knietaite, 2021
  */
 public class Robot {
-    private NameNode robotRoot = new NameNode("Robot");
+    private NameNode robotRoot;
 
-    private TransformNode moveFoot;
-    private TransformNode moveNeck;
-    private TransformNode moveRightLowerEar;
-    private TransformNode moveRightUpperEar;
-    private TransformNode moveLeftLowerEar;
-    private TransformNode moveLeftUpperEar;
-    private TransformNode moveUpperLip;
-    private TransformNode moveLowerLip;
-    private TransformNode moveRightInnerEye;
-    private TransformNode moveLeftInnerEye;
+    private TransformNode moveFoot = new TransformNode("Move Foot", new Mat4(1));
+    private TransformNode moveNeck = new TransformNode("Move Neck", new Mat4(1));
 
-    private static final float MEASUREMENT_1 = 0.1f;        // 0.1f
-    private static final float MEASUREMENT_2 = 0.25f;       // 0.25f
-    private static final float MEASUREMENT_3 = 0.4f;        // 0.4f
-    private static final float MEASUREMENT_4 = 0.5f;        // 0.5f
-    private static final float MEASUREMENT_5 = 0.6f;        // 0.6f
-    private static final float MEASUREMENT_6 = 1f;          // 1f
-    private static final float MEASUREMENT_7 = 2f;          // 2f
-    private static final float MEASUREMENT_8 = 5f;          // 5f
+    public Robot(GL3 gl, Camera camera, Light light1, Light light2, Spotlight spotlight, Mesh mesh, String robotName){
 
-    public Robot(GL3 gl, Camera camera, Light light1, Light light2, Spotlight spotlight, Mesh mesh){
+        robotRoot = new NameNode(robotName);
 
         // Creates all materials needed for robot
         Material robotDarkMaterial = createMaterial(
@@ -90,8 +76,8 @@ public class Robot {
         RobotPart body = new RobotPart(RobotPartName.BODY, robotLightModel);
         RobotPart foot = new RobotPart(RobotPartName.FOOT, robotDarkModel);
 
-        // Calls the method, which populates robot transform nodes and creates the hierarchical model
-        constructRobot(head, neck, body, foot);
+        // Calls the method, which creates the hierarchical model of the robot
+        constructHierarchy(head, neck, body, foot);
     }
 
     /**
@@ -103,9 +89,25 @@ public class Robot {
         robotRoot.draw(gl);
     }
 
-    private void constructRobot(RobotHead head, RobotPart neck, RobotPart body, RobotPart foot){
-        // TODO construct robot: create hierarchical tree and populate transform nodes
-        // robotRoot.addChild(...);
+    /**
+     * Given robot body parts, constructs the hierarchy of the robot.
+     *
+     * The hierarchy within each part is constructed whilst initialising each part.
+     * Thea hierarchy within the head is constructed whilst initialising the head.
+     *
+     * @param head Head of the robot
+     * @param neck Neck of the robot
+     * @param body Body of the robot
+     * @param foot Foot of the robot
+     */
+    private void constructHierarchy(RobotHead head, RobotPart neck, RobotPart body, RobotPart foot){
+        // Constructing the hierarchical tree of robot body
+        robotRoot.addChild(moveFoot);
+            moveFoot.addChild(foot.getNameNode());
+                foot.getNameNode().addChild(body.getNameNode());
+                    body.getNameNode().addChild(moveNeck);
+                        moveNeck.addChild(neck.getNameNode());
+                            neck.getNameNode().addChild(head.getHead().getNameNode());
 
         // Updates the robot after all the nodes have been added
         robotRoot.update();

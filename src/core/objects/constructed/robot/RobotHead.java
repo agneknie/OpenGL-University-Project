@@ -1,38 +1,51 @@
 package core.objects.constructed.robot;
 
 import core.structure.Model;
+import core.structure.nodes.SGNode;
+import core.structure.nodes.TransformNode;
+import gmaths.Mat4;
 
 /**
  * Class representing robot head.
  *
- * @author Agne Knietaite
+ * @author Agne Knietaite, 2021
  */
 public class RobotHead {
     // Head
-    protected RobotPart head;
+    private RobotPart head;
 
     // Left ear
-    protected RobotPart upperLeftEar;
-    protected RobotPart lowerLeftEar;
+    private RobotPart upperLeftEar;
+    private RobotPart lowerLeftEar;
 
     // Right ear
-    protected RobotPart upperRightEar;
-    protected RobotPart lowerRightEar;
+    private RobotPart upperRightEar;
+    private RobotPart lowerRightEar;
 
     // Left eye
-    protected RobotPart outerLeftEye;
-    protected RobotPart innerLeftEye;
+    private RobotPart outerLeftEye;
+    private RobotPart innerLeftEye;
 
     // Right eye
-    protected RobotPart outerRightEye;
-    protected RobotPart innerRightEye;
+    private RobotPart outerRightEye;
+    private RobotPart innerRightEye;
 
     // Nose
-    protected RobotPart nose;
+    private RobotPart nose;
 
     // Lips
-    protected RobotPart upperLip;
-    protected RobotPart lowerLip;
+    private RobotPart upperLip;
+    private RobotPart lowerLip;
+
+    // Transform nodes to move the head parts
+    private TransformNode moveRightLowerEar = new TransformNode("Move Right Lower Ear", new Mat4(1));
+    private TransformNode moveRightUpperEar = new TransformNode("Move Right Upper Ear", new Mat4(1));
+    private TransformNode moveLeftLowerEar = new TransformNode("Move Left Lower Ear", new Mat4(1));
+    private TransformNode moveLeftUpperEar = new TransformNode("Move Left Upper Ear", new Mat4(1));
+    private TransformNode moveUpperLip = new TransformNode("Move Upper Lip", new Mat4(1));
+    private TransformNode moveLowerLip = new TransformNode("Move Lower Lip", new Mat4(1));
+    private TransformNode moveRightInnerEye = new TransformNode("Move Right Inner Ear", new Mat4(1));
+    private TransformNode moveLeftInnerEye = new TransformNode("Move Left Inner Ear", new Mat4(1));
 
     protected RobotHead(Model robotDark, Model robotLight, Model robotLips, Model robotOuterEye, Model robotInnerEye){
         this.head = new RobotPart(RobotPartName.HEAD, robotLight);
@@ -52,6 +65,54 @@ public class RobotHead {
         this.nose = new RobotPart(RobotPartName.NOSE, robotDark);
 
         this.upperLip = new RobotPart(RobotPartName.UPPER_LIP, robotLips);
-        this.lowerLip = new RobotPart(RobotPartName.LOWER_LIP, robotLight);
+        this.lowerLip = new RobotPart(RobotPartName.LOWER_LIP, robotLips);
+
+        // Creates the hierarchy within the head
+        createHierarchy();
+    }
+
+    public RobotPart getHead() {
+        return head;
+    }
+
+    /**
+     * Method which creates node hierarchy within the head of the robot.
+     *
+     * The hierarchy within each part is constructed whilst initialising each part.
+     * Indentation is used to visualise the structure more clearly.
+     */
+    public void createHierarchy(){
+        SGNode headRoot = head.getNameNode();
+
+        // Right ear
+        headRoot.addChild(moveRightLowerEar);
+            moveRightLowerEar.addChild(lowerRightEar.getNameNode());
+                lowerRightEar.getNameNode().addChild(moveRightUpperEar);
+                    moveRightUpperEar.addChild(upperRightEar.getNameNode());
+
+        // Left ear
+        headRoot.addChild(moveLeftLowerEar);
+            moveLeftLowerEar.addChild(lowerLeftEar.getNameNode());
+                lowerLeftEar.getNameNode().addChild(moveLeftUpperEar);
+                    moveLeftLowerEar.addChild(upperLeftEar.getNameNode());
+
+        // Right Eye
+        headRoot.addChild(outerRightEye.getNameNode());
+            outerRightEye.getNameNode().addChild(moveRightInnerEye);
+                moveRightInnerEye.addChild(innerRightEye.getNameNode());
+
+        // Left Eye
+        headRoot.addChild(outerLeftEye.getNameNode());
+            outerLeftEye.getNameNode().addChild(moveLeftInnerEye);
+                moveLeftInnerEye.addChild(innerLeftEye.getNameNode());
+
+        // Nose
+        headRoot.addChild(nose.getNameNode());
+
+        // Lips
+        headRoot.addChild(moveUpperLip);
+            moveUpperLip.addChild(upperLip.getNameNode());
+        headRoot.addChild(moveLowerLip);
+            moveLowerLip.addChild(lowerLip.getNameNode());
     }
 }

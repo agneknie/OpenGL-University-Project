@@ -171,7 +171,7 @@ public class InterfacePanel extends JPanel {
 
             case "Animate":
                 // TODO robot animation
-                System.out.println("Animate");
+                System.err.println("Animation not Implemented :(");
                 break;
         }
     }
