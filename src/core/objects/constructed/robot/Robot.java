@@ -114,8 +114,8 @@ public class Robot {
     }
 
     /**
-     * Resets the robot into the natural state so it can
-     * be modified into a different pose.
+     * Resets the robot into the natural state (initial world position)
+     * so it can be modified into a different pose.
      */
     private void resetToNaturalState(){
         // TODO resetToNaturalState
@@ -170,7 +170,7 @@ public class Robot {
      * @return created material
      */
     private static Material createMaterial(Vec3 ambient, Vec3 diffuse, Vec3 specular){
-        final int DEFAULT_SHININESS = 32;
+        final int DEFAULT_SHININESS = 16;
 
         return new Material(ambient, diffuse, specular, DEFAULT_SHININESS);
     }

@@ -392,7 +392,7 @@ public class RobotPart {
                 Mat4Transform.translate(
                         0,
                         ROBOT_MEASUREMENT_1*0.5f+ROBOT_MEASUREMENT_7*0.25f+ROBOT_MEASUREMENT_4+ROBOT_MEASUREMENT_8+ROBOT_MEASUREMENT_6,
-                        ROBOT_MEASUREMENT_7*0.5f-ROBOT_MEASUREMENT_1
+                        ROBOT_MEASUREMENT_7*0.5f-ROBOT_MEASUREMENT_1*0.25f
                 ), calculatedMatrix);
 
         return calculatedMatrix;
@@ -415,7 +415,7 @@ public class RobotPart {
                 Mat4Transform.translate(
                         0,
                         -ROBOT_MEASUREMENT_1*0.5f+ROBOT_MEASUREMENT_7*0.25f+ROBOT_MEASUREMENT_4+ROBOT_MEASUREMENT_8+ROBOT_MEASUREMENT_6,
-                        ROBOT_MEASUREMENT_7*0.5f-ROBOT_MEASUREMENT_1*1.5f
+                        ROBOT_MEASUREMENT_7*0.5f-ROBOT_MEASUREMENT_1
                 ), calculatedMatrix);
 
         return calculatedMatrix;

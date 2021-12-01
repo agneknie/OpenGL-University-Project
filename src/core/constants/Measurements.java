@@ -15,14 +15,14 @@ public final class Measurements {
     public static final float SPOTLIGHT_POSITION_X = 6.75f;
     public static final float SPOTLIGHT_POSITION_Z = 6.75f;
 
-    public static final float ROBOT_MEASUREMENT_1 = 0.1f;
-    public static final float ROBOT_MEASUREMENT_2 = 0.25f;
-    public static final float ROBOT_MEASUREMENT_3 = 0.4f;
-    public static final float ROBOT_MEASUREMENT_4 = 0.5f;
-    public static final float ROBOT_MEASUREMENT_5 = 0.6f;
-    public static final float ROBOT_MEASUREMENT_6 = 1f;
-    public static final float ROBOT_MEASUREMENT_7 = 2f;
-    public static final float ROBOT_MEASUREMENT_8 = 5f;
+    public static final float ROBOT_MEASUREMENT_1 = 0.12f;
+    public static final float ROBOT_MEASUREMENT_2 = 0.2f;
+    public static final float ROBOT_MEASUREMENT_3 = 0.35f;
+    public static final float ROBOT_MEASUREMENT_4 = 0.4f;
+    public static final float ROBOT_MEASUREMENT_5 = 0.5f;
+    public static final float ROBOT_MEASUREMENT_6 = 0.8f;
+    public static final float ROBOT_MEASUREMENT_7 = 1.5f;
+    public static final float ROBOT_MEASUREMENT_8 = 4f;
 
     // Class cannot be instantiated
     private Measurements(){}
