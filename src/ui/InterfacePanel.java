@@ -164,6 +164,7 @@ public class InterfacePanel extends JPanel {
                 // Finds current light setting
                 boolean lightOn = gl.getSpotlight().getMaterial().getSpecular().x
                                     == Spotlight.LIGHT_ON;
+
                 // Changes to the opposite value
                 gl.getSpotlight().turnLightOn(!lightOn);
                 break;

@@ -3,7 +3,7 @@ package core.objects.base;
 /**
  * Class taken from COM3503 Online Tutorial Materials
  * by Dr Steve Maddock at The University of Sheffield, 2021.
- * <p>
+ *
  * Modified and restructured to suit the needs of this project.
  *
  * @author Agne Knietaite, 2021

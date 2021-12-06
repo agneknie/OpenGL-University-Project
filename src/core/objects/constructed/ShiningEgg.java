@@ -17,9 +17,9 @@ import static core.constants.Measurements.WALL_WIDTH;
  */
 public class ShiningEgg extends ConstructedObjectBase {
 
-    private static final float MEASUREMENT_1 = 1f;          // 1f
-    private static final float MEASUREMENT_2 = 4f;          // 4f
-    private static final float MEASUREMENT_3 = 8f;          // 8f
+    private static final float MEASUREMENT_1 = 1f;
+    private static final float MEASUREMENT_2 = 4f;
+    private static final float MEASUREMENT_3 = 8f;
 
     public ShiningEgg(Model model, Model model2) {
         super(model, model2);

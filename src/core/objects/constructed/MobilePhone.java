@@ -17,11 +17,11 @@ import static core.constants.Measurements.*;
  */
 public class MobilePhone extends ConstructedObjectBase {
 
-    private static final float MEASUREMENT_1 = 0.5f;                // 0.5f
-    private static final float MEASUREMENT_2 = 1f;                  // 1f
-    private static final float MEASUREMENT_3 = 3f;                  // 3f
-    private static final float MEASUREMENT_4 = 4f;                  // 4f
-    private static final float MEASUREMENT_5 = 8f;                  // 8f
+    private static final float MEASUREMENT_1 = 0.5f;
+    private static final float MEASUREMENT_2 = 1f;
+    private static final float MEASUREMENT_3 = 3f;
+    private static final float MEASUREMENT_4 = 4f;
+    private static final float MEASUREMENT_5 = 8f;
 
     public MobilePhone(Model model, Model model2) {
         super(model, model2);
