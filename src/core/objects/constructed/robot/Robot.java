@@ -23,6 +23,7 @@ import static core.constants.Measurements.*;
  * @author Agne Knietaite, 2021
  */
 public class Robot {
+    // Variables related to robot structure
     private NameNode robotRoot;
 
     private RobotHead robotHead;
@@ -30,8 +31,10 @@ public class Robot {
     private TransformNode moveFoot = new TransformNode("Move Foot", new Mat4(1));
     private TransformNode moveNeck = new TransformNode("Move Neck", new Mat4(1));
 
+    // Variables related to animation
     public boolean animationActive = false;
     private boolean inObservingPosition = false;
+
     private RobotPosition currentPosition;
     private float rotation = 0f;
 
@@ -130,6 +133,8 @@ public class Robot {
     }
 
     /**
+     * Concerns positioning of the robot.
+     *
      * Resets the robot into the natural state (initial world position)
      * so it can be modified into a different pose.
      */
@@ -144,6 +149,8 @@ public class Robot {
     }
 
     /**
+     * Concerns positioning of the robot.
+     *
      * Method which puts the robot into pose 1:
      * Just entered the museum, the robot is amazed.
      */
@@ -185,16 +192,8 @@ public class Robot {
     }
 
     /**
-     * Moves the robot to the first position in the world.
-     */
-    private void setPose1Position(){
-        moveFoot.setTransform(Mat4.multiply(Mat4Transform.translate(
-                -WALL_WIDTH*0.25f,
-                0,
-                -WALL_WIDTH*0.375f), moveFoot.getTransform()));
-    }
-
-    /**
+     * Concerns positioning of the robot.
+     *
      * Method which puts the robot into pose 2:
      * Looking at the mobile phone, which greatly interests the robot.
      */
@@ -235,18 +234,8 @@ public class Robot {
     }
 
     /**
-     * Moves the robot to the second position in the world.
-     */
-    private void setPose2Position(){
-        moveFoot.setTransform(Mat4.multiply(
-                Mat4Transform.translate(
-                        WALL_WIDTH*0.25f,
-                        0,
-                        0), moveFoot.getTransform())
-        );
-    }
-
-    /**
+     * Concerns positioning of the robot.
+     *
      * Method which puts the robot into pose 3:
      * Looking at the spotlight, which amazes the robot.
      */
@@ -311,16 +300,8 @@ public class Robot {
     }
 
     /**
-     * Moves the robot to the third position in the world.
-     */
-    private void setPose3Position(){
-        moveFoot.setTransform(Mat4.multiply(Mat4Transform.translate(
-                WALL_WIDTH*0.25f,
-                0,
-                WALL_WIDTH*0.375f), moveFoot.getTransform()));
-    }
-
-    /**
+     * Concerns positioning of the robot.
+     *
      * Method which puts the robot into pose 4:
      * Looking at the shining egg, which is very confusing for the robot.
      */
@@ -385,16 +366,8 @@ public class Robot {
     }
 
     /**
-     * Moves the robot to the fourth position in the world.
-     */
-    private void setPose4Position(){
-        moveFoot.setTransform(Mat4.multiply(Mat4Transform.translate(
-                -WALL_WIDTH*0.125f,
-                0,
-                WALL_WIDTH*0.375f), moveFoot.getTransform()));
-    }
-
-    /**
+     * Concerns positioning of the robot.
+     *
      * Method which puts the robot into pose 5:
      * Looking through the window, enjoying the fresh seaside breeze.
      */
@@ -447,6 +420,57 @@ public class Robot {
     }
 
     /**
+     * Concerns positioning of the robot.
+     *
+     * Moves the robot to the first position in the world.
+     */
+    private void setPose1Position(){
+        moveFoot.setTransform(Mat4.multiply(Mat4Transform.translate(
+                -WALL_WIDTH*0.25f,
+                0,
+                -WALL_WIDTH*0.375f), moveFoot.getTransform()));
+    }
+
+    /**
+     * Concerns positioning of the robot.
+     *
+     * Moves the robot to the second position in the world.
+     */
+    private void setPose2Position(){
+        moveFoot.setTransform(Mat4.multiply(
+                Mat4Transform.translate(
+                        WALL_WIDTH*0.25f,
+                        0,
+                        0), moveFoot.getTransform()));
+    }
+
+    /**
+     * Concerns positioning of the robot.
+     *
+     * Moves the robot to the third position in the world.
+     */
+    private void setPose3Position(){
+        moveFoot.setTransform(Mat4.multiply(Mat4Transform.translate(
+                WALL_WIDTH*0.25f,
+                0,
+                WALL_WIDTH*0.375f), moveFoot.getTransform()));
+    }
+
+    /**
+     * Concerns positioning of the robot.
+     *
+     * Moves the robot to the fourth position in the world.
+     */
+    private void setPose4Position(){
+        moveFoot.setTransform(Mat4.multiply(Mat4Transform.translate(
+                -WALL_WIDTH*0.125f,
+                0,
+                WALL_WIDTH*0.375f), moveFoot.getTransform()));
+    }
+
+    /**
+     * Concerns positioning of the robot.
+     *
      * Moves the robot to the fifth position in the world.
      */
     private void setPose5Position(){
@@ -457,8 +481,10 @@ public class Robot {
     }
 
     /**
+     * Concerns animation of the robot.
+     *
      * Method which makes the robot to observe the dark weird
-     * world from the current position.
+     * abyss in the world from the current position.
      */
     public void lookAtTheWorld(){
         final float INCREMENT = 1f;
@@ -488,6 +514,8 @@ public class Robot {
     }
 
     /**
+     * Concerns animation of the robot.
+     *
      * Method which puts the robot in the observing position.
      */
     private void putInObservingPosition(){
@@ -510,6 +538,8 @@ public class Robot {
     }
 
     /**
+     * Concerns animation of the robot.
+     *
      * Method which moves the robot to the current position.
      */
     private void moveToCurrentPosition(){
@@ -537,6 +567,8 @@ public class Robot {
     }
 
     /**
+     * Concerns animation of the robot.
+     *
      * Changes the state of robot animation to an opposite one.
      */
     public void changeAnimationState(){
@@ -545,6 +577,8 @@ public class Robot {
     }
 
     /**
+     * Concerns initialisation of the robot.
+     *
      * Method which creates a material given the colour vectors.
      *
      * @param ambient ambient colour vector
@@ -559,6 +593,8 @@ public class Robot {
     }
 
     /**
+     * Concerns initialisation of the robot.
+     *
      * Method which creates a model with given parameters.
      *
      * @param gl
