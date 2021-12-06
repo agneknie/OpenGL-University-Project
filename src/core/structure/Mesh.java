@@ -86,7 +86,6 @@ public class Mesh {
     /**
      * Returns all meshes, used by the program.
      *
-     * @param gl
      * @return list of Mesh objects
      */
     public static List<Mesh> populateMeshList(GL3 gl){

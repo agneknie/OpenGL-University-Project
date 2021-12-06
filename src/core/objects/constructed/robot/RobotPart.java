@@ -125,14 +125,6 @@ public class RobotPart {
         return nameNode;
     }
 
-    public TransformNode getTransformNode() {
-        return transformNode;
-    }
-
-    public ModelNode getModelNode() {
-        return modelNode;
-    }
-
     /**
      * Method which calculates upper right ear transformation matrix.
      *

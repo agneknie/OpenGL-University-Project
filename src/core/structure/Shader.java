@@ -10,6 +10,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -88,12 +89,12 @@ public class Shader {
         ShaderCode vertexShaderCode = new ShaderCode(GL3.GL_VERTEX_SHADER, sources.length, sources);
         boolean compiled = vertexShaderCode.compile(gl, System.err);
         if (!compiled)
-            System.err.println("[error] Unable to compile vertex shader: " + sources);
+            System.err.println("[error] Unable to compile vertex shader: " + Arrays.deepToString(sources));
         sources[0] = new String[]{ fragmentShaderSource };
         ShaderCode fragmentShaderCode = new ShaderCode(GL3.GL_FRAGMENT_SHADER, sources.length, sources);
         compiled = fragmentShaderCode.compile(gl, System.err);
         if (!compiled)
-            System.err.println("[error] Unable to compile fragment shader: " + sources);
+            System.err.println("[error] Unable to compile fragment shader: " + Arrays.deepToString(sources));
         ShaderProgram program = new ShaderProgram();
         program.init(gl);
         program.add(vertexShaderCode);

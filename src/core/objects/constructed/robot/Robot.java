@@ -97,8 +97,6 @@ public class Robot {
 
     /**
      * Method which draws the robot.
-     *
-     * @param gl
      */
     public void draw(GL3 gl){
         // Activates the animation if necessary
@@ -597,7 +595,6 @@ public class Robot {
      *
      * Method which creates a model with given parameters.
      *
-     * @param gl
      * @param camera camera
      * @param light1 light1
      * @param light2 light2
@@ -611,7 +608,6 @@ public class Robot {
 
         Shader shader = new Shader(gl, "vs_objects.glsl", "fs_singleColour.glsl");
 
-        Model model = new Model(camera, light1, light2, spotlight, shader, material, mesh);
-        return model;
+        return new Model(camera, light1, light2, spotlight, shader, material, mesh);
     }
 }

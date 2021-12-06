@@ -141,7 +141,6 @@ public class Museum_GLEventListener implements GLEventListener {
 
     /**
      * Method which initialises all objects present on the canvas.
-     * @param gl
      */
     public void initialise(GL3 gl) {
 

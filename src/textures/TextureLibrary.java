@@ -63,7 +63,7 @@ public class TextureLibrary {
 
     /**
      * Returns all textures, used by the program.
-     * @param gl
+     *
      * @return texture list of int[]
      */
     public static List<int[]> populateTextureList(GL3 gl){

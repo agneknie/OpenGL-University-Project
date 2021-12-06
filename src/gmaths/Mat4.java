@@ -1,7 +1,5 @@
 package gmaths;
 
-import java.util.Arrays;
-
 /**
  * Class taken from COM3503 Online Tutorial Materials
  * by Dr Steve Maddock at The University of Sheffield, 2021.
@@ -154,18 +152,5 @@ public class Mat4 {
         }
         s.append("}");
         return s.toString();
-    }
-
-    /**
-     * Method which compares this matrix with the given matrix.
-     *
-     * @param mat4 matrix to compare this matrix with
-     * @return true if matrices are the same
-     */
-    public boolean equals(Mat4 mat4){
-        String thisMatrix = this.toString();
-        String otherMatrix = mat4.toString();
-
-        return thisMatrix.equals(otherMatrix);
     }
 }
