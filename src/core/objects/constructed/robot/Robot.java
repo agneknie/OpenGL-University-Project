@@ -30,6 +30,11 @@ public class Robot {
     private TransformNode moveFoot = new TransformNode("Move Foot", new Mat4(1));
     private TransformNode moveNeck = new TransformNode("Move Neck", new Mat4(1));
 
+    public boolean animationActive = false;
+    private boolean inObservingPosition = false;
+    private RobotPosition currentPosition;
+    private float rotation = 0f;
+
     public Robot(GL3 gl, Camera camera, Light light1, Light light2, Spotlight spotlight, Mesh mesh, String robotName){
 
         robotRoot = new NameNode(robotName);
@@ -93,6 +98,10 @@ public class Robot {
      * @param gl
      */
     public void draw(GL3 gl){
+        // Activates the animation if necessary
+        if(animationActive) this.lookAtTheWorld();
+
+        // Draws the robot
         robotRoot.draw(gl);
     }
 
@@ -131,6 +140,7 @@ public class Robot {
         robotHead.resetToNaturalState();
 
         robotRoot.update();
+        inObservingPosition = false;
     }
 
     /**
@@ -139,12 +149,10 @@ public class Robot {
      */
     public void makePose1(){
         resetToNaturalState();
+        animationActive = false;
 
         // Moves to the right position
-        moveFoot.setTransform(Mat4Transform.translate(
-                -WALL_WIDTH*0.25f,
-                0,
-                -WALL_WIDTH*0.375f));
+        setPose1Position();
 
         // Opens the mouth
         robotHead.moveUpperLip.setTransform(
@@ -170,7 +178,20 @@ public class Robot {
                         0,
                         0));
 
+        // Updates position variable
+        this.currentPosition = RobotPosition.POSITION_1;
+
         robotRoot.update();
+    }
+
+    /**
+     * Moves the robot to the first position in the world.
+     */
+    private void setPose1Position(){
+        moveFoot.setTransform(Mat4.multiply(Mat4Transform.translate(
+                -WALL_WIDTH*0.25f,
+                0,
+                -WALL_WIDTH*0.375f), moveFoot.getTransform()));
     }
 
     /**
@@ -179,6 +200,7 @@ public class Robot {
      */
     public void makePose2(){
         resetToNaturalState();
+        animationActive = false;
 
         // Rotates towards phone
         moveFoot.setTransform((Mat4Transform.rotateAroundY(180)));
@@ -188,12 +210,7 @@ public class Robot {
                 Mat4Transform.rotateAroundX(-30), moveFoot.getTransform()));
 
         // Moves to the right position
-        moveFoot.setTransform(Mat4.multiply(
-                Mat4Transform.translate(
-                        WALL_WIDTH*0.25f,
-                        0,
-                        0), moveFoot.getTransform())
-        );
+        setPose2Position();
 
         // Inspects phone closely
         robotHead.moveRightInnerEye.setTransform(
@@ -211,7 +228,22 @@ public class Robot {
         robotHead.moveRightLowerEar.setTransform(Mat4Transform.rotateAroundX(-1));
         robotHead.moveLeftLowerEar.setTransform(Mat4Transform.rotateAroundX(-1));
 
+        // Updates position variable
+        this.currentPosition = RobotPosition.POSITION_2;
+
         robotRoot.update();
+    }
+
+    /**
+     * Moves the robot to the second position in the world.
+     */
+    private void setPose2Position(){
+        moveFoot.setTransform(Mat4.multiply(
+                Mat4Transform.translate(
+                        WALL_WIDTH*0.25f,
+                        0,
+                        0), moveFoot.getTransform())
+        );
     }
 
     /**
@@ -220,6 +252,7 @@ public class Robot {
      */
     public void makePose3(){
         resetToNaturalState();
+        animationActive = false;
 
         // Rotates towards spotlight
         moveFoot.setTransform(Mat4Transform.rotateAroundY(90));
@@ -229,10 +262,7 @@ public class Robot {
                 Mat4Transform.rotateAroundZ(20), moveFoot.getTransform()));
 
         // Moves to the right position
-        moveFoot.setTransform(Mat4.multiply(Mat4Transform.translate(
-                WALL_WIDTH*0.25f,
-                0,
-                WALL_WIDTH*0.375f), moveFoot.getTransform()));
+        setPose3Position();
 
         // Looks down at the spotlight on its body
         robotHead.moveRightInnerEye.setTransform(
@@ -274,7 +304,20 @@ public class Robot {
                         -ROBOT_MEASUREMENT_1*0.5f,
                         0));
 
+        // Updates position variable
+        this.currentPosition = RobotPosition.POSITION_3;
+
         robotRoot.update();
+    }
+
+    /**
+     * Moves the robot to the third position in the world.
+     */
+    private void setPose3Position(){
+        moveFoot.setTransform(Mat4.multiply(Mat4Transform.translate(
+                WALL_WIDTH*0.25f,
+                0,
+                WALL_WIDTH*0.375f), moveFoot.getTransform()));
     }
 
     /**
@@ -283,6 +326,7 @@ public class Robot {
      */
     public void makePose4(){
         resetToNaturalState();
+        animationActive = false;
 
         // Rotates towards egg
         moveFoot.setTransform(Mat4Transform.rotateAroundY(180));
@@ -292,10 +336,7 @@ public class Robot {
                 Mat4Transform.rotateAroundZ(15), moveFoot.getTransform()));
 
         // Moves to the right position
-        moveFoot.setTransform(Mat4.multiply(Mat4Transform.translate(
-                -WALL_WIDTH*0.125f,
-                0,
-                WALL_WIDTH*0.375f), moveFoot.getTransform()));
+        setPose4Position();
 
         // Looks up at the egg
         robotHead.moveRightInnerEye.setTransform(
@@ -337,7 +378,20 @@ public class Robot {
                 )
         );
 
+        // Updates position variable
+        this.currentPosition = RobotPosition.POSITION_4;
+
         robotRoot.update();
+    }
+
+    /**
+     * Moves the robot to the fourth position in the world.
+     */
+    private void setPose4Position(){
+        moveFoot.setTransform(Mat4.multiply(Mat4Transform.translate(
+                -WALL_WIDTH*0.125f,
+                0,
+                WALL_WIDTH*0.375f), moveFoot.getTransform()));
     }
 
     /**
@@ -346,6 +400,7 @@ public class Robot {
      */
     public void makePose5(){
         resetToNaturalState();
+        animationActive = false;
 
         // Rotates towards window
         moveFoot.setTransform(Mat4Transform.rotateAroundY(-90));
@@ -355,10 +410,7 @@ public class Robot {
                 Mat4Transform.rotateAroundZ(20), moveFoot.getTransform()));
 
         // Moves to the right position
-        moveFoot.setTransform(Mat4.multiply(Mat4Transform.translate(
-                -WALL_WIDTH*0.375f,
-                0,
-                0), moveFoot.getTransform()));
+        setPose5Position();
 
         // Looks up at the sky
         robotHead.moveRightInnerEye.setTransform(
@@ -388,7 +440,108 @@ public class Robot {
                 )
         );
 
+        // Updates position variable
+        this.currentPosition = RobotPosition.POSITION_5;
+
         robotRoot.update();
+    }
+
+    /**
+     * Moves the robot to the fifth position in the world.
+     */
+    private void setPose5Position(){
+        moveFoot.setTransform(Mat4.multiply(Mat4Transform.translate(
+                -WALL_WIDTH*0.375f,
+                0,
+                0), moveFoot.getTransform()));
+    }
+
+    /**
+     * Method which makes the robot to observe the dark weird
+     * world from the current position.
+     */
+    public void lookAtTheWorld(){
+        final float INCREMENT = 1f;
+
+        // If robot is already in observing position, rotate
+        if(this.inObservingPosition) {
+            // Update rotation angle
+            rotation += INCREMENT;
+
+            // Rotate
+            moveFoot.setTransform(new Mat4(1));
+            moveFoot.setTransform(Mat4.multiply(Mat4Transform.rotateAroundY(rotation), moveFoot.getTransform()));
+            moveToCurrentPosition();
+        }
+        // If no, put it in position
+        else {
+            // Reset rotation
+            rotation = 0;
+
+            // Put in observing position
+            putInObservingPosition();
+            inObservingPosition = true;
+        }
+
+        // Update the robot
+        robotRoot.update();
+    }
+
+    /**
+     * Method which puts the robot in the observing position.
+     */
+    private void putInObservingPosition(){
+        resetToNaturalState();
+
+        // Move to current position
+        moveToCurrentPosition();
+
+        // Looks up at the sky
+        robotHead.moveRightInnerEye.setTransform(
+                Mat4Transform.translate(
+                        0,
+                        ROBOT_MEASUREMENT_2*0.75f,
+                        0));
+        robotHead.moveLeftInnerEye.setTransform(
+                Mat4Transform.translate(
+                        0,
+                        ROBOT_MEASUREMENT_2*0.75f,
+                        0));
+    }
+
+    /**
+     * Method which moves the robot to the current position.
+     */
+    private void moveToCurrentPosition(){
+        switch (this.currentPosition){
+            case POSITION_1:
+                this.setPose1Position();
+                break;
+
+            case POSITION_2:
+                this.setPose2Position();
+                break;
+
+            case POSITION_3:
+                this.setPose3Position();
+                break;
+
+            case POSITION_4:
+                this.setPose4Position();
+                break;
+
+            case POSITION_5:
+                this.setPose5Position();
+                break;
+        }
+    }
+
+    /**
+     * Changes the state of robot animation to an opposite one.
+     */
+    public void changeAnimationState(){
+        boolean animationActive = this.animationActive;
+        this.animationActive = !animationActive;
     }
 
     /**

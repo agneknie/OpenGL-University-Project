@@ -29,7 +29,9 @@ Some of the core features are outlined below:
 - The view through the window has texture effects applied, hence it appears that the 
   clouds are moving;
 - The robot is a hierarchical model and is capable of making 5 distinct poses by varying its 
-  rotation, eye, lip, ear, head and body movement.
+  rotation, eye, lip, ear, head and body movement;
+- The robot gains awareness that the world around it is an empty dark abyss, hence during animation
+it looks at it with caution.
 
 ## Maintenance & Extendability
 

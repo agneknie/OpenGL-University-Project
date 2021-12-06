@@ -170,8 +170,8 @@ public class InterfacePanel extends JPanel {
                 break;
 
             case "Animate":
-                // TODO Robot Animation
-                System.err.println("Animation not Implemented :(");
+                // Changes the state of the animation
+                gl.getRobot().changeAnimationState();
                 break;
         }
     }
