@@ -19,6 +19,13 @@ When starting the program, make sure JOGL is added to the path.
 - You might need to alter the paths in [TextureLibrary](src/textures/TextureLibrary.java) and
   [Shader](src/core/structure/Shader.java) for the program to find the images (src/textures/images)
   and the shaders (src/core/shaders) respectfully.
+  
+### IDE
+- The program is developed with IntelliJ IDEA;
+- Start the file [Museum.java](src/start/Museum.java);
+- You might need to alter the paths in [TextureLibrary](src/textures/TextureLibrary.java) and
+  [Shader](src/core/structure/Shader.java) for the program to find the images (src/textures/images)
+  and the shaders (src/core/shaders) respectfully if you are using a different IDE.
 
 ## About
 The Assignment was to model a museum room, which consists of different objects with different
