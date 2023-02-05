@@ -1,6 +1,6 @@
 # COM3503 3D Computer Graphics Assignment
 
-### My assignment for the 3D Computer Graphics Module at the University of Sheffield. Achieved Grade: 71%.
+### My assignment for the 3D Computer Graphics Module at the University of Sheffield. Achieved Grade: 71% (First Class).
 
 ## Start
 The main start of the program is [Museum.java](src/start/Museum.java) in the [start package](src/start).
